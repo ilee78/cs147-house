@@ -1,9 +1,3 @@
 **CS 147 - House**
 
-***Getting Started.***
-
-Install `Node.js` and `npm` (Node.js package manager). 
-Navigate to the project directory in your terminal. Go to app directory with `cd house` and type `npm start` to open in the browser.
-
-`npm install -g create-react-native-app`
-`create-react-native-app house`
+see [notion page](https://www.notion.so/annabellewang/getting-started-1bf7f39c031f45f79c3b855ee6c3d05c) for instructions on getting started
