@@ -12,12 +12,9 @@ import Houses from './screens/Houses';
 import Profile from './screens/Profile';
 
 // Icons
-import neighborhoodBlack from '../assets/neighborhood-black.svg';
-import neighborhoodGrey from '../assets/neighborhood-grey.svg';
-import housesBlack from '../assets/search-black.svg';
-import housesGrey from '../assets/search-grey.svg';
-import profileBlack from '../assets/profile-black.svg';
-import profileGrey from '../assets/profile-grey.svg';
+import NeighborhoodIcon from '../assets/neighborhood-icon.js';
+import HousesIcon from '../assets/houses-icon.js'
+import ProfileIcon from '../assets/profile-icon.js'
 
 const neighborhoodName = 'neighborhood';
 const housesName = 'houses';
@@ -43,17 +40,17 @@ function Navigator() {
 
             <Tab.Screen name={neighborhoodName} component={Neighborhood} options={{
                 tabBarIcon: ({color, size}) => (
-                    <Ionicons name="home-outline" color={color} size={size}/>
+                    <NeighborhoodIcon color={color} />
                 )
             }}/>
             <Tab.Screen name={housesName} component={Houses} options={{
                 tabBarIcon: ({color, size}) => (
-                    <Ionicons name="search-outline" color={color} size={size}/>
+                    <HousesIcon color={color}/>
                 )
             }}/>
             <Tab.Screen name={profileName} component={Profile} options={{
                 tabBarIcon: ({color, size}) => (
-                    <Ionicons name="person-outline" color={color} size={size}/>
+                    <ProfileIcon color={color}/>
                 )
             }}/>
 
