@@ -11,14 +11,6 @@ import Neighborhood from './screens/Neighborhood';
 import Houses from './screens/Houses';
 import Profile from './screens/Profile';
 
-// Icons
-import neighborhoodBlack from '../assets/neighborhood-black.svg';
-import neighborhoodGrey from '../assets/neighborhood-grey.svg';
-import housesBlack from '../assets/search-black.svg';
-import housesGrey from '../assets/search-grey.svg';
-import profileBlack from '../assets/profile-black.svg';
-import profileGrey from '../assets/profile-grey.svg';
-
 const neighborhoodName = 'neighborhood';
 const housesName = 'houses';
 const profileName = 'profile';
