@@ -5,6 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
 import Neighborhood from './screens/Neighborhood';
@@ -21,7 +22,6 @@ const Tab = createBottomTabNavigator();
 
 function Navigator() {
     return(
-        // setting headerShown to 'false' makes text cut off at top of screen
         <NavigationContainer>
             <Tab.Navigator screenOptions={{
                 headerShown: true,
