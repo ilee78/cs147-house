@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 import Ionicons from 'react-native-vector-icons/Ionicons';
