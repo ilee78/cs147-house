@@ -1,0 +1,116 @@
+[
+    {
+        "profileName": "Annabelle W.",
+        "bio": "hi! my name is annabelle and i like to dance",
+        "tags": [
+            "freestyle", 
+            "house (genre)",
+            "k-pop (genre)",
+            "choreography (genre)",
+            "making friends"
+        ],
+        "songs": [
+            {
+                "songTitle": "So Fine",
+                "songArtist": "Mint Condition"
+            },
+            {
+                "songTitle": "My Heart Belongs To U",
+                "songArtist": "Jodeci"
+            },
+            {
+                "songTitle": "Anywhere But Home",
+                "songArtist": "SEULGI"
+            }
+        ],
+        "houses": [
+            "sf voguers",
+            "rae class community"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Nali W.",
+        "bio": "hi! my name is nali and i like to dance",
+        "tags": [
+            "freestyle",
+            "k-pop (genre)",
+            "choreography (genre)"
+        ],
+        "songs": [
+            {
+                "songTitle": "Eternal Sunshine",
+                "songArtist": "ATEEZ"
+            }
+        ],
+        "houses": [
+            "sf voguers"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Caroline Z.",
+        "bio": "hi! my name is caroline and i like to dance",
+        "tags": [
+            "freestyle",
+            "k-pop (genre)",
+            "choreography (genre)"
+        ],
+        "songs": [
+            {
+                "songTitle": "ANTIFRAGILE",
+                "songArtist": "LE SSERAFIM"
+            }
+        ],
+        "houses": [
+            "sf voguers",
+            "rae class community"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Jeff W.",
+        "bio": "",
+        "tags": [],
+        "songs": [
+            {
+                "songTitle": "",
+                "songArtist": ""
+            }
+        ],
+        "houses": [
+            "oakland boba bash"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Izzy L.",
+        "bio": "",
+        "tags": [],
+        "songs": [
+            {
+                "songTitle": "",
+                "songArtist": ""
+            }
+        ],
+        "houses": [
+            "rae class community"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Michael C.",
+        "bio": "",
+        "tags": [],
+        "songs": [
+            {
+                "songTitle": "",
+                "songArtist": ""
+            }
+        ],
+        "houses": [
+            "stanford + san jose poppers"
+        ],
+        "showHouses": false
+    }
+]

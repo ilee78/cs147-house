@@ -1,0 +1,148 @@
+[
+    {
+        "houseName": "sf voguers", 
+        "userJoined": false, 
+        "location": "San Francisco, CA", 
+        "address": "351 Shotwell St, San Francisco, CA 94110",
+        "milesAway": 15, 
+        "tags":  [
+            "lgbtq+", 
+            "newbies",
+            "vogue (genre)"
+        ], 
+        "about": "we are a group of friends that usually dance in ODC dance commons in san francisco! we love voguing and welcome dancers of all levels to join our community.",
+        "events": [
+            {
+                "eventName": "vogue I",
+                "userRSVP": false,
+                "eventAddress": "351 Shotwell St, San Francisco, CA 94110", 
+                "eventDate": "12/19/2022",
+                "eventStartTime": "7 PM PST",
+                "eventAbout": "beginner voguing class for new dancers! come learn the basics with us!"
+            },
+            {
+                "eventName": "VIBE tickets",
+                "userRSVP": false,
+                "eventAddress": "location lol",
+                "eventDate": "12/1/2022",
+                "eventStartTime": "9 PM PST", 
+                "eventAbout": "tickets to VIBE dance competition on 2/26/2023 are dropping soon! come watch the show with us so remember to get your tickets in time!"
+            }
+        ],
+        "members": [
+            "Annabelle W.", 
+            "Nali W.", 
+            "Caroline Z."
+        ],
+        "moderators": [
+            "Annabelle W."
+        ]
+    }, 
+    {
+        "houseName": "oakland boba bash", 
+        "userJoined": false, 
+        "location": "Oakland, CA", 
+        "address": "580 14th St, Oakland, CA 94612",
+        "milesAway": 9, 
+        "tags":  [
+            "hanging out", 
+            "making friends", 
+            "freestyle"
+        ], 
+        "about": "we are a group of casual dancers at In The Groove Studios that love drinking boba! we host boba runs on us on the last saturday of every month so if you wanna meet some new dancers and drink boba on the house, come join!",
+        "events": [
+            {
+                "eventName": "newbie boba bash (december 2022) @ i-Tea",
+                "userRSVP": false,
+                "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
+                "eventDate": "12/31/2022",
+                "eventStartTime": "7 PM PST",
+                "about": "boba run welcoming all our new members of december 2022!"
+            },
+            {
+                "eventName": "newbie boba bash (jan 2022) @ i-Tea",
+                "userRSVP": false,
+                "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
+                "eventDate": "01/28/2023",
+                "eventStartTime": "7 PM PST",
+                "about": "boba run welcoming all our new members of january 2023!"
+            }
+        ],
+        "members": [
+            "Jeff W.", 
+            "Anna X.", 
+            "Paula V."
+        ],
+        "moderators": [
+            "Jeff W."
+        ]
+    },
+    {
+        "houseName": "rae class community", 
+        "userJoined": false, 
+        "location": "San Francisco, CA", 
+        "address": "414 Mason St #705, San Francisco, CA 94102",
+        "milesAway": 21, 
+        "tags":  [
+            "studio"
+        ], 
+        "about": "we are a community of dancers at rae studios in sf that frequent the studio! if you'd like to see a familiar face or try out a new class you've been eyeing, join our house to meet others!",
+        "events": [
+            {
+                "eventName": "jumps and turns with madelin braun",
+                "userRSVP": false,
+                "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
+                "eventDate": "12/16/2022",
+                "eventStartTime": "5:30 PM PST",
+                "about": "open to all levels!"
+            }
+        ],
+        "members": [
+            "Izzy L.", 
+            "Anna X.", 
+            "Caroline Z.",
+            "Annabelle W."
+        ],
+        "moderators": [
+            "Izzy L."
+        ]
+    },
+    {
+        "houseName": "stanford + san jose poppers", 
+        "userJoined": false, 
+        "location": "Palo Alto, CA", 
+        "address": "726 Serra St, Stanford, CA 94305",
+        "milesAway": 5,
+        "tags":  [
+            "popping (genre)",
+            "freestyle"
+        ], 
+        "about": "we're a community based at stanford of mostly students that often travel to san jose for studio classes, usually weekly! we love a variety of styles, especially popping.",
+        "events": [
+            {
+                "eventName": "weekly popping class",
+                "userRSVP": false,
+                "eventAddress": "422 N Capitol Ave, San Jose, CA 95133", 
+                "eventDate": "12/21/2022",
+                "eventStartTime": "7:30 PM PST",
+                "about": "we're going to on one studios for the popping foundations class with SwitchVilla! please rsvp at least 3 days beforehand so we can coordinate travel."
+            },
+            {
+                "eventName": "freestyle sesh in 6th floor evgr c wellness room",
+                "userRSVP": false,
+                "eventAddress": "726 Serra St, Stanford, CA 94305", 
+                "eventDate": "12/15/2022",
+                "eventStartTime": "10 PM PST",
+                "about": "nightly sesh to get the edge off #swag #finalsareover"
+            }
+        ],
+        "members": [
+            "Michael C.",
+            "Stephen G.",
+            "Hammy O."
+        ],
+        "moderators": [
+            "Michael C."
+        ]
+    }
+]

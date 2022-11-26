@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 
 function Profile({navigation}) {
     return(
-        <View>
-            <Text>profile screen</Text>
-        </View>
+        <SafeAreaView>
+            <Text style={styles.container}>profile screen</Text>
+        </SafeAreaView>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        fontSize: 20,
+        fontFamily: 'WorkSans-Regular',
+    }
+});
 
 export default Profile;

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 
 
 function Neighborhood({navigation}) {
 
     return(
-        <View>
+        <SafeAreaView>
             <Text style={styles.container}>neighborhood screen</Text>
-        </View>
+        </SafeAreaView>
     );
 }
 
