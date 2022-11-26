@@ -39,12 +39,22 @@
         ],
         "songs": [
             {
-                "songTitle": "Eternal Sunshine",
-                "songArtist": "ATEEZ"
+                "songTitle": "Dimples",
+                "songArtist": "WOOSUNG"
+            },
+            {
+                "songTitle": "Sleeping With a Friend",
+                "songArtist": "Bourbon Chai"
+            },
+            {
+                "songTitle": "Matsuri",
+                "songArtist": "Fujii Kaze"
             }
+
         ],
         "houses": [
-            "sf voguers"
+            "sf voguers",
+            "stanford + san jose poppers"
         ],
         "showHouses": false
     },
@@ -58,12 +68,20 @@
         ],
         "songs": [
             {
-                "songTitle": "ANTIFRAGILE",
-                "songArtist": "LE SSERAFIM"
+                "songTitle": "OVERZONE",
+                "songArtist": "SAAY"
+            },
+            {
+                "songTitle": "Nights Like This (feat. Ty Dolla $ign)",
+                "songArtist": "Kehlani, Ty Dolla $ign"
+            },
+            {
+                "songTitle": "Danger",
+                "songArtist": "TAEMIN"
             }
         ],
         "houses": [
-            "sf voguers",
+            "oakland boba bash",
             "rae class community"
         ],
         "showHouses": false
@@ -74,11 +92,20 @@
         "tags": [],
         "songs": [
             {
-                "songTitle": "",
-                "songArtist": ""
+                "songTitle": "Overseas",
+                "songArtist": "Thundercat, Zack Fox"
+            },
+            {
+                "songTitle": "Like",
+                "songArtist": "ellis, Jéja"
+            },
+            {
+                "songTitle": "PADO",
+                "songArtist": "BIBI"
             }
         ],
         "houses": [
+            "sf voguers",
             "oakland boba bash"
         ],
         "showHouses": false
@@ -89,12 +116,13 @@
         "tags": [],
         "songs": [
             {
-                "songTitle": "",
-                "songArtist": ""
+                "songTitle": "Alone With You",
+                "songArtist": "Alina Baraz"
             }
         ],
         "houses": [
-            "rae class community"
+            "rae class community",
+            "stanford + san jose poppers"
         ],
         "showHouses": false
     },
@@ -104,12 +132,40 @@
         "tags": [],
         "songs": [
             {
-                "songTitle": "",
-                "songArtist": ""
+                "songTitle": "Shirt",
+                "songArtist": "SZA"
+            },
+            {
+                "songTitle": "Monster",
+                "songArtist": "Jermaine Elliott"
             }
         ],
         "houses": [
+            "rae class community",
             "stanford + san jose poppers"
+        ],
+        "showHouses": false
+    },
+    {
+        "profileName": "Hammy O.",
+        "bio": "",
+        "tags": [],
+        "songs": [
+            {
+                "songTitle": "Outside",
+                "songArtist": "Bryson Tiller"
+            },
+            {
+                "songTitle": "Two of 'Em",
+                "songArtist": "Jazz Cartier, Buddy"
+            },
+            {
+                "songTitle": "Off The Grid",
+                "songArtist": "Kanye West"
+            }
+        ],
+        "houses": [
+            "roakland boba bash"
         ],
         "showHouses": false
     }
