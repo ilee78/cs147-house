@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, TextInput, StyleSheet, Pressable, Image } from 'react-native';
+import { SafeAreaView, Text, TextInput, StyleSheet, Pressable, Image, View, SectionList, StatusBar, FlatList} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Slider from '@react-native-community/slider';
@@ -105,8 +105,6 @@ function LocationScreen({navigation}) {
     );
 }
 
-// BRUH THIS SLIDER LOOKS GOOFY AS FUCK HAHAHAHAHAHA
-// TODO: fix the damn slider
 function TravelScreen({navigation}) {
 
     const [distance, setDistance] = useState(0);
@@ -125,7 +123,7 @@ function TravelScreen({navigation}) {
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo}/>
-                <Text style={styles.headerText}>how far are you willing to travel?</Text>
+                <Text style={styles.headerText}>how far are you willing to travel for events?</Text>
                 <Slider 
                 style={styles.slider}
                 onValueChange={(value) => distanceInputHandler(value)}
@@ -145,6 +143,98 @@ function TravelScreen({navigation}) {
     );
 }
 
+const SECTIONS = [
+  {
+    title: 'dance genres',
+    data: [
+      {
+        key: '1',
+        text: 'Item text 1',
+      },
+      {
+        key: '2',
+        text: 'Item text 2',
+      },
+
+      {
+        key: '3',
+        text: 'Item text 3',
+      },
+      {
+        key: '4',
+        text: 'Item text 4',
+      },
+      {
+        key: '5',
+        text: 'Item text 5',
+      },
+    ],
+  },
+  {
+    title: 'goals',
+    data: [
+      {
+        key: '1',
+        text: 'Item text 1',
+      },
+      {
+        key: '2',
+        text: 'Item text 2',
+      },
+
+      {
+        key: '3',
+        text: 'Item text 3',
+      },
+      {
+        key: '4',
+        text: 'Item text 4',
+      },
+      {
+        key: '5',
+        text: 'Item text 5',
+      },
+    ],
+  },
+  {
+    title: 'anything else?',
+    data: [
+      {
+        key: '1',
+        text: 'Item text 1',
+      },
+      {
+        key: '2',
+        text: 'Item text 2',
+      },
+
+      {
+        key: '3',
+        text: 'Item text 3',
+      },
+      {
+        key: '4',
+        text: 'Item text 4',
+      },
+      {
+        key: '5',
+        text: 'Item text 5',
+      },
+    ],
+  },
+];
+
+
+const ListItem = ({ item }) => {
+    return (
+      <View style={styles.item}>
+        <Pressable onPress={() => navigation.navigate("Unpacking")}>
+            <Text style={styles.itemText}>{item.text}</Text>
+        </Pressable>
+      </View>
+    );
+  };
+
 // TODO: handler
 function InterestScreen({navigation}) {
     return(
@@ -156,7 +246,36 @@ function InterestScreen({navigation}) {
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo}/>
-                <Text style={styles.headerText}>what are your interests?</Text>
+                <Text style={styles.headerText}>tell us about yourself!</Text>
+                <Text style={styles.bodyText}>choose up to 5 interests to put on your profile</Text>
+                
+                <View style={styles.container}>
+                    <StatusBar style="light" />
+                    <SafeAreaView style={{ flex: 1 }}>
+                        <SectionList
+                            contentContainerStyle={{ paddingHorizontal: 12 }}
+                            stickySectionHeadersEnabled={false}
+                            scrollEnabled={false}
+                            sections={SECTIONS}
+                            renderSectionHeader={({ section }) => (
+                                <>
+                                    <Text style={styles.sectionHeader}>{section.title}</Text>
+                                    <FlatList
+                                        horizontal
+                                        data={section.data}
+                                        renderItem={({item}) => <ListItem item={item}/> }
+                                        showsHorizontalScrollIndicator={false}
+                                    />
+                                </>
+                            )}
+                            renderItem={({ item, section }) => {
+                                return null;
+                                return <ListItem item={item} />;
+                            }}
+                        />
+                    </SafeAreaView>
+                </View>
+
                 <Pressable style={styles.button} onPress={() => navigation.navigate("Unpacking")}>
                     <Text style={styles.buttonText}>next</Text>
                 </Pressable>
@@ -222,7 +341,7 @@ const styles = StyleSheet.create({
         fontFamily: 'WorkSans-Regular',
     },
     bodyText: {
-        fontSize: 20,
+        fontSize: 16,
         color: '#61646B',
         textAlign: 'center',
         alignItems: 'center',
@@ -275,7 +394,33 @@ const styles = StyleSheet.create({
         color: 'black',
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    sectionHeader: {
+        paddingTop: 12,
+        fontSize: 18,
+        color: '#000',
+        marginTop: 20,
+        paddingHorizontal: 10,
+        textAlign: 'left',
+        fontFamily: 'WorkSans-Medium',
+    },
+    item: {
+        marginHorizontal: 6,
+        marginVertical: 10,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#C6C6C6',
+        borderRadius: 24,
+        padding: 10
+    },
+    itemText: {
+        color: 'rgba(0, 0, 0, 0.5)',
+        marginTop: 5,
+    },
 });
 
 export { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen };
