@@ -228,9 +228,7 @@ const SECTIONS = [
 const ListItem = ({ item }) => {
     return (
       <View style={styles.item}>
-        <Pressable onPress={() => navigation.navigate("Unpacking")}>
-            <Text style={styles.itemText}>{item.text}</Text>
-        </Pressable>
+        <Text style={styles.itemText}>{item.text}</Text>
       </View>
     );
   };
