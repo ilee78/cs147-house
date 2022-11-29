@@ -57,37 +57,28 @@ function HousesScreen({navigation}) {
     );
 }
 
-// TODO: stylize static header
 // TODO: three tabs of scrolling information
+// TODO: stylize static header
 function HouseProfileScreen({navigation}) {
     var key = ID;
     var joined = houseData[key].userJoined;
 
-    return(
+    // tabs data
+    const events = houseData[key].events;
 
-        <View>
-            <SafeAreaView>
-                <Pressable onPress={() => navigation.goBack()}>
-                    <BackIcon/>
-                </Pressable>
-            </SafeAreaView>
-
-            <Text>{houseData[key].houseName}</Text>
-            <Text>{houseData[key].milesAway} miles away</Text>
-            <FlatList
-                horizontal
-                data={houseData[key].tags}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item}) => <ProfileItem item={item}/> }
-            />
-        </View>
-    );
+    return null;
 }
+
+
+
 // setSelected={(title) => houseHandler(title)}
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#40187B",
+    },
+    screenBackground: {
+        color: "#40187B",
     },
     option: {
         marginHorizontal: 6,
