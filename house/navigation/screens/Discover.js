@@ -45,7 +45,8 @@ function HousesScreen({navigation}) {
     );
 }
 
-// TODO: upon change of about, events, members, keep top section fixed while changing bottom section
+// TODO: stylize static header
+// TODO: three tabs of scrolling information
 function HouseProfileScreen({navigation}) {
     var key = ID;
 
