@@ -1,5 +1,6 @@
 [
     {
+        "key": 0,
         "houseName": "sf voguers", 
         "userJoined": false, 
         "location": "San Francisco, CA", 
@@ -39,6 +40,7 @@
         ]
     }, 
     {
+        "key": 1,
         "houseName": "oakland boba bash", 
         "userJoined": false, 
         "location": "Oakland, CA", 
@@ -78,6 +80,7 @@
         ]
     },
     {
+        "key": 2,
         "houseName": "rae class community", 
         "userJoined": false, 
         "location": "San Francisco, CA", 
@@ -107,6 +110,7 @@
         ]
     },
     {
+        "key": 3,
         "houseName": "stanford + san jose poppers", 
         "userJoined": false, 
         "location": "Palo Alto, CA", 
