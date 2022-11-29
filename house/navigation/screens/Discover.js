@@ -5,7 +5,24 @@ import BackIcon from '../../assets/back.js';
 
 
 // Global variable - bad style lol, change later
-var HOUSE = "";
+var ID = "";
+
+const BrowseItem = ({ item }) => {
+    return (
+      <View style={styles.browseTag}>
+        <Text style={styles.tagText}>{item}</Text>   
+      </View>
+    );
+};
+
+const ProfileItem = ({ item }) => {
+    return (
+      <View style={styles.profileTag}>
+        <Text style={styles.tagText}>{item}</Text>   
+      </View>
+    );
+};
+
 
 function HousesScreen({navigation}) {
     const [selected, setSelected] = useState('');
@@ -23,21 +40,16 @@ function HousesScreen({navigation}) {
                 showsVerticalScrollIndicator={false}
                 renderItem={({item}) =>
                 <View >
-                    <Pressable style={styles.button} onPress={() => {navigation.navigate('HouseProfile'); ID = item.key}}>
+                    <Pressable style={styles.option} onPress={() => {navigation.navigate('HouseProfile'); ID = item.key}}>
                         <Text> {item.houseName} </Text>
-                    
+                        <Text>{item.milesAway} miles away </Text>
+                        <FlatList 
+                            horizontal
+                            data={item.tags}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({item}) => <BrowseItem item={item}/> }
+                        />
                     </Pressable>
-                    <Text>{item.milesAway} miles away </Text>
-                    <FlatList
-                        horizontal
-                        data={item.tags}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({item}) =>
-                        <View >
-                            <Text>{item} </Text>
-                        </View>
-                        }
-                    />
                 </View>
                 }
             />
@@ -49,6 +61,7 @@ function HousesScreen({navigation}) {
 // TODO: three tabs of scrolling information
 function HouseProfileScreen({navigation}) {
     var key = ID;
+    var joined = houseData[key].userJoined;
 
     return(
 
@@ -59,25 +72,24 @@ function HouseProfileScreen({navigation}) {
                 </Pressable>
             </SafeAreaView>
 
-            <Text>profile for</Text>
             <Text>{houseData[key].houseName}</Text>
             <Text>{houseData[key].milesAway} miles away</Text>
             <FlatList
                 horizontal
                 data={houseData[key].tags}
                 showsVerticalScrollIndicator={false}
-                renderItem={({item}) =>
-                <View >
-                    <Text>{item} </Text>
-                </View>
-                }
+                renderItem={({item}) => <ProfileItem item={item}/> }
             />
         </View>
     );
 }
 // setSelected={(title) => houseHandler(title)}
 const styles = StyleSheet.create({
-    button: {
+    container: {
+        flex: 1,
+        backgroundColor: "#40187B",
+    },
+    option: {
         marginHorizontal: 6,
         marginVertical: 10,
         backgroundColor: '#fff',
@@ -86,6 +98,38 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         padding: 10,
     },
+    button: {
+        height: 45,
+        paddingVertical: 16,
+        paddingHorizontal: 12, 
+        fontSize: 18,
+        color: "#FDC765",
+        borderRadius: 24,
+        borderWidth: 1,
+    },
+    browseTag: {
+        marginHorizontal: 12,
+        marginVertical: 8,
+        backgroundColor: '#FFEBC6',
+        borderWidth: 1,
+        borderColor: '#FFEBC6',
+        borderRadius: 24,
+        padding: 10
+    },
+    profileTag: {
+        marginHorizontal: 6,
+        marginVertical: 8,
+        backgroundColor: '#FFEBC6',
+        borderWidth: 1,
+        borderColor: '#FFEBC6',
+        borderRadius: 24,
+        padding: 10
+    },
+    tagText: {
+        textAlign: 'center',
+        fontSize: 12,
+        color: "000",
+    }
 });
 
 export { HousesScreen, HouseProfileScreen};
