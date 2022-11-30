@@ -3,7 +3,7 @@ import { SafeAreaView, Text, Button, TextInput, StyleSheet, Pressable, Image, Vi
 import houseData from './house-data.json';
 import BackIcon from '../../assets/back.js';
 
-
+// just placeholder, not active anywhere currently
 <SafeAreaView style={styles.screenBackground}>
             <SafeAreaView>
                 <Pressable onPress={() => navigation.goBack()}>
