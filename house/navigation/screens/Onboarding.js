@@ -8,6 +8,7 @@ import { SvgUri } from 'react-native-svg';
 import Logo from '../../assets/logo.png';
 import BackIcon from '../../assets/back.js';
 
+import styles from '../../styles.js'
 // Global variable - bad style lol, change later
 var USERNAME = '';
 var LOCATION = '';
@@ -566,5 +567,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
 export { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen };

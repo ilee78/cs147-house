@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from "react";
 import Svg, { G, Path } from 'react-native-svg';
 
 function SvgComponent(props) {
