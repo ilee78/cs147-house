@@ -3,7 +3,6 @@ import { SafeAreaView, Text, TextInput, StyleSheet, Pressable, Image, View, Sect
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Slider from '@react-native-community/slider';
-//import * as RNFS from 'react-native-fs';
 import { SvgUri } from 'react-native-svg';
 import Logo from '../../assets/logo.png';
 import BackIcon from '../../assets/back.js';
