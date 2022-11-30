@@ -318,7 +318,7 @@ const ListItem = ({ item }) => {
 
 // TODO: handler
 function InterestScreen({navigation}) {
-    
+
     var tags = [];
 
     function tagsInputHandler() {
@@ -568,5 +568,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
 export { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen };
