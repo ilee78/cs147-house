@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, SafeAreaView, Text, StyleSheet, Pressable, Image } from 'react-native';
-//import EmptyNeighborhoodGraphic from '../../assets/emptyNeighborhood.png';
+import EmptyNeighborhoodGraphic from '../../assets/boxesGraphic.png';
 
 function Neighborhood({navigation}) {
     return(
         <SafeAreaView style={styles.background}>
+            <SafeAreaView>
+
+            </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Text style={styles.whiteHeader}>it's empty in here.</Text>
                 <Pressable style={styles.browseHousesButton}>
                     <Text style={styles.buttonText}>browse houses</Text>
                 </Pressable>
             </SafeAreaView>
-            <Image style={styles.picture} source='../../assets/emptyNeighborhood.png'/>
+            <Image style={styles.picture} source={EmptyNeighborhoodGraphic}/>
         </SafeAreaView>
     );
 }
@@ -28,6 +31,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#40187B',
         justifyContent: 'center',
+    },
+    neighborhoodHeading: {
+        height: 100
     },
     browseHousesButton: {
         backgroundColor: '#FDC765',
@@ -53,7 +59,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     picture: {
-        
+        width: 213,
+        height: 132,
+        justifyContent: 'flex-end',
+        position: 'absolute',
+        top: 600,
+        left: 175
     }
 });
 
