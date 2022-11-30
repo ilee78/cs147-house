@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, Button, TextInput, StyleSheet, Pressable, Image, View, SectionList, StatusBar, FlatList} from 'react-native';
+import { SafeAreaView, Text, Button, TextInput, StyleSheet, Pressable, Image, View, SectionList, StatusBar, FlatList, useWindowDimensions} from 'react-native';
 import houseData from './house-data.json';
 import BackIcon from '../../assets/back.js';
+import { TabView, SceneMap } from 'react-native-tab-view';
 
 
 // Global variable - bad style lol, change later
@@ -57,6 +58,19 @@ function HousesScreen({navigation}) {
     );
 }
 
+const FirstRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+);
+
+const SecondRoute = () => (
+    <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+);
+
+const renderScene = SceneMap({
+    first: FirstRoute,
+    second: SecondRoute,
+});
+
 // TODO: three tabs of scrolling information
 // TODO: stylize static header
 function HouseProfileScreen({navigation}) {
@@ -64,9 +78,32 @@ function HouseProfileScreen({navigation}) {
     var joined = houseData[key].userJoined;
 
     // tabs data
-    const events = houseData[key].events;
+    const layout = useWindowDimensions();
 
-    return null;
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+        { key: 'first', title: 'First' },
+        { key: 'second', title: 'Second' },
+    ]);
+
+    return (
+        <SafeAreaView>
+            <Pressable onPress={() => navigation.goBack()}>
+                <BackIcon/>
+            </Pressable>
+            <View> 
+                <Text>{houseData[key].houseName}</Text>
+            </View>
+
+
+            <TabView
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                initialLayout={{ width: layout.width }}
+            />
+        </SafeAreaView>
+    );
 }
 
 
