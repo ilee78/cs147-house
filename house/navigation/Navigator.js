@@ -54,7 +54,7 @@ const Tab = createBottomTabNavigator();
 function Tabs() {
     return(
         <Tab.Navigator screenOptions={{
-            headerShown: true,
+            headerShown: false,
             tabBarShowLabel: false,
             tabBarStyle: {backgroundColor: '#EFEFF0'},
             tabBarInactiveTintColor: '#707175',
@@ -75,7 +75,7 @@ function Tabs() {
             }}/>
             <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({color, size}) => (
-                    <ProfileIcon color={color}/>
+                    <ProfileIcon size="24" color={color}/>
                 )
             }}/>
 
