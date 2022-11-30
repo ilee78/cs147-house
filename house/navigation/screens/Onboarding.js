@@ -6,11 +6,8 @@ import Slider from '@react-native-community/slider';
 import { SvgUri } from 'react-native-svg';
 import Logo from '../../assets/logo.png';
 import BackIcon from '../../assets/back.js';
+import './Global.js';
 
-// Global variable - bad style lol, change later
-var USERNAME = '';
-var LOCATION = '';
-var DISTANCE = 0;
 
 // TODO: logo as SVG (svg -> js)
 // TODO: progress bars for all the screens 
@@ -85,7 +82,6 @@ function NameScreen({navigation}) {
 
 // https://github.com/danish1658/react-native-dropdown-select-list 
 function LocationScreen({navigation}) {
-    
     const [selected, setSelected] = useState('');
     function locationInputHandler(location) {
         setSelected(location);
@@ -146,7 +142,6 @@ function LocationScreen({navigation}) {
 }
 
 function TravelScreen({navigation}) {
-
     const [distance, setDistance] = useState(0);
 
     function distanceInputHandler(dist) {
@@ -323,6 +318,20 @@ const ListItem = ({ item }) => {
 
 // TODO: handler
 function InterestScreen({navigation}) {
+
+    var tags = [];
+
+    function tagsInputHandler() {
+        for (let i = 0; i < SECTIONS.length; i++) {
+            for (let j = 0; j < SECTIONS[i].data.length; j++) {
+                if (SECTIONS[i].data[j].selected) {
+                    tags.push(SECTIONS[i].data[j].text)
+                }
+            }
+        }
+        TAGS = tags;
+    }
+
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.topPanel}>
@@ -360,8 +369,9 @@ function InterestScreen({navigation}) {
                         />
                     </SafeAreaView>
                 </View>
-                    <Pressable style={styles.button} onPress={() => navigation.navigate("Unpacking")}>
+                    <Pressable style={styles.button} onPress={() => {navigation.navigate("Unpacking"); tagsInputHandler()}} >
                         <Text style={styles.buttonText}>next</Text>
+                        
                     </Pressable>
             </SafeAreaView>
             <SafeAreaView style={styles.bottomPanel}>
@@ -390,12 +400,17 @@ function InterestScreen({navigation}) {
 }
 
 function UnpackingScreen({navigation}) {
+    console.log({USERNAME})
+    console.log({LOCATION})
+    console.log({DISTANCE})
+    console.log({TAGS})
+
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo}/>
                 <Text style={styles.headerText}>unpacking...</Text>
-                <Pressable style={styles.button} onPress={() => { navigation.navigate("Tabs");}}>
+                <Pressable style={styles.button} onPress={() => { navigation.navigate("Tabs")}}>
                     <Text style={styles.buttonText}>next</Text>
                 </Pressable>
             </SafeAreaView>
