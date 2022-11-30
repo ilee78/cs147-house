@@ -10,7 +10,12 @@ function Profile({navigation}) {
                 <Pressable style={styles.profileBackground}>
                     <ProfileIcon style={styles.profileIcon} color='#FFFFFF' size='58'/>
                 </Pressable>
-                <Text style={styles.name}>john d.</Text> 
+                <SafeAreaView style={styles.namePanel}>
+                    <Text style={styles.name}>john d.</Text> 
+                    <Pressable style={styles.editIcon}>
+                        <EditIcon />
+                    </Pressable>
+                </SafeAreaView>
                 <Text style={styles.bioText}>this is a bio. it can be short or long, whatever you like!</Text>
             </SafeAreaView>
             <SafeAreaView style={styles.tagPanel}>
@@ -32,6 +37,9 @@ const styles = StyleSheet.create({
         marginTop: 51,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    namePanel: {
+        flexDirection: 'row',
     },
     tagPanel: {
         //flex: 1,
@@ -55,7 +63,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 15,
-        marginBottom: 5
+        marginBottom: 5,
+    },
+    editIcon: {
+        paddingTop: 20,
+        // this looks jank fix it later
     },
     tag: {
         fontSize: 16,
@@ -93,6 +105,8 @@ const styles = StyleSheet.create({
         marginTop: 15,
         maxWidth: '80%',
         minWidth: '80%', 
+        //flexShrink: 1,
+        flexWrap: 'wrap'
     }
 });
 
