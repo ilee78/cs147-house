@@ -6,7 +6,9 @@ function Neighborhood({navigation}) {
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView>
+                <Pressable style={styles.menuIcon}>
 
+                </Pressable>
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Text style={styles.whiteHeader}>it's empty in here.</Text>
@@ -14,7 +16,7 @@ function Neighborhood({navigation}) {
                     <Text style={styles.buttonText}>browse houses</Text>
                 </Pressable>
             </SafeAreaView>
-            <Image style={styles.picture} source={EmptyNeighborhoodGraphic}/>
+            <Image style={styles.boxesImage} source={EmptyNeighborhoodGraphic}/>
         </SafeAreaView>
     );
 }
@@ -58,13 +60,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    picture: {
+    boxesImage: {
         width: 213,
         height: 132,
         justifyContent: 'flex-end',
         position: 'absolute',
-        top: 600,
-        left: 175
+        bottom: 40,
+        right: 40
+    },
+    menuIcon: {
+
     }
 });
 
