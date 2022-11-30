@@ -3,6 +3,7 @@ import { SafeAreaView, Text, TextInput, StyleSheet, Pressable, Image, View, Sect
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Slider from '@react-native-community/slider';
+import * as RNFS from 'react-native-fs';
 import { SvgUri } from 'react-native-svg';
 import Logo from '../../assets/logo.png';
 import BackIcon from '../../assets/back.js';
@@ -391,23 +392,23 @@ function InterestScreen({navigation}) {
 
 function UnpackingScreen({navigation}) {
 
-    // function writeUserInfo() {
-    //     var RNFS = require('react-native-fs');
-    //     let info = {
-    //         name: USERNAME,
-    //         location: LOCATION,
-    //         distance: DISTANCE,
-    //         interests: SECTIONS,
-    //     };
-    //     RNFS.writeFile('../../user-data.json', info);
-    // }
+    function writeUserInfo() {
+        let info = {
+            name: USERNAME,
+            location: LOCATION,
+            distance: DISTANCE,
+            interests: SECTIONS,
+        };
+        RNFS.writeFile('../../user-data.json', info);
+        
+    }
 
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo}/>
                 <Text style={styles.headerText}>unpacking...</Text>
-                <Pressable style={styles.button} onPress={() => { navigation.navigate("Tabs");}}>
+                <Pressable style={styles.button} onPress={() => { writeUserInfo(); navigation.navigate("Tabs");}}>
                     <Text style={styles.buttonText}>next</Text>
                 </Pressable>
             </SafeAreaView>
