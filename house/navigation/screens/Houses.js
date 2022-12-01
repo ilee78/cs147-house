@@ -3,14 +3,16 @@ import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 
 function Houses({navigation}) {
     return(
-        <SafeAreaView>
-            <Text style={styles.container}>houses screen</Text>
+        <SafeAreaView style={styles.container}>
+            <Text>houses screen</Text>
         </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: 'white',
         fontSize: 20,
         fontFamily: 'WorkSans-Regular',
     }

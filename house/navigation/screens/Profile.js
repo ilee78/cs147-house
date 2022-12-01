@@ -1,46 +1,138 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
+import { View, SafeAreaView, Text, TextInput, StyleSheet, Pressable, ScrollView, FlatList, SectionList } from 'react-native';
 import ProfileIcon from './../../assets/profile-icon.js';
 import EditIcon from './../../assets/edit.js';
 import SettingsIcon from './../../assets/gear.js';
+import HouseIcon from './../../assets/house.js';
+import MusicIcon from './../../assets/music.js';
+import BackIcon from "../../assets/back.js";
+import PlusIcon from "../../assets/plus.js"
 
-function Profile({navigation}) {
+
+/* TODO
+ *  add + icon back to tags
+ */
+
+function ProfileScreen({navigation}) {
+
     return(
-        <SafeAreaView style={styles.background}>
-            <ScrollView>
-                <Pressable style={styles.settingsIcon}>
-                    <SettingsIcon color="#61646B" size="36" />
+        <ScrollView style={styles.background}>
+                <Pressable style={styles.settingsIcon} onPress={() => navigation.navigate("Settings")}>
+                    <SettingsIcon color="#61646B" size="24" />
                 </Pressable>
                 <SafeAreaView style={styles.profilePanel}>
                     <Pressable style={styles.profileBackground}>
                         <ProfileIcon style={styles.profileIcon} color='#FFFFFF' size='58'/>
                     </Pressable>
                     <SafeAreaView style={styles.namePanel}>
-                        <Text style={styles.name}>john d.</Text> 
+                        <Text style={styles.name}>{global.USERNAME}</Text> 
                         <Pressable style={styles.editIcon}>
-                            <EditIcon color="#61646B"/>
+                            <EditIcon color="#61646B" size="24" onPress={() => navigation.navigate("EditProfile")}/>
                         </Pressable>
                     </SafeAreaView>
-                    <Text style={styles.bioText}>this is a bio. it can be short or long, whatever you like! </Text>
+                    <TextInput id='bioText' style={styles.bioText}></TextInput>
                 </SafeAreaView>
                 <SafeAreaView style={styles.tagPanel}>
                     <Text style={styles.sectionHeading}>tags</Text>
+                    <FlatList
+                        horizontal
+                        data={global.TAGS}
+                        renderItem={({item}) => <Tags item={item}/> }
+                        showsHorizontalScrollIndicator={false}
+                    />
                 </SafeAreaView>
                 <SafeAreaView style={styles.housesPanel}>
                     <Text style={styles.sectionHeading}>my houses</Text>
+                    <FlatList
+                        horizontal
+                        data={global.HOUSES}
+                        renderItem={({item}) => <Houses item={item}/> }
+                        showsHorizontalScrollIndicator={false}
+                    />
                 </SafeAreaView>
                 <SafeAreaView style={styles.songsPanel}>
                     <Text style={styles.sectionHeading}>songs i'm listening to</Text>
+                    <Songs />
                 </SafeAreaView>
-            </ScrollView>
+        </ScrollView>
+    );
+}
+
+function EditProfileScreen({navigation}) {
+    return(
+        <SafeAreaView style={styles.background}>
+            <SafeAreaView style={styles.topPanel}>
+                <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
+                    <BackIcon />
+                </Pressable>
+            </SafeAreaView>
         </SafeAreaView>
     );
 }
+
+function SettingsScreen({navigation}) {
+    return(
+        <SafeAreaView style={styles.background}>
+            <SafeAreaView style={styles.topPanel}>
+                <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
+                    <BackIcon />
+                </Pressable>
+            </SafeAreaView>
+        </SafeAreaView>
+    );
+}
+
+const Tags = ({ item }) => {
+    return (
+        <View style={item == "+" ? styles.addTag : styles.tag}>
+            <Pressable>
+                <Text style={styles.tagText}>{item}</Text>   
+            </Pressable>
+        </View>
+    );
+};
+
+const Houses = ({ item }) => {
+    return (
+        <View style={styles.house}>
+            <Pressable>
+                <Text style={{fontSize:40, color: 'white', textAlign: 'center'}}>+</Text>
+                <Text style={styles.houseText}>{item}</Text>
+            </Pressable>
+        </View>
+    );
+}
+
+const Songs = () => {
+
+    function RenderSongs() {
+        return global.SONGS.map((item) => {
+            return(    
+                <View style={styles.songs}>
+                    <MusicIcon color="#40187B" size="24"/>
+                    <Text style={styles.songNameText}>{item.song}
+                        <Text style={styles.songArtistText}> {item.artist}</Text>
+                    </Text>
+                </View>
+            );
+        });
+    }
+
+    return(
+        <RenderSongs/>
+    );
+}
+
 
 const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: 'white'
+    },
+    topPanel: {
+        flex: 1,
+        backgroundColor: "#FFFFFF",
+        textAlign: "left",
     },
     profilePanel: {
         //flex: 1, comment this back in after we add in more panels
@@ -52,15 +144,21 @@ const styles = StyleSheet.create({
     },
     tagPanel: {
         flex: 1,
-        marginTop: 14
+        marginTop: 14,
+        marginLeft: 30,
+        marginRight: 30,
     },
     housesPanel: {
         flex: 1,
-        marginTop: 14
+        marginTop: 14,
+        marginLeft: 30,
+        marginRight: 30,
     },
     songsPanel: {
         flex: 1,
-        marginTop: 14
+        marginTop: 14,
+        marginLeft: 30,
+        marginRight: 30,
     },
     settingsIcon: {
         alignSelf: 'flex-end',
@@ -93,17 +191,75 @@ const styles = StyleSheet.create({
         // THIS IS SO JANK
     },
     tag: {
+        marginHorizontal: 6,
+        marginVertical: 10,
+        backgroundColor: '#FFEBC6',
+        borderWidth: 1,
+        borderColor: '#FFEBC6',
+        borderRadius: 24,
+        padding: 10,
+    },
+    addTag: {
+        marginHorizontal: 6,
+        marginVertical: 10,
+        backgroundColor: '#FDC765',
+        borderWidth: 1,
+        borderColor: '#FDC765',
+        borderRadius: 100,
+        padding: 10,
+        paddingHorizontal: 15,
+    },
+    tagText: {
         fontSize: 16,
         fontFamily: 'WorkSans-Medium',
         justifyContent: 'center',
-        backgroundColor: '#FFEBC6',
     },
     sectionHeading: {
         fontSize: 24,
         fontFamily: 'WorkSans-Regular',
         textAlign: 'left',
         alignSelf: 'flex-start',
-        marginLeft: 30
+    },
+    house: {
+        marginHorizontal: 6,
+        marginVertical: 10,
+        backgroundColor: '#40187B',
+        borderWidth: 1,
+        borderColor: '#40187B',
+        borderRadius: 5,
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        maxWidth: 94,
+        minWidth: 94,
+        minHeight: 120,
+        maxHeight: 120
+    },
+    houseText: {
+        textAlign: 'center',
+        color: 'white',
+        fontFamily: 'WorkSans-Regular',
+        paddingTop: 8,
+        fontSize: 16
+    },
+    plusIcon : {
+        margin: 30,
+    },
+    songs: {
+        flexDirection: 'row',
+        paddingTop: 12,
+        paddingBottom: 12
+    },
+    songNameText: {
+        color: '#61646B',
+        fontSize: 16,
+        fontFamily: 'WorkSans-Medium',
+        paddingLeft: 15
+    },
+    songArtistText: {
+        color: '#61646B',
+        fontsize: 16,
+        fontFamily: 'WorkSans-Regular'
     },
     browseHousesButton: {
         backgroundColor: '#FDC765',
@@ -131,8 +287,14 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginLeft: 30,
         marginRight: 30,
-        flexWrap: 'wrap'
-    }
+        marginLeft: 30,
+        flexWrap: 'wrap',
+        alignItems: 'stretch',
+        minWidth: '80%' // TODO: change this to stretch 
+    },
+    backIcon: {
+        margin: 20,
+    },
 });
 
-export default Profile;
+export { ProfileScreen, EditProfileScreen, SettingsScreen };

@@ -7,9 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
-import Neighborhood from './screens/Neighborhood';
-import Houses from './screens/Houses';
-import Profile from './screens/Profile';
+import NeighborhoodScreen from './screens/Neighborhood';
+import HousesScreen from './screens/Houses';
+import { ProfileScreen, EditProfileScreen, SettingsScreen } from './screens/Profile';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
 // Icons
@@ -30,7 +30,9 @@ import ProfileIcon from '../assets/profile-icon.js'
  *      - Tabs (TabNavigator)
  *          - Neighborhood  -- FYI: each of these tabs will need a stack navigator
  *          - Public Houses
- *          - Profile
+ *          - Profile (StackNavigator)
+ *              - Edit Profile
+ *              - Settings
  */
 
 const MainStack = createNativeStackNavigator();
@@ -39,10 +41,7 @@ function Navigator() {
     return(
         <NavigationContainer>
             <MainStack.Navigator screenOptions={{headerShown: false}}>
-                <MainStack.Screen 
-                name="Onboarding"
-                component={Onboarding}
-                />
+                <MainStack.Screen name="Onboarding" component={Onboarding} />
                 <MainStack.Screen name="Tabs" component={Tabs}/>
             </MainStack.Navigator>
         </NavigationContainer>
@@ -63,12 +62,12 @@ function Tabs() {
             tabBarInactiveBackgroundColor: '#EFEFF0',
         }}>
 
-            <Tab.Screen name="Neighborhood" component={Neighborhood} options={{
+            <Tab.Screen name="Neighborhood" component={NeighborhoodScreen} options={{
                 tabBarIcon: ({color, size}) => (
                     <NeighborhoodIcon color={color} />
                 )
             }}/>
-            <Tab.Screen name="Houses" component={Houses} options={{
+            <Tab.Screen name="Houses" component={HousesScreen} options={{
                 tabBarIcon: ({color, size}) => (
                     <HousesIcon color={color}/>
                 )
@@ -95,6 +94,18 @@ function Onboarding({navigation}) {
             <OnboardingStack.Screen name="Interest" component={InterestScreen} />
             <OnboardingStack.Screen name="Unpacking" component={UnpackingScreen} />
         </OnboardingStack.Navigator>
+    );
+}
+
+const ProfileStack = createNativeStackNavigator();
+
+function Profile({navigation}) {
+    return(
+        <ProfileStack.Navigator screenOptions={{headerShown: false}}>
+            <ProfileStack.Screen name="UserProfile" component={ProfileScreen}/>
+            <ProfileStack.Screen name="EditProfile" component={EditProfileScreen}/>
+            <ProfileStack.Screen name="Settings" component={SettingsScreen}/>
+        </ProfileStack.Navigator>
     );
 }
 
