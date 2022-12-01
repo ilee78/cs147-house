@@ -316,7 +316,7 @@ const ListItem = ({ item }) => {
     );
 };
 
-// TODO: handler
+
 function InterestScreen({navigation}) {
 
     var tags = [];
