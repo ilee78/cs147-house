@@ -6,10 +6,9 @@ import Slider from "@react-native-community/slider";
 import { SvgUri } from "react-native-svg";
 import Logo from "../../assets/logo.png";
 import BackIcon from "../../assets/back.js";
+import { createStore } from 'state-pool';
 import "./Global.js";
 
-// TODO: logo as SVG (svg -> js)
-// TODO: progress bars for all the screens
 function WelcomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.background}>
