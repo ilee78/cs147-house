@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, SafeAreaView, Text, StyleSheet } from 'react-native';
 
-function HousesScreen({navigation}) {
+function BrowsingScreen({navigation}) {
     return(
         <SafeAreaView style={styles.container}>
             <Text>houses screen</Text>
@@ -18,4 +18,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export { HousesScreen };
+export { BrowsingScreen };

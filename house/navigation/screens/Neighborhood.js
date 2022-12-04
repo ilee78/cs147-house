@@ -11,6 +11,9 @@ import LinesIcon from '../../assets/lines.png';
 import HouseMint from '../../assets/house-mint.png';
 import HousePink from '../../assets/house-pink.png';
 import HouseYellow from '../../assets/house-yellow.png';
+import OwnedHouseMint from '../../assets/ownedHouse-Mint.png';
+import OwnedHousePink from '../../assets/ownedHouse-Pink.png';
+import OwnedHouseYellow from '../../assets/ownedHouse-Yellow.png';
 import Bulletin from '../../assets/bulletinBoard.png'
 import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
@@ -84,6 +87,16 @@ const UserHouses = ({ item }) => {
 };
 
 const HouseIllustration = ({ item }) => {
+    if (global.OWNEDHOUSES.includes(item)) {
+        switch (HouseData[item].color) {
+            case 'yellow':
+                return (<Image style={styles.houseIllustration} source={OwnedHouseYellow}></Image>);
+            case 'pink':
+                return (<Image style={styles.houseIllustration} source={OwnedHousePink}></Image>);
+            case 'mint':
+                return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
+        }
+    }
     switch (HouseData[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);

@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
 import { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
-import { HousesScreen } from './screens/Houses';
+import { BrowsingScreen } from './screens/Houses';
 import { ProfileScreen, EditProfileScreen, SettingsScreen } from './screens/Profile';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
@@ -43,7 +43,7 @@ function Navigator() {
             <MainStack.Navigator screenOptions={{headerShown: false}}>
                 <MainStack.Screen name="Onboarding" component={Onboarding} />
                 <MainStack.Screen name="Tabs" component={Tabs}/>
-                <MainStack.Screen name="Houses" component={HousesScreen}/>
+                <MainStack.Screen name="Houses" component={BrowsingScreen}/>
                 <MainStack.Screen name="EmptyNeighborhood" component={EmptyNeighborhoodScreen}/>
             </MainStack.Navigator>
         </NavigationContainer>
@@ -114,7 +114,7 @@ const HousesStack = createNativeStackNavigator();
 function Houses({navigation}) {
     return(
         <HousesStack.Navigator screenOptions={{headerShown: false}}>
-            <HousesStack.Screen name="Houses" component={HousesScreen}/>
+            <HousesStack.Screen name="Browse" component={BrowsingScreen}/>
         </HousesStack.Navigator>
     );
 }
