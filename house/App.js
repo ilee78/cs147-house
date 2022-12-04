@@ -17,6 +17,7 @@ export default function App() {
     'WorkSans-Medium': require('./assets/fonts/WorkSans-Medium.ttf'),
     'WorkSans-MediumItalic': require('./assets/fonts/WorkSans-MediumItalic.ttf'),
     'WorkSans-Bold': require('./assets/fonts/WorkSans-Bold.ttf'),
+    'WorkSans-Italic': require('./assets/fonts/WorkSans-Italic.ttf'),
   })
 
   const onLayoutRootView = useCallback(async () => {

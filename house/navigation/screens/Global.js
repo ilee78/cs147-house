@@ -7,9 +7,10 @@
 global.USERNAME = '';
 global.LOCATION = '';
 global.DISTANCE = 0;
-global.BIO = '';
+global.BIO = 'add a bio';
 global.TAGS = [];
 global.HOUSES = ["add a house"];
-global.SONGS = [ { song: "juice", artist: "brb." }, { song: "Alone with You", artist: "Alina Baraz" }, { song: "Killing Me", artist: "Omar Apollo" }];
+//global.SONGS = [ { key: "0", song: "juice", artist: "brb." }, { key: "1", song: "Alone with You", artist: "Alina Baraz" }, { key: "2", song: "Killing Me", artist: "Omar Apollo" }];
+global.SONGS = [];
 
 //export {USERNAME, LOCATION, DISTANCE, TAGS};
