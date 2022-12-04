@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     bulletinPanel: {
         alignItems: 'center',
         marginTop: 25,
+        marginBottom: 5,
     },
     buttonText: {
         fontSize: 24,
@@ -168,8 +169,9 @@ const styles = StyleSheet.create({
     houseDisplay: {
         width: '30%',
         marginHorizontal: '10%',
-        marginVertical: 10,
+        marginVertical: 8,
         justifyContent: 'flex-end',
+        paddingVertical: 5,
     },
     houseIllustration: {
         width: 130,
@@ -179,9 +181,9 @@ const styles = StyleSheet.create({
     houseNameContainer: {
         justifyContent: 'flex-end',
         alignItems: 'center',
+        bottom: 5
     },
     houseNameText: {
-        bottom: 10,
         fontSize: 20,
         color: 'white',
         textAlign: 'center',
