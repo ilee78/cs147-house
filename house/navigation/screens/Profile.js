@@ -79,7 +79,7 @@ function EditProfileScreen({navigation}) {
     return(
         <SafeAreaView style={editStyles.background}>
             <SafeAreaView style={editStyles.topPanel}>
-                <Pressable style={editStyles.backIcon} onPress={navigation.goBack()}>
+                <Pressable style={editStyles.backIcon} onPress={() => navigation.goBack()}>
                     <BackIcon color='#000000'/>
                 </Pressable>
             </SafeAreaView>
@@ -211,7 +211,7 @@ const SECTIONS = [
       <SafeAreaView style={styles.background}>
         <SafeAreaView style={styles.topPanel}>
           <Pressable style={styles.backIcon} onPress={() => {tagsInputHandler(); navigation.goBack();}}>
-            <BackIcon />
+            <BackIcon color='black'/>
           </Pressable>
         </SafeAreaView>
         <SafeAreaView style={styles.contentPanel}>

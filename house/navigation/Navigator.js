@@ -12,6 +12,9 @@ import { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen } from 
 import { BrowsingScreen, HouseLandingScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
+// Global vars
+import Store from './../Store';
+
 // Icons
 import NeighborhoodIcon from '../assets/neighborhood-icon.js';
 import HousesIcon from '../assets/houses-icon.js'
@@ -54,6 +57,8 @@ function Navigator(props) {
 const Tab = createBottomTabNavigator();
 
 function Tabs() {
+    const [user, ,updateUser] = Store.useState("user");
+
     return(
         <Tab.Navigator screenOptions={{
             headerShown: false,
@@ -64,7 +69,7 @@ function Tabs() {
             tabBarActiveBackgroundColor: '#DEDEDE',
             tabBarInactiveBackgroundColor: '#EFEFF0',
         }}>
-            <Tab.Screen name="Neighborhood" component={global.HOUSES.length == 0 ? EmptyNeighborhoodScreen : UserNeighborhood} options={{
+            <Tab.Screen name="Neighborhood" component={user.houses.length == 0 ? EmptyNeighborhoodScreen : UserNeighborhood} options={{
                 tabBarIcon: ({color, size}) => (
                     <NeighborhoodIcon color={color} />
                 )
