@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 
 // Components
 import Navigator from './navigation/Navigator';
+import AppContext from './components/AppContext';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

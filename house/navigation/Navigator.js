@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { SvgUri } from 'react-native-svg';
 
@@ -7,9 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
+import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen } from './screens/Profile';
 import { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
 import { BrowsingScreen, HouseLandingScreen } from './screens/Houses';
-import { ProfileScreen, EditProfileScreen, SettingsScreen } from './screens/Profile';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
 // Icons
@@ -32,12 +32,13 @@ import ProfileIcon from '../assets/profile-icon.js'
  *          - Public Houses
  *          - Profile (StackNavigator)
  *              - Edit Profile
+ *              - Edit Tags
  *              - Settings
  */
 
 const MainStack = createNativeStackNavigator();
 
-function Navigator() {
+function Navigator(props) {
     return(
         <NavigationContainer>
             <MainStack.Navigator screenOptions={{headerShown: false}}>
@@ -128,6 +129,7 @@ function Profile({navigation}) {
         <ProfileStack.Navigator screenOptions={{headerShown: false}}>
             <ProfileStack.Screen name="UserProfile" component={ProfileScreen}/>
             <ProfileStack.Screen name="EditProfile" component={EditProfileScreen}/>
+            <ProfileStack.Screen name="EditTags" component={EditTagsScreen}/>
             <ProfileStack.Screen name="Settings" component={SettingsScreen}/>
         </ProfileStack.Navigator>
     );
