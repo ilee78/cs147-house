@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { SafeAreaView, Text, TextInput, StyleSheet, Pressable, Image, View, SectionList, StatusBar, FlatList } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SelectList } from "react-native-dropdown-select-list";
@@ -6,8 +6,8 @@ import Slider from "@react-native-community/slider";
 import { SvgUri } from "react-native-svg";
 import Logo from "../../assets/logo.png";
 import BackIcon from "../../assets/back.js";
-import { createStore } from 'state-pool';
-import "./Global.js";
+import Store from './../../Store';
+
 
 function WelcomeScreen({ navigation }) {
   return (
@@ -33,11 +33,10 @@ function WelcomeScreen({ navigation }) {
 }
 
 function NameScreen({ navigation }) {
-  const [username, setUsername] = useState("");
-  function nameInputHandler(name) {
-    setUsername(name);
-    USERNAME = name;
-    global.USERNAME = name;
+
+  const [user, ,updateUser] = Store.useState("user");
+  const updateName = (name) => {
+    updateUser(user => { user.username = name});
   }
 
   return (
@@ -53,7 +52,7 @@ function NameScreen({ navigation }) {
         <TextInput
           style={styles.textInput}
           placeholder="enter name..."
-          onChangeText={(name) => nameInputHandler(name)}
+          onChangeText={(name) => updateName(name)}
         />
         <Pressable
           style={styles.button}
@@ -93,11 +92,10 @@ function NameScreen({ navigation }) {
 
 // https://github.com/danish1658/react-native-dropdown-select-list
 function LocationScreen({ navigation }) {
-  const [selected, setSelected] = useState("");
-  function locationInputHandler(location) {
-    setSelected(location);
-    //LOCATION = location;
-    global.LOCATION = location;
+
+  const [user, ,updateUser] = Store.useState("user");
+  const updateLocation = (location) => {
+    updateUser(user => { user.location = location});
   }
 
   const data = [{ key: "1", value: "San Francisco, CA" }];
@@ -113,7 +111,7 @@ function LocationScreen({ navigation }) {
         <Image style={styles.logo} source={Logo} />
         <Text style={styles.headerText}>
           hi
-          <Text style={styles.houseText}> {USERNAME}</Text>! where are you
+          <Text style={styles.houseText}> {user.username}</Text>! where are you
           based?
         </Text>
         <SelectList
@@ -121,7 +119,7 @@ function LocationScreen({ navigation }) {
           placeholder="search locations..."
           fontFamily="WorkSans-MediumItalic"
           buttonStyle={styles.textInput}
-          setSelected={(val) => locationInputHandler(val)}
+          setSelected={(val) => updateLocation(val)}
           data={data}
           save="value"
         />
@@ -162,12 +160,10 @@ function LocationScreen({ navigation }) {
 }
 
 function TravelScreen({ navigation }) {
-  const [distance, setDistance] = useState(0);
 
-  function distanceInputHandler(dist) {
-    setDistance(dist);
-    //DISTANCE = dist;
-    global.DISTANCE = dist;
+  const [user, ,updateUser] = Store.useState("user");
+  const updateDistance = (distance) => {
+    updateUser(user => { user.distance = distance});
   }
 
   return (
@@ -184,7 +180,7 @@ function TravelScreen({ navigation }) {
         </Text>
         <Slider
           style={styles.slider}
-          onValueChange={(value) => distanceInputHandler(value)}
+          onValueChange={(value) => updateDistance(value)}
           minimumValue={0}
           maximumValue={50}
           step={1}
@@ -192,7 +188,7 @@ function TravelScreen({ navigation }) {
           minimumTrackTintColor="#40187B"
           maximumTrackTintColor="#C6C6C6"
         />
-        <Text style={styles.sliderText}>{distance} mi</Text>
+        <Text style={styles.sliderText}>{user.distance} mi</Text>
         <Pressable
           style={styles.button}
           onPress={() => navigation.navigate("Interest")}
@@ -258,68 +254,22 @@ const SECTIONS = [
   {
     title: "goals",
     data: [
-      {
-        key: "1",
-        text: "confidence",
-        selected: false,
-      },
-      {
-        key: "2",
-        text: "finding friends",
-        selected: false,
-      },
-
-      {
-        key: "3",
-        text: "getting in shape",
-        selected: false,
-      },
-      {
-        key: "4",
-        text: "just having fun",
-        selected: false,
-      },
-      {
-        key: "5",
-        text: "training",
-        selected: false,
-      },
+      { key: "1", text: "confidence", selected: false },
+      { key: "2", text: "finding friends", selected: false },
+      { key: "3", text: "getting in shape", selected: false },
+      { key: "4", text: "just having fun", selected: false },
+      { key: "5", text: "training", selected: false },
     ],
   },
   {
     title: "anything else?",
     data: [
-      {
-        key: "1",
-        text: "casual learner",
-        selected: false,
-      },
-      {
-        key: "2",
-        text: "dance battles",
-        selected: false,
-      },
-
-      {
-        key: "3",
-        text: "freestyle",
-        selected: false,
-      },
-      {
-        key: "4",
-        text: "on a team",
-        selected: false,
-      },
-      {
-        key: "5",
-        text: "professional",
-        selected: false,
-      },
-      {
-        key: "6",
-        text: "lgbtq+",
-        selected: false,
-      },
+      { key: "1", text: "casual learner", selected: false },
+      { key: "2", text: "dance battles", selected: false },
+      { key: "3", text: "freestyle", selected: false },
+      { key: "4", text: "on a team", selected: false },
+      { key: "5", text: "professional", selected: false },
+      { key: "6", text: "lgbtq+", selected: false },
     ],
   },
 ];
@@ -353,6 +303,7 @@ const ListItem = ({ item }) => {
 
 function InterestScreen({ navigation }) {
   var tags = [];
+  const [user, ,updateUser] = Store.useState("user");
 
   function tagsInputHandler() {
     for (let i = 0; i < SECTIONS.length; i++) {
@@ -362,8 +313,7 @@ function InterestScreen({ navigation }) {
         }
       }
     }
-    //TAGS = tags;
-    global.TAGS = tags;
+    updateUser(user => { user.tags = tags });
   }
 
   return (
@@ -445,10 +395,11 @@ function InterestScreen({ navigation }) {
 }
 
 function UnpackingScreen({ navigation }) {
-  //console.log({ USERNAME });
-  //console.log({ LOCATION });
-  //console.log({ DISTANCE });
-  //console.log({ TAGS });
+  const [user, ,updateUser] = Store.useState("user");
+  // console.log(user.username);
+  // console.log(user.location);
+  // console.log(user.distance);
+  // console.log(user.tags);
 
   return (
     <SafeAreaView style={styles.background}>
