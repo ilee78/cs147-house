@@ -6,7 +6,8 @@
         "profileImg": "houseProfileImg.jpg",
         "userJoined": false, 
         "location": "San Francisco, CA", 
-        "address": "351 Shotwell St, San Francisco, CA 94110",
+        "address": "123 Duck Walk Way, San Francisco, CA 94110",
+        "map": "duck-walkway.png",
         "milesAway": 15, 
         "tags":  [
             "lgbtq+", 

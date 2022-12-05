@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView } from 'react-native';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button } from 'react-native';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import Sidebar from 'react-native-sidebar';
@@ -19,6 +19,7 @@ import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 
 //const Drawer = createDrawerNavigator();
+let DrawerIsOpen = false;
 
 function EmptyNeighborhoodScreen({navigation}) {
     return(
@@ -40,19 +41,67 @@ function EmptyNeighborhoodScreen({navigation}) {
     );
 }
 
+
+
 function UserNeighborhoodScreen({navigation}) {
+//     const pan = useRef(new Animated.ValueXY()).current;
+// const panResponder = useRef(
+//     PanResponder.create({
+//       onMoveShouldSetPanResponder: () => true,
+//       onPanResponderMove: Animated.event([
+//         null,
+//         { dx: pan.x, dy: pan.y }
+//       ]),
+//       onPanResponderRelease: () => {
+//         Animated.spring(pan, { toValue: { x: 100, y: 0 } }).start();
+//       }
+//     })
+//   ).current;
+    const openAnim = useRef(new Animated.Value(-240)).current;
+    const openAnim2 = useRef(new Animated.Value(-150)).current;
+    const OpenMenu = () => {
+        //Animated.spring(openAnim, {toValue: { x: 100, y: 0 }}).start();
+        console.log("open");
+            Animated.timing(openAnim, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true
+              }).start();
+              Animated.timing(openAnim2, {
+                toValue: 0,
+                duration: 1000,
+                useNativeDriver: true
+              }).start();
+        DrawerIsOpen = true;
+    };
+    const CloseMenu = () => {
+        Animated.timing(openAnim, {
+            toValue: -250,
+            duration: 1000,
+            useNativeDriver: true
+          }).start();
+        Animated.timing(openAnim2, {
+            toValue: -175,
+            duration: 1000,
+            useNativeDriver: true
+          }).start();
+        DrawerIsOpen = false;
+    };
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.neighborhoodHeading}>
-                <Pressable>
+                <Pressable onPress={OpenMenu}>
                     <Image style={styles.menuIcon} source={LinesIcon}/>
                 </Pressable>
                 <Text style={styles.headingText}>neighborhood</Text>
             </SafeAreaView>
+            <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding")}>
+                <Text>neighborhood house landing</Text>
+            </Pressable>
             <SafeAreaView style={{flex: 8}}>
                 <FlatList
                 ListHeaderComponent={
-                <Pressable style={styles.bulletinPanel}>
+                <Pressable onPress={() => navigation.navigate("Bulletin")} style={styles.bulletinPanel}>
                     <Image style={styles.bulletinImage} source={global.NOTIFCOUNT > 0 ? BulletinNotif : Bulletin}/>
                     {global.NOTIFCOUNT > 0 ? <Text style={styles.notifCount}>{global.NOTIFCOUNT > 98 ? 99 : global.NOTIFCOUNT}</Text> : <Text></Text>}
                 </Pressable>
@@ -66,7 +115,35 @@ function UserNeighborhoodScreen({navigation}) {
                 style={styles.neighborhoodList}
                 />
             </SafeAreaView>
+            <Animated.View
+                style={[
+                {
+                    // Bind opacity to animated value
+                    transform: [{translateX: openAnim}]
+                    //opacity: openAnim
+                }
+                ]}
+            >
+                <SafeAreaView style={styles.menuPanel}>
+                    <SafeAreaView style={styles.neighborhoodMenu}>
+                        <Text>menu</Text>
+                    </SafeAreaView>
+                    {/*<Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>*/}
+                    <Animated.View
+                        style={[
+                        {
+                            // Bind opacity to animated value
+                            transform: [{translateX: openAnim2}]
+                            //opacity: openAnim
+                        }
+                        ]}
+                    >
+                        <Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>
+                    </Animated.View>
+                </SafeAreaView>
+            </Animated.View>
         </SafeAreaView>
+        
     );
 }
 
@@ -115,10 +192,22 @@ const HouseProfilePicture = ({ item }) => {
 };
 
 function BulletinScreen({navigation}) {
-    
+    return (
+        <SafeAreaView>
+            <Text>bulletin screen</Text>
+            <Pressable onPress={() => navigation.goBack()}>
+                <Text>go back</Text>
+            </Pressable>
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
+    fadingContainer: {
+        height:30,
+        width:30,
+        backgroundColor:'red'
+    },
     background: {
         flex: 1,
         backgroundColor: '#40187B',
@@ -216,6 +305,10 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginRight: 30,
     },
+    menuPanel: {
+        flexDirection: 'row',
+        position: 'absolute'
+    },
     neighborhoodHeading: {
         flex: 1,
         flexDirection: 'row',
@@ -225,6 +318,19 @@ const styles = StyleSheet.create({
     },
     neighborhoodList: {
         alignSelf: 'center',
+    },
+    neighborhoodMenu: {
+        backgroundColor: 'white',
+        position: 'relative',
+        bottom: 785,
+        height: 785,
+        width: 250,
+    },
+    nonMenuSpace: {
+        position: 'relative',
+        width: 175,
+        height: 785,
+        bottom: 785,
     },
     notifCount: {
         left: 74,
