@@ -2,9 +2,12 @@
     {
         "key": 0,
         "houseName": "sf voguers", 
+        "color": "yellow",
+        "profileImg": "houseProfileImg.jpg",
         "userJoined": false, 
         "location": "San Francisco, CA", 
-        "address": "351 Shotwell St, San Francisco, CA 94110",
+        "address": "123 Duck Walk Way, San Francisco, CA 94110",
+        "map": "duck-walkway.png",
         "milesAway": 15, 
         "tags":  [
             "lgbtq+", 
@@ -42,6 +45,8 @@
     {
         "key": 1,
         "houseName": "oakland boba bash", 
+        "color": "pink",
+        "profileImg": "houseProfileImg.jpg",
         "userJoined": false, 
         "location": "Oakland, CA", 
         "address": "580 14th St, Oakland, CA 94612",
@@ -82,6 +87,8 @@
     {
         "key": 2,
         "houseName": "rae class community", 
+        "color": "mint",
+        "profileImg": "houseProfileImg.jpg",
         "userJoined": false, 
         "location": "San Francisco, CA", 
         "address": "414 Mason St #705, San Francisco, CA 94102",
@@ -112,6 +119,8 @@
     {
         "key": 3,
         "houseName": "stanford + san jose poppers", 
+        "color": "yellow",
+        "profileImg": "houseProfileImg.jpg",
         "userJoined": false, 
         "location": "Palo Alto, CA", 
         "address": "726 Serra St, Stanford, CA 94305",
