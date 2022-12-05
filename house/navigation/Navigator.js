@@ -7,10 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
-// import AppContext from '../components/AppContext';
-import NeighborhoodScreen from './screens/Neighborhood';
-import HousesScreen from './screens/Houses';
 import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen } from './screens/Profile';
+import { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
+import { BrowsingScreen, HouseLandingScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
 // Icons
@@ -45,6 +44,8 @@ function Navigator(props) {
             <MainStack.Navigator screenOptions={{headerShown: false}}>
                 <MainStack.Screen name="Onboarding" component={Onboarding} />
                 <MainStack.Screen name="Tabs" component={Tabs}/>
+                <MainStack.Screen name="Houses" component={BrowsingScreen}/>
+                <MainStack.Screen name="EmptyNeighborhood" component={EmptyNeighborhoodScreen}/>
             </MainStack.Navigator>
         </NavigationContainer>
     );
@@ -63,13 +64,12 @@ function Tabs() {
             tabBarActiveBackgroundColor: '#DEDEDE',
             tabBarInactiveBackgroundColor: '#EFEFF0',
         }}>
-
-            <Tab.Screen name="Neighborhood" component={NeighborhoodScreen} options={{
+            <Tab.Screen name="Neighborhood" component={global.HOUSES.length == 0 ? EmptyNeighborhoodScreen : UserNeighborhood} options={{
                 tabBarIcon: ({color, size}) => (
                     <NeighborhoodIcon color={color} />
                 )
             }}/>
-            <Tab.Screen name="Houses" component={HousesScreen} options={{
+            <Tab.Screen name="Houses" component={Houses} options={{
                 tabBarIcon: ({color, size}) => (
                     <HousesIcon color={color}/>
                 )
@@ -96,6 +96,29 @@ function Onboarding({navigation}) {
             <OnboardingStack.Screen name="Interest" component={InterestScreen} />
             <OnboardingStack.Screen name="Unpacking" component={UnpackingScreen} />
         </OnboardingStack.Navigator>
+    );
+}
+
+const NeighborhoodStack = createNativeStackNavigator();
+
+function UserNeighborhood({navigation}) {
+    return(
+        <NeighborhoodStack.Navigator screenOptions={{headerShown: false}}>
+            <NeighborhoodStack.Screen name="UserNeighborhood" component={UserNeighborhoodScreen}/>
+            <NeighborhoodStack.Screen name="Bulletin" component={BulletinScreen}/>
+            <NeighborhoodStack.Screen name="NeighborhoodHouseLanding" component={HouseLandingScreen}/>
+        </NeighborhoodStack.Navigator>
+    );
+}
+
+const HousesStack = createNativeStackNavigator();
+
+function Houses({navigation}) {
+    return(
+        <HousesStack.Navigator screenOptions={{headerShown: false}}>
+            <HousesStack.Screen name="Browse" component={BrowsingScreen}/>
+            <HousesStack.Screen name="BrowseHouseLanding" component={HouseLandingScreen}/>
+        </HousesStack.Navigator>
     );
 }
 

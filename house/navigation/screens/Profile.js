@@ -79,8 +79,8 @@ function EditProfileScreen({navigation}) {
     return(
         <SafeAreaView style={editStyles.background}>
             <SafeAreaView style={editStyles.topPanel}>
-                <Pressable style={editStyles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon />
+                <Pressable style={editStyles.backIcon} onPress={navigation.goBack()}>
+                    <BackIcon color='#000000'/>
                 </Pressable>
             </SafeAreaView>
             <SafeAreaView style={editStyles.profilePanel}>
