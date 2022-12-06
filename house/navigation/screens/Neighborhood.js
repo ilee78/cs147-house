@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button } from 'react-native';
+import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button, useWindowDimensions } from 'react-native';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import Sidebar from 'react-native-sidebar';
@@ -17,163 +17,198 @@ import OwnedHouseYellow from '../../assets/ownedHouse-Yellow.png';
 import Bulletin from '../../assets/bulletinBoard.png'
 import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
+import Store from './../../Store';
 
-//const Drawer = createDrawerNavigator();
-let DrawerIsOpen = false;
+function NeighborhoodScreen({ navigation }) {
+    const [user, ,updateUser] = Store.useState("user");
 
-function EmptyNeighborhoodScreen({navigation}) {
-    return(
-        <SafeAreaView style={styles.background}>
-            <SafeAreaView style={styles.neighborhoodHeading}>
-                <Pressable>
-                    <Image style={styles.menuIcon} source={LinesIcon}/>
-                </Pressable>
-                <Text style={styles.headingText}>neighborhood</Text>
-            </SafeAreaView>
-            <SafeAreaView style={styles.centerContentPanel}>
-                <Text style={styles.whiteText}>it's empty in here.</Text>
-                <Pressable style={styles.browseHousesButton} onPress={() => navigation.navigate("Houses")}>
-                    <Text style={styles.buttonText}>browse houses</Text>
-                </Pressable>
-            </SafeAreaView>
-            <Image style={styles.boxesImage} source={EmptyNeighborhoodGraphic}/>
-        </SafeAreaView>
-    );
-}
-
-
-
-function UserNeighborhoodScreen({navigation}) {
-//     const pan = useRef(new Animated.ValueXY()).current;
-// const panResponder = useRef(
-//     PanResponder.create({
-//       onMoveShouldSetPanResponder: () => true,
-//       onPanResponderMove: Animated.event([
-//         null,
-//         { dx: pan.x, dy: pan.y }
-//       ]),
-//       onPanResponderRelease: () => {
-//         Animated.spring(pan, { toValue: { x: 100, y: 0 } }).start();
-//       }
-//     })
-//   ).current;
-    const openAnim = useRef(new Animated.Value(-240)).current;
+    const openAnim = useRef(new Animated.Value(-250)).current;
     const openAnim2 = useRef(new Animated.Value(-150)).current;
     const OpenMenu = () => {
-        //Animated.spring(openAnim, {toValue: { x: 100, y: 0 }}).start();
-        console.log("open");
-            Animated.timing(openAnim, {
-                toValue: 0,
-                duration: 1000,
-                useNativeDriver: true
-              }).start();
-              Animated.timing(openAnim2, {
-                toValue: 0,
-                duration: 1000,
-                useNativeDriver: true
-              }).start();
-        DrawerIsOpen = true;
+        Animated.timing(openAnim, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true
+        }).start();
+        Animated.timing(openAnim2, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true
+        }).start();
     };
     const CloseMenu = () => {
         Animated.timing(openAnim, {
             toValue: -250,
-            duration: 1000,
+            duration: 500,
             useNativeDriver: true
-          }).start();
+        }).start();
         Animated.timing(openAnim2, {
             toValue: -175,
-            duration: 1000,
+            duration: 500,
             useNativeDriver: true
-          }).start();
-        DrawerIsOpen = false;
+        }).start();
     };
-    return(
-        <SafeAreaView style={styles.background}>
-            <SafeAreaView style={styles.neighborhoodHeading}>
-                <Pressable onPress={OpenMenu}>
-                    <Image style={styles.menuIcon} source={LinesIcon}/>
-                </Pressable>
-                <Text style={styles.headingText}>neighborhood</Text>
-            </SafeAreaView>
-            <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding")}>
-                <Text>neighborhood house landing</Text>
-            </Pressable>
-            <SafeAreaView style={{flex: 8}}>
-                <FlatList
-                ListHeaderComponent={
-                <Pressable onPress={() => navigation.navigate("Bulletin")} style={styles.bulletinPanel}>
-                    <Image style={styles.bulletinImage} source={global.NOTIFCOUNT > 0 ? BulletinNotif : Bulletin}/>
-                    {global.NOTIFCOUNT > 0 ? <Text style={styles.notifCount}>{global.NOTIFCOUNT > 98 ? 99 : global.NOTIFCOUNT}</Text> : <Text></Text>}
-                </Pressable>
-                }
-                vertical
-                numColumns={2}
-                data={global.HOUSES}
-                renderItem={({item}) => <UserHouses item={item}/> }
-                scrollEnabled={true}
-                showsVerticalScrollIndicator={false}
-                style={styles.neighborhoodList}
-                />
-            </SafeAreaView>
-            <Animated.View
-                style={[
-                {
-                    // Bind opacity to animated value
-                    transform: [{translateX: openAnim}]
-                    //opacity: openAnim
-                }
-                ]}
-            >
-                <SafeAreaView style={styles.menuPanel}>
-                    <SafeAreaView style={styles.neighborhoodMenu}>
-                        <Text>menu</Text>
-                    </SafeAreaView>
-                    {/*<Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>*/}
-                    <Animated.View
-                        style={[
-                        {
-                            // Bind opacity to animated value
-                            transform: [{translateX: openAnim2}]
-                            //opacity: openAnim
-                        }
-                        ]}
-                    >
-                        <Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>
-                    </Animated.View>
+    if (user.houses.length > 0){
+        // Neighborhood
+        return (
+            <SafeAreaView style={styles.background}>
+                <SafeAreaView style={styles.neighborhoodHeading}>
+                    <Pressable onPress={OpenMenu}>
+                        <Image style={styles.menuIcon} source={LinesIcon} />
+                    </Pressable>
+                    <Text style={styles.headingText}>neighborhood</Text>
                 </SafeAreaView>
-            </Animated.View>
-        </SafeAreaView>
-        
-    );
+                <SafeAreaView style={{ flex: 8 }}>
+                    <FlatList
+                        ListHeaderComponent={
+                            <Pressable onPress={() => navigation.navigate("Bulletin")} style={styles.bulletinPanel}>
+                                <Image style={styles.bulletinImage} source={global.NOTIFCOUNT > 0 ? BulletinNotif : Bulletin} />
+                                {global.NOTIFCOUNT > 0 ? <Text style={styles.notifCount}>{global.NOTIFCOUNT > 98 ? 99 : global.NOTIFCOUNT}</Text> : <Text></Text>}
+                            </Pressable>
+                        }
+                        vertical
+                        numColumns={2}
+                        data={user.houses}
+                        renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.houseDisplay}>
+                           <UserHouses item={item} /></Pressable>}
+                        scrollEnabled={true}
+                        showsVerticalScrollIndicator={false}
+                        style={styles.neighborhoodList}
+                    />
+                </SafeAreaView>
+                <Animated.View
+                    style={[{ transform: [{ translateX: openAnim }] }]}>
+                    <SafeAreaView style={styles.menuPanel}>
+                        <SafeAreaView style={styles.neighborhoodMenu}>
+                            <SafeAreaView style={styles.neighborhoodMenuContent}>
+    
+                            <FlatList
+                                ListHeaderComponent={
+                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
+                                        <Text style={styles.menuHeader}>my houses</Text>
+                                        <Pressable style={styles.createHouseButton}>
+                                            <Text style={styles.menuText}>+ create a house</Text>
+                                        </Pressable>
+    
+                                    </SafeAreaView>
+                                }
+                                vertical
+                                data={user.houses}
+                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
+                                    <MenuHouse item={item}></MenuHouse>
+                                </Pressable>}
+                                scrollEnabled={true}
+                                showsVerticalScrollIndicator={false}
+                                style={styles.menuNeighborhoodList}
+                            />
+                            </SafeAreaView>
+                        </SafeAreaView>
+                        <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
+                            <Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>
+                        </Animated.View>
+                    </SafeAreaView>
+                </Animated.View>
+            </SafeAreaView>
+    
+        );
+    }
+    else {
+        // Empty Neighborhood
+        return (
+            <SafeAreaView style={styles.background}>
+                <SafeAreaView style={styles.neighborhoodHeading}>
+                    <Pressable onPress={OpenMenu}>
+                        <Image style={styles.menuIcon} source={LinesIcon} />
+                    </Pressable>
+                    <Text style={styles.headingText}>neighborhood</Text>
+                </SafeAreaView>
+                <SafeAreaView style={styles.centerContentPanel}>
+                    <Text style={styles.whiteText}>it's empty in here.</Text>
+                    <Pressable style={styles.browseHousesButton} onPress={() => navigation.navigate("Houses")}>
+                        <Text style={styles.buttonText}>browse houses</Text>
+                    </Pressable>
+                </SafeAreaView>
+                <Image style={styles.boxesImage} source={EmptyNeighborhoodGraphic} />
+                <Animated.View
+                    style={[{ transform: [{ translateX: openAnim }] }]}>
+                    <SafeAreaView style={styles.menuPanel}>
+                        <SafeAreaView style={styles.neighborhoodMenu}>
+                            <SafeAreaView style={styles.neighborhoodMenuContent}>
+    
+                            <FlatList
+                                ListHeaderComponent={
+                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
+                                        <Text style={styles.menuHeader}>my houses</Text>
+                                        <Pressable style={styles.createHouseButton}>
+                                            <Text style={styles.menuText}>+ create a house</Text>
+                                        </Pressable>
+    
+                                    </SafeAreaView>
+                                }
+                                vertical
+                                data={user.houses}
+                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
+                                    <MenuHouse item={item}></MenuHouse>
+                                </Pressable>}
+                                scrollEnabled={true}
+                                showsVerticalScrollIndicator={false}
+                                style={styles.menuNeighborhoodList}
+                            />
+                            </SafeAreaView>
+                        </SafeAreaView>
+                        <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
+                            <Pressable style={styles.nonMenuSpace} onPress={CloseMenu}></Pressable>
+                        </Animated.View>
+                    </SafeAreaView>
+                </Animated.View>
+            </SafeAreaView>
+        );
+    }
+    
 }
+
+const MenuHouseProfilePicture = ({ item }) => {
+    switch (HouseData[item].profileImg) {
+        case 'houseProfileImg.jpg':
+            return (<Image style={styles.menuHouseProfileImage} source={HouseProfileImg}></Image>);
+    }
+};
+
+const MenuHouse = ({ item }) => {
+    console.log(HouseData[item].houseName);
+    return (
+        <SafeAreaView style={styles.horizontalMenuHouseContainer}>
+                <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
+                <Text style={styles.menuHouseNameText}>{HouseData[item].houseName}</Text>
+        </SafeAreaView>
+    );
+};
 
 const UserHouses = ({ item }) => {
     return (
-        <Pressable style={styles.houseDisplay}>
-            <SafeAreaView>
-                <SafeAreaView style={styles.houseNameContainer}>
-                    <Text style={styles.houseNameText}>{HouseData[item].houseName}</Text>
-                </SafeAreaView>
+        <SafeAreaView>
+            <SafeAreaView style={styles.houseNameContainer}>
+                <Text style={styles.houseNameText}>{HouseData[item].houseName}</Text>
+            </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
                 <HouseProfilePicture item={item}></HouseProfilePicture>
             </SafeAreaView>
-            </SafeAreaView>
-        </Pressable>
+        </SafeAreaView>
     );
 };
 
 const HouseIllustration = ({ item }) => {
-    if (global.OWNEDHOUSES.includes(item)) {
-        switch (HouseData[item].color) {
-            case 'yellow':
-                return (<Image style={styles.houseIllustration} source={OwnedHouseYellow}></Image>);
-            case 'pink':
-                return (<Image style={styles.houseIllustration} source={OwnedHousePink}></Image>);
-            case 'mint':
-                return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
-        }
-    }
+    //if (global.OWNEDHOUSES.includes(item)) {
+    //     switch (HouseData[item].color) {
+    //         case 'yellow':
+    //             return (<Image style={styles.houseIllustration} source={OwnedHouseYellow}></Image>);
+    //         case 'pink':
+    //             return (<Image style={styles.houseIllustration} source={OwnedHousePink}></Image>);
+    //         case 'mint':
+    //             return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
+    //     }
+    // }
     switch (HouseData[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);
@@ -191,7 +226,7 @@ const HouseProfilePicture = ({ item }) => {
     }
 };
 
-function BulletinScreen({navigation}) {
+function BulletinScreen({ navigation }) {
     return (
         <SafeAreaView>
             <Text>bulletin screen</Text>
@@ -204,9 +239,9 @@ function BulletinScreen({navigation}) {
 
 const styles = StyleSheet.create({
     fadingContainer: {
-        height:30,
-        width:30,
-        backgroundColor:'red'
+        height: 30,
+        width: 30,
+        backgroundColor: 'red'
     },
     background: {
         flex: 1,
@@ -222,6 +257,7 @@ const styles = StyleSheet.create({
     },
     browseHousesButton: {
         backgroundColor: '#FDC765',
+        fontFamily: 'WorkSans-Medium',
         alignItems: 'center',
         justifyContent: 'center',
         width: 274,
@@ -259,6 +295,10 @@ const styles = StyleSheet.create({
         fontFamily: 'WorkSans-Medium',
         scrollY: true,
     },
+    createHouseButton: {
+        padding: 10,
+        paddingTop: 20,
+    },
     headingText: {
         fontSize: 36,
         color: 'white',
@@ -267,6 +307,10 @@ const styles = StyleSheet.create({
     },
     horizontalGraphicsContainer: {
         flexDirection: 'row'
+    },
+    horizontalMenuHouseContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     houseDisplay: {
         width: '30%',
@@ -298,6 +342,27 @@ const styles = StyleSheet.create({
         borderColor: 'white',
         right: 52
     },
+    menuHeader: {
+        color: 'black',
+        fontSize: 24,
+        fontFamily: 'WorkSans-Bold',
+    },
+    menuHouseContainer: {
+        flex:1,
+        width: 200,
+        marginVertical: 8,
+    },
+    menuHouseNameText: {
+        textAlignVertical: 'center',
+        fontSize: 18,
+        marginLeft: 10,
+        marginRight: 30
+    },
+    menuHouseProfileImage: {
+        width: 45,
+        height: 45,
+        borderRadius: 45,
+    },
     menuIcon: {
         width: 30,
         height: 18,
@@ -305,9 +370,16 @@ const styles = StyleSheet.create({
         marginLeft: 35,
         marginRight: 30,
     },
+    menuNeighborhoodList: {
+        paddingLeft: 20
+    },
     menuPanel: {
         flexDirection: 'row',
-        position: 'absolute'
+        position: 'absolute',
+    },
+    menuText: {
+        fontSize: 18,
+        marginBottom: 10
     },
     neighborhoodHeading: {
         flex: 1,
@@ -322,9 +394,14 @@ const styles = StyleSheet.create({
     neighborhoodMenu: {
         backgroundColor: 'white',
         position: 'relative',
+        justifyContent: 'flex-end',
         bottom: 785,
         height: 785,
         width: 250,
+    },
+    neighborhoodMenuContent: {
+        height: 735,
+        paddingLeft: 20,
     },
     nonMenuSpace: {
         position: 'relative',
@@ -345,6 +422,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'WorkSans-Regular',
     },
+
 });
 
-export { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen };
+export { NeighborhoodScreen, BulletinScreen };

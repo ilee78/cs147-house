@@ -8,6 +8,7 @@ import MusicIcon from './../../assets/music.js';
 import BackIcon from "../../assets/back.js";
 import PlusIcon from "../../assets/plus.js"
 import Store from './../../Store';
+import houseData from '../../house-data.json'
 
 const EMPTY_BIO = '';
 
@@ -20,7 +21,7 @@ function ProfileScreen({navigation}) {
     return(
         <ScrollView style={styles.background}>
                 <Pressable style={styles.settingsIcon} onPress={() => navigation.navigate("Settings")}>
-                    <SettingsIcon color="#61646B" size="24" />
+                    <SettingsIcon color="black" size="24" />
                 </Pressable>
                 <SafeAreaView style={styles.profilePanel}>
                     <Pressable style={styles.profileBackground}>
@@ -29,7 +30,7 @@ function ProfileScreen({navigation}) {
                     <SafeAreaView style={styles.namePanel}>
                         <Text id='username' style={styles.name}>{user.username}</Text> 
                         <Pressable style={styles.editIcon} onPress={() => navigation.navigate("EditProfile")}>
-                            <EditIcon color="#61646B" size="24"/>
+                            <EditIcon color="black" size="24"/>
                         </Pressable>
                     </SafeAreaView>
                     <Bio />
@@ -50,7 +51,7 @@ function ProfileScreen({navigation}) {
                         id = 'houses'
                         horizontal
                         data={user.houses}
-                        renderItem={({item}) => <Houses item={item}/> }
+                        renderItem={({item}) => <Houses item={houseData[item].houseName}/> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
@@ -80,7 +81,7 @@ function EditProfileScreen({navigation}) {
         <SafeAreaView style={editStyles.background}>
             <SafeAreaView style={editStyles.topPanel}>
                 <Pressable style={editStyles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon color='#000000'/>
+                    <BackIcon color='red'/>
                 </Pressable>
             </SafeAreaView>
             <SafeAreaView style={editStyles.profilePanel}>
@@ -192,27 +193,29 @@ const SECTIONS = [
     );
   };
   
-  function EditTagsScreen({ navigation }) {
+
+
+function EditTagsScreen({ navigation }) {
     var tags = [];
     const [user, ,updateUser] = Store.useState("user");
   
     function tagsInputHandler() {
-      for (let i = 0; i < SECTIONS.length; i++) {
-        for (let j = 0; j < SECTIONS[i].data.length; j++) {
-          if (SECTIONS[i].data[j].selected) {
-            tags.push(SECTIONS[i].data[j].text);
+        for (let i = 0; i < SECTIONS.length; i++) {
+          for (let j = 0; j < SECTIONS[i].data.length; j++) {
+            if (SECTIONS[i].data[j].selected) {
+              tags.push(SECTIONS[i].data[j].text);
+            }
           }
         }
+        updateUser(user => { user.tags = tags });
       }
-      updateUser(user => { user.tags = tags });
-    }
   
     return (
       <SafeAreaView style={styles.background}>
         <SafeAreaView style={styles.topPanel}>
-          <Pressable style={styles.backIcon} onPress={() => {tagsInputHandler(); navigation.goBack();}}>
+        <Pressable style={styles.backIcon} onPress={() => {tagsInputHandler(); navigation.goBack();}}>
             <BackIcon color='black'/>
-          </Pressable>
+        </Pressable>
         </SafeAreaView>
         <SafeAreaView style={styles.contentPanel}>
           <Text style={styles.headerText}>choose your interests</Text>
@@ -275,7 +278,7 @@ const Houses = ({ item }) => {
     return (
         <View style={styles.house}>
             <Pressable>
-                <Text style={{fontSize:40, color: 'white', textAlign: 'center'}}>+</Text>
+                <SafeAreaView style={{borderWidth:3}}><HouseIcon width={30} height={30} color={'white'}/></SafeAreaView>
                 <Text style={styles.houseText}>{item}</Text>
             </Pressable>
         </View>
@@ -538,7 +541,6 @@ const styles = StyleSheet.create({
         maxWidth: 94,
         minWidth: 94,
         minHeight: 120,
-        maxHeight: 120
     },
     houseText: {
         textAlign: 'center',
@@ -587,6 +589,8 @@ const styles = StyleSheet.create({
     },
     backIcon: {
         margin: 20,
+        width: 50,
+        height: 35
     },
     headerText: {
         fontSize: 24,
@@ -624,7 +628,7 @@ const editStyles = StyleSheet.create({
     },
     topPanel: {
         //flex: 1,
-        backgroundColor: "#FFFFFF",
+        //backgroundColor: "#FFFFFF",
         textAlign: "left",
     },
     profilePanel: {
@@ -691,6 +695,8 @@ const editStyles = StyleSheet.create({
     },
     backIcon: {
         margin: 20,
+        width: 35,
+        height: 24,
     },
 });
 
