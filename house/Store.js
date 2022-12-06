@@ -9,7 +9,7 @@ Store.setState("user",
     distance: 0, 
     bio: '', 
     tags: [], 
-    houses: ['add a house'], 
+    houses: [0,1], 
     songs: [
         { key: 0, song: '', artist: ''},
         { key: 1, song: '', artist: ''},

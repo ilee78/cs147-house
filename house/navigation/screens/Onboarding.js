@@ -7,6 +7,7 @@ import { SvgUri } from "react-native-svg";
 import Logo from "../../assets/logo.png";
 import BackIcon from "../../assets/back.js";
 import Store from './../../Store';
+import { EmptyNeighborhoodScreen } from "./Neighborhood";
 
 
 function WelcomeScreen({ navigation }) {
@@ -396,6 +397,9 @@ function InterestScreen({ navigation }) {
 
 function UnpackingScreen({ navigation }) {
   const [user, ,updateUser] = Store.useState("user");
+  setTimeout(() => {
+    navigation.navigate('Tabs', {screen: 'Neighborhood'}); //this.props.navigation.navigate('Login')
+  }, 2000);
   // console.log(user.username);
   // console.log(user.location);
   // console.log(user.distance);
@@ -406,14 +410,6 @@ function UnpackingScreen({ navigation }) {
       <SafeAreaView style={styles.contentPanel}>
         <Image style={styles.logo} source={Logo} />
         <Text style={styles.headerText}>  unpacking...</Text>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("Tabs");
-          }}
-        >
-          <Text style={styles.buttonText}>next</Text>
-        </Pressable>
       </SafeAreaView>
       <SafeAreaView style={styles.bottomPanel}>
         <SafeAreaView

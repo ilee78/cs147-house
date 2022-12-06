@@ -47,8 +47,8 @@ function Navigator(props) {
             <MainStack.Navigator screenOptions={{headerShown: false}}>
                 <MainStack.Screen name="Onboarding" component={Onboarding} />
                 <MainStack.Screen name="Tabs" component={Tabs}/>
-                <MainStack.Screen name="Houses" component={BrowsingScreen}/>
-                <MainStack.Screen name="EmptyNeighborhood" component={EmptyNeighborhoodScreen}/>
+                {/*<MainStack.Screen name="Houses" component={BrowsingScreen}/>
+                <MainStack.Screen name="UserNeighborhood" component={EmptyNeighborhoodScreen}/>*/}
             </MainStack.Navigator>
         </NavigationContainer>
     );
@@ -58,7 +58,6 @@ const Tab = createBottomTabNavigator();
 
 function Tabs() {
     const [user, ,updateUser] = Store.useState("user");
-
     return(
         <Tab.Navigator screenOptions={{
             headerShown: false,
@@ -69,7 +68,7 @@ function Tabs() {
             tabBarActiveBackgroundColor: '#DEDEDE',
             tabBarInactiveBackgroundColor: '#EFEFF0',
         }}>
-            <Tab.Screen name="Neighborhood" component={user.houses.length == 0 ? EmptyNeighborhoodScreen : UserNeighborhood} options={{
+            <Tab.Screen name="Neighborhood" component={Neighborhood} options={{
                 tabBarIcon: ({color, size}) => (
                     <NeighborhoodIcon color={color} />
                 )
@@ -106,9 +105,10 @@ function Onboarding({navigation}) {
 
 const NeighborhoodStack = createNativeStackNavigator();
 
-function UserNeighborhood({navigation}) {
+function Neighborhood({navigation}) {
     return(
         <NeighborhoodStack.Navigator screenOptions={{headerShown: false}}>
+            <NeighborhoodStack.Screen name="EmptyNeighborood" component={EmptyNeighborhoodScreen}/>
             <NeighborhoodStack.Screen name="UserNeighborhood" component={UserNeighborhoodScreen}/>
             <NeighborhoodStack.Screen name="Bulletin" component={BulletinScreen}/>
             <NeighborhoodStack.Screen name="NeighborhoodHouseLanding" component={HouseLandingScreen}/>
