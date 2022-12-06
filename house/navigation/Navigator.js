@@ -9,7 +9,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // Screens
 import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen } from './screens/Profile';
 import { NeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
-import { BrowsingScreen, HouseLandingScreen } from './screens/Houses';
+import { BrowsingScreen, HouseLandingScreen, NormsAndRulesScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
 // Global vars
@@ -122,6 +122,7 @@ function Houses({navigation}) {
         <HousesStack.Navigator screenOptions={{headerShown: false}}>
             <HousesStack.Screen name="Browse" component={BrowsingScreen}/>
             <HousesStack.Screen name="BrowseHouseLanding" component={HouseLandingScreen}/>
+            <HousesStack.Screen name="NormsAndRules" component={NormsAndRulesScreen}/>
         </HousesStack.Navigator>
     );
 }

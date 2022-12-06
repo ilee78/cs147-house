@@ -81,7 +81,7 @@ function EditProfileScreen({navigation}) {
         <SafeAreaView style={editStyles.background}>
             <SafeAreaView style={editStyles.topPanel}>
                 <Pressable style={editStyles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon color='red'/>
+                    <BackIcon color='black'/>
                 </Pressable>
             </SafeAreaView>
             <SafeAreaView style={editStyles.profilePanel}>
@@ -256,7 +256,7 @@ function SettingsScreen({navigation}) {
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.topPanel}>
                 <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon />
+                    <BackIcon color='black'/>
                 </Pressable>
             </SafeAreaView>
         </SafeAreaView>
@@ -278,7 +278,7 @@ const Houses = ({ item }) => {
     return (
         <View style={styles.house}>
             <Pressable>
-                <SafeAreaView style={{borderWidth:3}}><HouseIcon width={30} height={30} color={'white'}/></SafeAreaView>
+                <SafeAreaView style={styles.houseIconContainer}><HouseIcon width={30} height={30} color={'white'}/></SafeAreaView>
                 <Text style={styles.houseText}>{item}</Text>
             </Pressable>
         </View>
@@ -472,6 +472,7 @@ const styles = StyleSheet.create({
     settingsIcon: {
         alignSelf: 'flex-end',
         margin: 15,
+        padding: 5,
     },
     profileBackground: {
         backgroundColor: '#47C8A7',
@@ -536,8 +537,7 @@ const styles = StyleSheet.create({
         borderColor: '#40187B',
         borderRadius: 5,
         padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
+        //justifyContent: 'center',
         maxWidth: 94,
         minWidth: 94,
         minHeight: 120,
@@ -591,6 +591,11 @@ const styles = StyleSheet.create({
         margin: 20,
         width: 50,
         height: 35
+    },
+    houseIconContainer: {
+        alignItems:'center',
+        justifyContent: 'center',
+        height: 50,
     },
     headerText: {
         fontSize: 24,
