@@ -53,7 +53,7 @@ function NameScreen({ navigation }) {
         <TextInput
           style={styles.textInput}
           placeholder="enter name..."
-          onChangeText={(name) => updateName(name)}
+          onChangeText={(name) => updateName(name)}          
         />
         <Pressable
           style={styles.button}

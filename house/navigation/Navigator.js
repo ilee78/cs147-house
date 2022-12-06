@@ -8,7 +8,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
 import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen } from './screens/Profile';
-import { EmptyNeighborhoodScreen, UserNeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
+import { NeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
 import { BrowsingScreen, HouseLandingScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
 
@@ -108,8 +108,7 @@ const NeighborhoodStack = createNativeStackNavigator();
 function Neighborhood({navigation}) {
     return(
         <NeighborhoodStack.Navigator screenOptions={{headerShown: false}}>
-            <NeighborhoodStack.Screen name="EmptyNeighborood" component={EmptyNeighborhoodScreen}/>
-            <NeighborhoodStack.Screen name="UserNeighborhood" component={UserNeighborhoodScreen}/>
+            <NeighborhoodStack.Screen name="UserNeighborhood" component={NeighborhoodScreen}/>
             <NeighborhoodStack.Screen name="Bulletin" component={BulletinScreen}/>
             <NeighborhoodStack.Screen name="NeighborhoodHouseLanding" component={HouseLandingScreen}/>
         </NeighborhoodStack.Navigator>

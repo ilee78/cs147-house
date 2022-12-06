@@ -1,11 +1,14 @@
 import { NavigationHelpersContext } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions, TextInput } from 'react-native';
+//import { Searchbar } from 'react-native-paper';
 
 import BackIcon from "../../assets/back.js";
 import HouseIcon from './../../assets/house.js';
 import ProfileIcon from './../../assets/profile-icon.js';
 import PinIcon from '../../assets/pin.js';
+//import HouseProfileImg from '../../assets/houseProfileImg.jpg'
+//import HouseGraphicBorder from '../../assets/browseHouse-Border.png'
 
 import houseData from '../../house-data.json';
 
@@ -33,6 +36,11 @@ const ProfileItem = ({ item }) => {
 
 function BrowsingScreen({navigation}) {
     const [selected, setSelected] = useState('');
+    
+    const [search, setSearch] = useState('');
+    function updateSearch (search) {
+        setSearch(search);
+    }
 
     function houseHandler(house) {
         setSelected(house);
@@ -41,28 +49,33 @@ function BrowsingScreen({navigation}) {
 
     return(
         <SafeAreaView style={browseStyles.housesPanel}>
+            {/*<Searchbar
+                placeholder="search houses or tags..."
+                onChangeText={updateSearch}
+                value={search}
+    />*/}
             <FlatList 
                 style={browseStyles.housesFlatList}
                 data={houseData}
                 showsVerticalScrollIndicator={false}
                 renderItem={({item}) =>
-                <SafeAreaView>
-                    <Pressable style={browseStyles.houseListing} onPress={() => {navigation.navigate("BrowseHouseLanding"); ID = item.key}}>
-                        <Pressable style={browseStyles.tempIconBackground}>
-                            <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
+                    <SafeAreaView>
+                        <Pressable style={browseStyles.houseListing} onPress={() => navigation.navigate("BrowseHouseLanding", {key: item.key})}>
+                            <Pressable style={browseStyles.tempIconBackground}>
+                                <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
+                            </Pressable>
+                            <SafeAreaView style={browseStyles.houseInfo}>
+                                <Text style={browseStyles.houseName}>{item.houseName}</Text>
+                                <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
+                                <FlatList
+                                    style={{flexDirection : "row", flexWrap : "wrap"}}
+                                    data={item.tags}
+                                    showsHorizontalScrollIndicator={false}
+                                    renderItem={({item}) => <BrowseItem item={item}/> }
+                                />
+                            </SafeAreaView> 
                         </Pressable>
-                        <SafeAreaView style={browseStyles.houseInfo}>
-                            <Text style={browseStyles.houseName}>{item.houseName}</Text>
-                            <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
-                            <FlatList
-                                style={{flexDirection : "row", flexWrap : "wrap"}}
-                                data={item.tags}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={({item}) => <BrowseItem item={item}/> }
-                            />
-                        </SafeAreaView> 
-                    </Pressable>
-                </SafeAreaView>
+                    </SafeAreaView>
                 }
             />
         </SafeAreaView>
@@ -70,8 +83,9 @@ function BrowsingScreen({navigation}) {
 }
 
 
-function HouseLandingScreen({navigation}) {
-    var key = ID;
+function HouseLandingScreen({route, navigation}) {
+    const { key } = route.params;
+    //var key = ID;
     //var joined = houseData[key].userJoined;
 
     // tabs data
@@ -420,6 +434,20 @@ const browseStyles = StyleSheet.create({
     distance: {
         fontFamily: "WorkSans-Regular",
         fontSize: 14,
+    },
+    searchBar: {
+        borderWidth: 1,
+        borderColor: "#AFB1B6",
+        backgroundColor: 'white',
+        width: "90%",
+        paddingVertical: 10,
+        paddingHorizontal: 14,
+        borderRadius: 20,
+        fontFamily: "WorkSans-MediumItalic",
+        fontSize: 14,
+        color: 'black',
+        marginHorizontal: 20,
+        marginTop: 20
     }
 });
 

@@ -8,6 +8,7 @@ import MusicIcon from './../../assets/music.js';
 import BackIcon from "../../assets/back.js";
 import PlusIcon from "../../assets/plus.js"
 import Store from './../../Store';
+import houseData from '../../house-data.json'
 
 const EMPTY_BIO = '';
 
@@ -50,7 +51,7 @@ function ProfileScreen({navigation}) {
                         id = 'houses'
                         horizontal
                         data={user.houses}
-                        renderItem={({item}) => <Houses item={item}/> }
+                        renderItem={({item}) => <Houses item={houseData[item].houseName}/> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
@@ -277,7 +278,7 @@ const Houses = ({ item }) => {
     return (
         <View style={styles.house}>
             <Pressable>
-                <Text style={{fontSize:40, color: 'white', textAlign: 'center'}}>+</Text>
+                <SafeAreaView style={{borderWidth:3}}><HouseIcon width={30} height={30} color={'white'}/></SafeAreaView>
                 <Text style={styles.houseText}>{item}</Text>
             </Pressable>
         </View>
@@ -540,7 +541,6 @@ const styles = StyleSheet.create({
         maxWidth: 94,
         minWidth: 94,
         minHeight: 120,
-        maxHeight: 120
     },
     houseText: {
         textAlign: 'center',
