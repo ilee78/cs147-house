@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button, useWindowDimensions } from 'react-native';
+import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button, useWindowDimensions, ActionSheetIOS } from 'react-native';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import Sidebar from 'react-native-sidebar';
 
-import HouseData from '../../house-data.json';
+import houseData from '../../house-data.json';
 
 import EmptyNeighborhoodGraphic from '../../assets/boxesGraphic.png';
 import LinesIcon from '../../assets/lines.png';
@@ -168,18 +168,18 @@ function NeighborhoodScreen({ navigation }) {
 }
 
 const MenuHouseProfilePicture = ({ item }) => {
-    switch (HouseData[item].profileImg) {
+    switch (houseData[item].profileImg) {
         case 'houseProfileImg.jpg':
             return (<Image style={styles.menuHouseProfileImage} source={HouseProfileImg}></Image>);
     }
 };
 
 const MenuHouse = ({ item }) => {
-    console.log(HouseData[item].houseName);
+    console.log(houseData[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
                 <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
-                <Text style={styles.menuHouseNameText}>{HouseData[item].houseName}</Text>
+                <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
         </SafeAreaView>
     );
 };
@@ -188,7 +188,7 @@ const UserHouses = ({ item }) => {
     return (
         <SafeAreaView>
             <SafeAreaView style={styles.houseNameContainer}>
-                <Text style={styles.houseNameText}>{HouseData[item].houseName}</Text>
+                <Text style={styles.houseNameText}>{houseData[item].houseName}</Text>
             </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
@@ -209,7 +209,7 @@ const HouseIllustration = ({ item }) => {
     //             return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
     //     }
     // }
-    switch (HouseData[item].color) {
+    switch (houseData[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);
         case 'pink':
@@ -220,7 +220,7 @@ const HouseIllustration = ({ item }) => {
 };
 
 const HouseProfilePicture = ({ item }) => {
-    switch (HouseData[item].profileImg) {
+    switch (houseData[item].profileImg) {
         case 'houseProfileImg.jpg':
             return (<Image style={styles.houseProfileImage} source={HouseProfileImg}></Image>);
     }

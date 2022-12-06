@@ -1,12 +1,15 @@
 import { NavigationHelpersContext } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions, TextInput } from 'react-native';
+import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions, TextInput, ActionSheetIOS } from 'react-native';
+import CheckBox from 'expo-checkbox';
+import Store from './../../Store';
 //import { Searchbar } from 'react-native-paper';
 
 import BackIcon from "../../assets/back.js";
 import HouseIcon from './../../assets/house.js';
 import ProfileIcon from './../../assets/profile-icon.js';
 import PinIcon from '../../assets/pin.js';
+import DotsIcon from '../../assets/dots.js';
 //import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 //import HouseGraphicBorder from '../../assets/browseHouse-Border.png'
 
@@ -49,11 +52,12 @@ function BrowsingScreen({navigation}) {
 
     return(
         <SafeAreaView style={browseStyles.housesPanel}>
-            {/*<Searchbar
+            <TextInput
+                style={browseStyles.searchBar}
                 placeholder="search houses or tags..."
-                onChangeText={updateSearch}
+                onChangeText={(search) => updateSearch(search)}
                 value={search}
-    />*/}
+            />
             <FlatList 
                 style={browseStyles.housesFlatList}
                 data={houseData}
@@ -83,12 +87,32 @@ function BrowsingScreen({navigation}) {
 }
 
 
+function openMenu() {
+    ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ["cancel", "share this house", "report house", "leave house"],
+          destructiveButtonIndex: 3,
+          cancelButtonIndex: 0,
+          userInterfaceStyle: 'dark'
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            // cancel action
+          } else if (buttonIndex === 1) {
+            console.log("share this house");
+          } else if (buttonIndex === 2) {
+            console.log("report house");
+          } else if (buttonIndex === 3) {
+            console.log("leave house");
+          }
+        }
+    );
+};
+
 function HouseLandingScreen({route, navigation}) {
     const { key } = route.params;
-    //var key = ID;
-    //var joined = houseData[key].userJoined;
-
-    // tabs data
+    const [user, ,updateUser] = Store.useState("user");
+    const [modalVisible, setModalVisible] = useState(false);
     const layout = useWindowDimensions();
 
     const [index, setIndex] = React.useState(0);
@@ -96,13 +120,23 @@ function HouseLandingScreen({route, navigation}) {
         { key: 'first', title: 'First' },
         { key: 'second', title: 'Second' },
     ]);
+    const imagePath = "./../../"+houseData[key].profileImg
 
     return(
         <ScrollView style={styles.background}>
+            <Image source={imagePath}></Image>
             <SafeAreaView style={styles.topPanel}>
-                <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon color='white'/>
-                </Pressable>
+            <SafeAreaView style={{height: 150, width: '100%',backgroundColor: houseData[key].headerColor, position:'absolute', top:0}}></SafeAreaView>
+                <SafeAreaView style={{flexDirection: 'row', justifyContent:'center', width: '100%', flex: 1}}>
+                    <Pressable style={styles.backIcon} onPress={() => navigation.navigate("Browse", {key: key})}>
+                        <BackIcon color='white'/>
+                    </Pressable>
+                    <SafeAreaView style={{flex:8}}></SafeAreaView>
+                    <Pressable style={styles.menuIcon} onPress={openMenu}>
+                        <DotsIcon color='white' width='30' height='9' />
+                    </Pressable>
+                </SafeAreaView>
+                
                 <SafeAreaView style={styles.infoPanel}>
                     <Pressable style={styles.houseIconBackground}>
                         <HouseIcon style={styles.houseIcon} color='white' size='45'/>
@@ -110,7 +144,7 @@ function HouseLandingScreen({route, navigation}) {
                     <SafeAreaView>
                         <SafeAreaView style={styles.nameAndJoin}>
                             <Text id='houseName' style={styles.houseName}>{houseData[key].houseName}</Text>
-                            <Pressable style={styles.joinButton} /*onPress={() => navigation.navigate("Houses")}*/>
+                            <Pressable style={styles.joinButton} onPress={() => navigation.navigate("NormsAndRules", {key: key})}>
                                 <Text style={styles.buttonText}>join</Text>
                             </Pressable> 
                         </SafeAreaView>   
@@ -166,6 +200,55 @@ function HouseLandingScreen({route, navigation}) {
     );
 }
 
+function NormsAndRulesScreen({route, navigation}) {
+    const { key } = route.params;
+    const [isSelected, setSelection] = useState(false);
+    const [user, ,updateUser] = Store.useState("user");
+
+    return (
+        <SafeAreaView style={styles.background}>
+            <SafeAreaView style={normsStyles.topPanel}>
+                <Pressable style={styles.backIcon} onPress={() => navigation.navigate("BrowseHouseLanding", {key: key})}>
+                    <BackIcon color='white'/>
+                </Pressable>
+                <SafeAreaView style={normsStyles.normsHeader}>
+                    <Pressable style={normsStyles.houseIconBackground}>
+                        <HouseIcon style={styles.houseIcon} color='white' size='58'/>
+                    </Pressable>
+                    <Text style={normsStyles.houseName}>{houseData[key].houseName}</Text>
+                    <Text style={normsStyles.normsTitle}>house rules & norms</Text>
+                </SafeAreaView>
+            </SafeAreaView>
+            <SafeAreaView style={normsStyles.normsScroll}>
+                <ScrollView>
+                    <Text style={normsStyles.normsText}>
+                        1. respect each other's privacy.{'\n'}
+                        2. be kind to each other.{'\n'}
+                        3. no NSFW content.{'\n'}
+                        4. do not discriminate.{'\n'}
+                        5. have fun!
+                    </Text>
+                </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={normsStyles.agreement}>
+                <CheckBox
+                    value={isSelected}
+                    onValueChange={setSelection}
+                    color={'#AFB1B6'}
+                />
+                <Text style={normsStyles.iagree}>i agree</Text>
+                <Pressable 
+                    style={normsStyles.joinButton}
+                    disabled={!isSelected}
+                    onPress={() => {navigation.navigate("BrowseHouseLanding", {key: key}); console.log("joined house", {isSelected});}}
+                >
+                    <Text style={normsStyles.buttonText}>join house</Text>
+                </Pressable>
+            </SafeAreaView>
+        </SafeAreaView>
+    );
+}
+
 
 const Tags = ({ item }) => {
     return (
@@ -194,11 +277,22 @@ const styles = StyleSheet.create({
     },
     backIcon: {
         margin: 20,
-        color: 'white'
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 50,
+        height: 40,
+    },
+    menuIcon: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 20,
+        width: 50,
+        height: 40,
     },
     infoPanel: {
         flex: 1,
         alignItems: 'left',
+        position: 'relative',
         marginLeft: 30,
         marginTop: 20,
     },
@@ -451,4 +545,83 @@ const browseStyles = StyleSheet.create({
     }
 });
 
-export { BrowsingScreen, HouseLandingScreen };
+const normsStyles = StyleSheet.create({
+    topPanel: {
+        flex: 1,
+        textAlign: "left",
+    },
+    normsHeader: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    houseIconBackground: {
+        backgroundColor: '#47C8A7',
+        borderRadius: 100, 
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 31,
+        width: 120,
+        height: 120,
+    },
+    houseName: {
+        fontFamily: "WorkSans-Regular",
+        fontSize: 30,
+        color: 'white',
+        marginVertical: 20
+    },
+    normsTitle: {
+        flex: 1,
+        fontFamily: "WorkSans-Medium",
+        fontSize: 28,
+        color: 'white',
+        marginBottom: 20
+    },
+    normsScroll: {
+        flex: 1,
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: '#AFB1B6',
+        width: '80%',
+        maxHeight: '50%',
+        alignSelf: 'center',
+        marginBottom: 20,
+    },
+    normsText: {
+        fontSize: 16,
+        paddingHorizontal: 40,
+        paddingVertical: 30,
+        color: 'white',
+        fontFamily: 'WorkSans-Regular',
+        lineHeight: 50
+    },
+    agreement: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 40
+    },
+    iagree: {
+        fontSize: 16,
+        marginRight: 30,
+        marginLeft: 10,
+        fontFamily: 'WorkSans-Regular',
+        color: 'white',
+    },
+    joinButton: {
+        flex: 0,
+        alignItems: 'center',
+        width: 120,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        height: 32,
+        borderRadius: 24,
+        backgroundColor: '#FDC765'
+    },
+    buttonText: {
+        fontSize: 16,
+        color: '#40187B',
+        fontFamily: 'WorkSans-Regular'
+    }
+});
+
+export { BrowsingScreen, HouseLandingScreen, NormsAndRulesScreen };
