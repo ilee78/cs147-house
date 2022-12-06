@@ -1,8 +1,8 @@
 import { NavigationHelpersContext } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions, TextInput, ActionSheetIOS } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { Animated, View, SafeAreaView, Text, StyleSheet, Pressable, ScrollView, FlatList, Image, useWindowDimensions, TextInput, ActionSheetIOS, Modal, YellowBox } from 'react-native';
 import CheckBox from 'expo-checkbox';
-import Store from './../../Store';
+
 //import { Searchbar } from 'react-native-paper';
 
 import BackIcon from "../../assets/back.js";
@@ -10,6 +10,7 @@ import HouseIcon from './../../assets/house.js';
 import ProfileIcon from './../../assets/profile-icon.js';
 import PinIcon from '../../assets/pin.js';
 import DotsIcon from '../../assets/dots.js';
+import Store from './../../Store';
 //import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 //import HouseGraphicBorder from '../../assets/browseHouse-Border.png'
 
@@ -19,6 +20,8 @@ import SfVoguersMap from '../../assets/duckwalkway.png';
 
 // Global variable - bad style lol, change later
 var ID = "";
+
+
 
 const BrowseItem = ({ item }) => {
     return (
@@ -86,8 +89,35 @@ function BrowsingScreen({navigation}) {
     );
 }
 
+function openUnjoinedMenu(key) {
+    ActionSheetIOS.showActionSheetWithOptions(
+        {
+          options: ["cancel", "share this house", "report house"],
+          cancelButtonIndex: 0,
+          userInterfaceStyle: 'dark'
+        },
+        buttonIndex => {
+          if (buttonIndex === 0) {
+            // cancel action
+          } else if (buttonIndex === 1) {
+            console.log("share this house");
+          } else if (buttonIndex === 2) {
+            console.log("report house");
+          } else if (buttonIndex === 3) {
+            console.log("leave house");
+            user.houses.filter((_, i) => i !== index)
+          }
+        }
+    );
+};
 
-function openMenu() {
+/*function openJoinedMenu(key) {
+    //const { key } = route.params;
+    const [user, ,updateUser] = Store.useState("user");
+    const leaveHouse = (leftHouse) => {
+        updateUser(user => { user.houses.splice(leftHouse, 1)});
+    }
+    
     ActionSheetIOS.showActionSheetWithOptions(
         {
           options: ["cancel", "share this house", "report house", "leave house"],
@@ -104,39 +134,92 @@ function openMenu() {
             console.log("report house");
           } else if (buttonIndex === 3) {
             console.log("leave house");
+            leaveHouse(houseData[key].key)
           }
         }
     );
-};
+};*/
 
 function HouseLandingScreen({route, navigation}) {
+    // componentDidMount = () => {
+    //     LogBox.ignoreWarnings(['VirtualizedLists should never be nested']);
+    // };
     const { key } = route.params;
     const [user, ,updateUser] = Store.useState("user");
-    const [modalVisible, setModalVisible] = useState(false);
+    const [houseTab, setHouseTab] = useState("about");
     const layout = useWindowDimensions();
-
-    const [index, setIndex] = React.useState(0);
+    //var houseTab = "about";
+    //const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
         { key: 'first', title: 'First' },
         { key: 'second', title: 'Second' },
     ]);
     const imagePath = "./../../"+houseData[key].profileImg
+    const leaveHouse = (leftHouse) => {
+        updateUser(user => { user.houses.splice(leftHouse - 1, 1)});
+    }
+    const flipJustJoined = () => {
+        justJoined = !justJoined;
+    }
+    const openJoinedMenu = () =>
+        ActionSheetIOS.showActionSheetWithOptions(
+            {
+              options: ["cancel", "share this house", "report house", "leave house"],
+              destructiveButtonIndex: 3,
+              cancelButtonIndex: 0,
+              userInterfaceStyle: 'dark'
+            },
+            buttonIndex => {
+              if (buttonIndex === 0) {
+                // cancel action
+              } else if (buttonIndex === 1) {
+                console.log("share this house");
+              } else if (buttonIndex === 2) {
+                console.log("report house");
+              } else if (buttonIndex === 3) {
+                console.log("leave house");
+                leaveHouse(key)
+              }
+            }
+        );
+
+    const moveAnim = useRef(new Animated.Value(0)).current;
+    const ToAbout = () => {
+        Animated.timing(moveAnim, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+        }).start();
+    };
+    const ToEvents = () => {
+        Animated.timing(moveAnim, {
+            toValue: -layout.width,
+            duration: 200,
+            useNativeDriver: true
+        }).start();
+    };
+    const ToRoommates = () => {
+        Animated.timing(moveAnim, {
+            toValue: -layout.width*2,
+            duration: 200,
+            useNativeDriver: true
+        }).start();
+    };
 
     return(
         <ScrollView style={styles.background}>
-            <Image source={imagePath}></Image>
-            <SafeAreaView style={styles.topPanel}>
+        <Image source={imagePath}></Image>
+        <SafeAreaView style={styles.topPanel}>
             <SafeAreaView style={{height: 150, width: '100%',backgroundColor: houseData[key].headerColor, position:'absolute', top:0}}></SafeAreaView>
                 <SafeAreaView style={{flexDirection: 'row', justifyContent:'center', width: '100%', flex: 1}}>
-                    <Pressable style={styles.backIcon} onPress={() => navigation.navigate("Browse", {key: key})}>
+                    <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
                         <BackIcon color='white'/>
                     </Pressable>
                     <SafeAreaView style={{flex:8}}></SafeAreaView>
-                    <Pressable style={styles.menuIcon} onPress={openMenu}>
+                    <Pressable style={styles.menuIcon} onPress={user.houses.includes(key) ? openJoinedMenu : openUnjoinedMenu}>
                         <DotsIcon color='white' width='30' height='9' />
                     </Pressable>
                 </SafeAreaView>
-                
                 <SafeAreaView style={styles.infoPanel}>
                     <Pressable style={styles.houseIconBackground}>
                         <HouseIcon style={styles.houseIcon} color='white' size='45'/>
@@ -144,9 +227,13 @@ function HouseLandingScreen({route, navigation}) {
                     <SafeAreaView>
                         <SafeAreaView style={styles.nameAndJoin}>
                             <Text id='houseName' style={styles.houseName}>{houseData[key].houseName}</Text>
-                            <Pressable style={styles.joinButton} onPress={() => navigation.navigate("NormsAndRules", {key: key})}>
+                            {user.houses.includes(key) ? 
+                                <SafeAreaView style={styles.joinedLabel}>
+                                    <Text style={styles.joinedLabelText}>joined</Text>
+                                </SafeAreaView>
+                            : <Pressable style={styles.joinButton} onPress={() => navigation.navigate("NormsAndRules", {key: key})}>
                                 <Text style={styles.buttonText}>join</Text>
-                            </Pressable> 
+                            </Pressable> }
                         </SafeAreaView>   
                         <SafeAreaView style={styles.distance}> 
                             <SafeAreaView style={styles.pinIcon}>
@@ -166,44 +253,74 @@ function HouseLandingScreen({route, navigation}) {
                     </SafeAreaView>
                 </SafeAreaView>
                 <SafeAreaView style={styles.tabsPanel}>
-                    <Pressable> 
-                        <Text style={styles.selected}>
+                    <Pressable onPress={() => {setHouseTab("about"); ToAbout();}}> 
+                        <Text style={houseTab=="about" ? styles.selected : styles.unselected}>
                             about
                         </Text>
                     </Pressable>
-                    <Pressable> 
-                        <Text style={styles.unselected}>
+                    <Pressable onPress={() => {setHouseTab("events"); ToEvents();}}> 
+                        <Text style={houseTab=="events" ? styles.selected : styles.unselected}>
                             events
                         </Text>
                     </Pressable>
-                    <Pressable> 
-                        <Text style={styles.unselected}>
+                    <Pressable onPress={() => {setHouseTab("roommates"); ToRoommates();}}> 
+                        <Text style={houseTab=="roommates" ? styles.selected : styles.unselected}>
                             roommates
                         </Text>
                     </Pressable>
                 </SafeAreaView>
-                <SafeAreaView style={styles.aboutPanel}>
-                    <Text style={styles.where}>where we are</Text>
-                    <Text style={styles.smallText}>{houseData[key].address}</Text>
-                    <Image style={styles.map} source={SfVoguersMap} />
-                    <Text style={styles.aboutUs}>about us</Text>
-                    <Text style={styles.smallText}>{houseData[key].about}</Text>
-                    <SafeAreaView style={styles.moderatorsPanel}>
-                        <Pressable style={styles.profileIconBackground}>
-                            <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
-                        </Pressable>
-                        <Text style={styles.moderatorText}>{houseData[key].moderators} is a moderator.</Text>
+            </SafeAreaView>
+
+            <Animated.View
+                style={[{ transform: [{ translateX: moveAnim }] }]}>
+                <SafeAreaView style={styles.houseInfoPanels}>
+                    <SafeAreaView style={styles.aboutPanel}>
+                        <Text style={styles.where}>where we are</Text>
+                        <Text style={styles.smallText}>{houseData[key].address}</Text>
+                        <Image style={styles.map} source={SfVoguersMap} />
+                        <Text style={styles.aboutUs}>about us</Text>
+                        <Text style={styles.smallText}>{houseData[key].about}</Text>
+                        <SafeAreaView style={styles.moderatorsPanel}>
+                            <Pressable style={styles.profileIconBackground}>
+                                <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
+                            </Pressable>
+                            <Text style={styles.moderatorText}>{houseData[key].moderators} is a moderator.</Text>
+                        </SafeAreaView>
+                    </SafeAreaView>
+                    <SafeAreaView style={styles.eventsPanel}>
+                        <Text>events</Text>
+                    </SafeAreaView>
+                    <SafeAreaView style={styles.roommatesPanel}>
+                        <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
+                        <FlatList>
+                            data={houseData[key].members}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({item}) => <Roommate item={item}/>}
+                        </FlatList>
+                        <Text>test</Text>
                     </SafeAreaView>
                 </SafeAreaView>
-            </SafeAreaView>
+            </Animated.View>
         </ScrollView>
     );
 }
+
+const Roommate = ({ item }) =>  {
+    return (
+        <Text>{item}</Text>
+    );
+};
 
 function NormsAndRulesScreen({route, navigation}) {
     const { key } = route.params;
     const [isSelected, setSelection] = useState(false);
     const [user, ,updateUser] = Store.useState("user");
+    const [modalVisible,setModalVisible] = useState(false);
+
+    const addHouse = (joinedHouse) => {
+        updateUser(user => { user.houses.push(joinedHouse)});
+    }
+
 
     return (
         <SafeAreaView style={styles.background}>
@@ -240,7 +357,7 @@ function NormsAndRulesScreen({route, navigation}) {
                 <Pressable 
                     style={normsStyles.joinButton}
                     disabled={!isSelected}
-                    onPress={() => {navigation.navigate("BrowseHouseLanding", {key: key}); console.log("joined house", {isSelected});}}
+                    onPress={() => {global.JUSTJOINEDHOUSE = houseData[key].houseName; navigation.navigate("BrowseHouseLanding", {key: key}); addHouse(houseData[key].key);}}
                 >
                     <Text style={normsStyles.buttonText}>join house</Text>
                 </Pressable>
@@ -261,6 +378,29 @@ const Tags = ({ item }) => {
 };
 
 const styles = StyleSheet.create({
+    houseInfoPanels: {
+        flexDirection: 'row',
+    },
+    aboutPanel: {
+        padding: 20,
+        marginHorizontal: 32
+    },
+    eventsPanel: {
+        backgroundColor: 'blue',
+        padding: 20,
+        width: 350,
+        marginHorizontal: 32
+    },
+    roommatesPanel: {
+        backgroundColor: 'pink',
+        padding: 20,
+        width: 350,
+        marginHorizontal: 32
+    },
+    memberText : {
+        fontFamily: 'WorkSans-Regular',
+        fontSize: 24
+    },
     container: {
         flex: 1,
         backgroundColor: 'white',
@@ -336,6 +476,27 @@ const styles = StyleSheet.create({
         height: 32,
         borderRadius: 24,
     },
+    joinedLabel: {
+        flex: 0,
+        borderColor: '#FDC765',
+        borderWidth: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 100,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+        marginTop: 10,
+        height: 34,
+        borderRadius: 24,
+    },
+    joinedLabelText: {
+        fontSize: 18,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: '#FDC765',
+        fontFamily: 'WorkSans-Regular'
+    },
     buttonText: {
         fontSize: 18,
         textAlign: 'center',
@@ -409,10 +570,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 20,
         textDecorationLine: 'underline'
-    },
-    aboutPanel: {
-        padding: 20,
-        marginLeft: 30
     },
     where: {
         color: 'white',

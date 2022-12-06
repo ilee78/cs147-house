@@ -81,7 +81,7 @@ function EditProfileScreen({navigation}) {
         <SafeAreaView style={editStyles.background}>
             <SafeAreaView style={editStyles.topPanel}>
                 <Pressable style={editStyles.backIcon} onPress={() => navigation.goBack()}>
-                    <BackIcon color='red'/>
+                    <BackIcon color='black'/>
                 </Pressable>
             </SafeAreaView>
             <SafeAreaView style={editStyles.profilePanel}>

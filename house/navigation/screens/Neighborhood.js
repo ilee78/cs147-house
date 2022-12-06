@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button, useWindowDimensions, ActionSheetIOS } from 'react-native';
+import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable, Image, FlatList, ScrollView, Button, useWindowDimensions, ActionSheetIOS, Modal } from 'react-native';
 //import { NavigationContainer } from '@react-navigation/native';
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import Sidebar from 'react-native-sidebar';
@@ -8,6 +8,7 @@ import houseData from '../../house-data.json';
 
 import EmptyNeighborhoodGraphic from '../../assets/boxesGraphic.png';
 import LinesIcon from '../../assets/lines.png';
+import XIcon from '../../assets/x.js';
 import HouseMint from '../../assets/house-mint.png';
 import HousePink from '../../assets/house-pink.png';
 import HouseYellow from '../../assets/house-yellow.png';
@@ -19,9 +20,16 @@ import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 import Store from './../../Store';
 
+//var justJoined = false;
+
 function NeighborhoodScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
+    const [modalVisible,setModalVisible] = useState(false);
 
+    // const flipJustJoined = () => {
+    //     justJoined = !justJoined;
+    // }
+    //houseData[user.houses[user.houses.length-1]].houseName
     const openAnim = useRef(new Animated.Value(-250)).current;
     const openAnim2 = useRef(new Animated.Value(-150)).current;
     const OpenMenu = () => {
@@ -48,10 +56,39 @@ function NeighborhoodScreen({ navigation }) {
             useNativeDriver: true
         }).start();
     };
+    if (global.JUSTJOINEDHOUSE !== '') {
+        console.log("joined house :");
+        console.log(global.JUSTJOINEDHOUSE);
+        setModalVisible(true);
+        global.JUSTJOINEDHOUSE = '';
+    }
     if (user.houses.length > 0){
         // Neighborhood
         return (
             <SafeAreaView style={styles.background}>
+                <SafeAreaView>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                    >
+                        <SafeAreaView style={modalStyles.modalView}>
+                            <SafeAreaView style={modalStyles.topPanel}>
+                                <Pressable 
+                                    style={modalStyles.XIcon} 
+                                    hitSlop={50}
+                                    onPress={() => {setModalVisible(!modalVisible);}}>
+                                    <XIcon size={20}/>
+                                </Pressable>
+                            </SafeAreaView>
+                            <SafeAreaView style={modalStyles.bottomPanel}>
+                                <Text style={modalStyles.welcomeHome}>welcome home!</Text>
+                                <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
+                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length-1]].houseName}</Text>
+                            </SafeAreaView>
+                        </SafeAreaView>
+                    </Modal>
+                </SafeAreaView>
                 <SafeAreaView style={styles.neighborhoodHeading}>
                     <Pressable onPress={OpenMenu}>
                         <Image style={styles.menuIcon} source={LinesIcon} />
@@ -424,5 +461,69 @@ const styles = StyleSheet.create({
     },
 
 });
+
+const modalStyles = StyleSheet.create({
+    modalView: {
+      marginTop: 300,
+      width: '80%',
+      aspectRatio: 1.1,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignSelf: 'center',
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    welcomeHome: {
+      textAlign: "center",
+      fontFamily: "WorkSans-Bold",
+      fontSize: 28,
+      color: "#40187B",
+      marginBottom: 15
+    },
+    joinedHouseText: {
+        textAlign: "center",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 20,
+        color: "black",
+        marginBottom: 15
+    },
+    joinedHouseName: {
+        textAlign: "center",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 20,
+        color: "black",
+        textDecorationLine: 'underline',
+        marginBottom: 15
+    },
+    topPanel: {
+        justifyContent: 'left',
+        flex: 1,
+        width: 30,
+        height: 30
+    },
+    bottomPanel: {
+        flex: 4,
+        alignItems: "center",
+        justifyContent: 'center',
+    },
+    XIcon: {
+        margin: 16
+    }
+  });
 
 export { NeighborhoodScreen, BulletinScreen };
