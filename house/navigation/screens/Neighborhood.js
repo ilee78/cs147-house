@@ -123,7 +123,7 @@ function NeighborhoodScreen({ navigation }) {
                                 ListHeaderComponent={
                                     <SafeAreaView style={{justifyContent: 'flex-start'}}>
                                         <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
+                                        <Pressable style={styles.createHouseButton} onPress={() => navigation.navigate("CreateHouse")}>
                                             <Text style={styles.menuText}>+ create a house</Text>
                                         </Pressable>
     
@@ -176,7 +176,7 @@ function NeighborhoodScreen({ navigation }) {
                                 ListHeaderComponent={
                                     <SafeAreaView style={{justifyContent: 'flex-start'}}>
                                         <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
+                                        <Pressable style={styles.createHouseButton} onPress={() => navigation.navigate("CreateHouse")}>
                                             <Text style={styles.menuText}>+ create a house</Text>
                                         </Pressable>
     

@@ -409,7 +409,7 @@ function UnpackingScreen({ navigation }) {
     <SafeAreaView style={styles.background}>
       <SafeAreaView style={styles.contentPanel}>
         <Image style={styles.logo} source={Logo} />
-        <Text style={styles.headerText}>  unpacking...</Text>
+        <Text style={styles.headerText}>unpacking...</Text>
       </SafeAreaView>
       <SafeAreaView style={styles.bottomPanel}>
         <SafeAreaView
