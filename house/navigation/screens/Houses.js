@@ -9,10 +9,11 @@ import BackIcon from "../../assets/back.js";
 import HouseIcon from './../../assets/house.js';
 import ProfileIcon from './../../assets/profile-icon.js';
 import PinIcon from '../../assets/pin.js';
+import BellIcon from '../../assets/bell.js'
 import DotsIcon from '../../assets/dots.js';
 import Store from './../../Store';
-//import HouseProfileImg from '../../assets/houseProfileImg.jpg'
-//import HouseGraphicBorder from '../../assets/browseHouse-Border.png'
+import HouseProfileImg from '../../assets/houseProfileImg.jpg';
+import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
 
 import houseData from '../../house-data.json';
 
@@ -42,7 +43,7 @@ const ProfileItem = ({ item }) => {
 
 function BrowsingScreen({navigation}) {
     const [selected, setSelected] = useState('');
-    
+    const [user, ,updateUser] = Store.useState("user");
     const [search, setSearch] = useState('');
     function updateSearch (search) {
         setSearch(search);
@@ -61,6 +62,12 @@ function BrowsingScreen({navigation}) {
                 onChangeText={(search) => updateSearch(search)}
                 value={search}
             />
+            <SafeAreaView style={browseStyles.location}>
+                <SafeAreaView style={{marginRight: 10}}>
+                    <PinIcon color='white' width='12' height='14'/>
+                </SafeAreaView>
+                <Text style={browseStyles.locationText}>{user.location}</Text>
+            </SafeAreaView>
             <FlatList 
                 style={browseStyles.housesFlatList}
                 data={houseData}
@@ -69,11 +76,15 @@ function BrowsingScreen({navigation}) {
                     <SafeAreaView>
                         <Pressable style={browseStyles.houseListing} onPress={() => navigation.navigate("BrowseHouseLanding", {key: item.key})}>
                             <Pressable style={browseStyles.tempIconBackground}>
-                                <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
                             </Pressable>
                             <SafeAreaView style={browseStyles.houseInfo}>
                                 <Text style={browseStyles.houseName}>{item.houseName}</Text>
-                                <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
+                                <SafeAreaView style={{flexDirection: 'row', marginTop: 5}}>
+                                    <SafeAreaView style={styles.pinIcon}>
+                                        <PinIcon color='black' width='12' height='14'/>
+                                    </SafeAreaView>
+                                    <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
+                                </SafeAreaView>
                                 <FlatList
                                     style={{flexDirection : "row", flexWrap : "wrap"}}
                                     data={item.tags}
@@ -81,6 +92,10 @@ function BrowsingScreen({navigation}) {
                                     renderItem={({item}) => <BrowseItem item={item}/> }
                                 />
                             </SafeAreaView> 
+                        </Pressable>
+                        <Pressable style = {{left: 20, top: 10, position: 'absolute'}} onPress={() => navigation.navigate("BrowseHouseLanding", {key: item.key})}>
+                            <Image style={browseStyles.houseGraphic} source={HouseGraphicBorder}/>
+                            <Image style={browseStyles.houseProfilePicture} source={HouseProfileImg}/>
                         </Pressable>
                     </SafeAreaView>
                 }
@@ -139,12 +154,6 @@ function openUnjoinedMenu(key) {
         }
     );
 };*/
-
-const Roommate = ({ item }) =>  {
-    return (
-        <Text style={{backgroundColor: 'red'}}>{item}</Text>
-    );
-};
 
 function HouseLandingScreen({route, navigation}) {
     // componentDidMount = () => {
@@ -214,12 +223,34 @@ function HouseLandingScreen({route, navigation}) {
 
     const Member = ({ name }) => {
         return (
-            <SafeAreaView style={{borderWidth:1, height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
-                <Pressable style={{flexDirection: 'row'}} onPress={() => naivgation.navigate("ViewOnlyProfile", {name})}>
+            <SafeAreaView style={{borderWidth:1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
+                <Pressable style={{flexDirection: 'row'}} onPress={() => navigation.navigate("ViewOnlyProfile", {name})}>
                     <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
                         <ProfileIcon size={24} color='#40187B'/> 
                     </SafeAreaView>
                     <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>   
+                </Pressable>
+            </SafeAreaView>
+        );
+    };
+
+    const Event = ({ event }) =>  {
+        return (
+            <SafeAreaView style={{borderWidth:1, borderColor: '#AFB1B6', backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
+                <Pressable style={{flexDirection: 'row', paddingVertical: 20}}>
+                    <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
+                        <BellIcon width={40} height={40} color='#FDC765'/> 
+                    </SafeAreaView>
+                    <SafeAreaView style={{width: 240}}>
+                        <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24, marginBottom: 5}}>{event.eventName}</Text>
+                        <SafeAreaView style={styles.eventLocation}> 
+                            <SafeAreaView style={styles.pinIcon}>
+                                <PinIcon color='#61646B' width='12' height='14'/>
+                            </SafeAreaView>
+                            <Text id='milesAway' style={styles.smallDarkText}>{event.eventAddress}</Text>
+                        </SafeAreaView>
+                        <Text style={styles.eventDescription}>{event.eventAbout.length > 80 ? event.eventAbout.substr(0,100)+'...' : event.eventAbout}</Text>
+                    </SafeAreaView>
                 </Pressable>
             </SafeAreaView>
         );
@@ -282,7 +313,7 @@ function HouseLandingScreen({route, navigation}) {
                             events
                         </Text>
                     </Pressable>
-                    <Pressable onPress={() => {setHouseTab("roommates"); console.log(houseData[key].members); ToRoommates();}}> 
+                    <Pressable onPress={() => {setHouseTab("roommates"); ToRoommates();}}> 
                         <Text style={houseTab=="roommates" ? styles.selected : styles.unselected}>
                             roommates
                         </Text>
@@ -307,20 +338,21 @@ function HouseLandingScreen({route, navigation}) {
                         </SafeAreaView>
                     </SafeAreaView>
                     <SafeAreaView style={styles.eventsPanel}>
-                        <Text>events</Text>
+                        {houseData[key].events.map(function(event) {return <Event key={event.eventName} event={event}/>})}
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
                         {user.houses.includes(key)
-                        ? [user.username + ' (me)', ...houseData[key].members].map(function(name) {return <Member name={name}/>;})
-                        : houseData[key].members.map(function(name) {return (<SafeAreaView style={{borderWidth:1, height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
-                        <Pressable style={{flexDirection: 'row'}} onPress={() => navigation.navigate("ViewOnlyProfile", {name: name})}>
-                            <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
-                                <ProfileIcon size={24} color='#40187B'/> 
-                            </SafeAreaView>
-                            <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>   
-                        </Pressable>
-                    </SafeAreaView>);})}
+                        ? <SafeAreaView style={{borderWidth:1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
+                            <Pressable style={{flexDirection: 'row'}} onPress={() => navigation.navigate("Profile")}>
+                                <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
+                                    <ProfileIcon size={24} color='#40187B'/> 
+                                </SafeAreaView>
+                                <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{user.username.toLowerCase() + ' (me)'}</Text>   
+                            </Pressable>
+                        </SafeAreaView>
+                        : <SafeAreaView></SafeAreaView>}
+                        {houseData[key].members.map(function(name) {return (<Member key={name} name={name}/>);})}
                     </SafeAreaView>
                 </SafeAreaView>
             </Animated.View>
@@ -403,7 +435,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 32
     },
     eventsPanel: {
-        backgroundColor: 'blue',
         padding: 20,
         width: 350,
         marginHorizontal: 32
@@ -414,10 +445,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 32
     },
     memberText : {
-        fontFamily: 'WorkSans-Regular',
-        fontSize: 24,
+        fontFamily: 'WorkSans-Medium',
+        fontSize: 20,
         color: 'white',
-        paddingBottom: 8,
+        paddingBottom: 10,
     },
     container: {
         flex: 1,
@@ -524,11 +555,25 @@ const styles = StyleSheet.create({
         fontFamily: 'WorkSans-Regular'
     },
     pinIcon: {
-        marginRight: 7
+        marginRight: 7,
+        marginVertical: 3,
     },
     distance: {
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    eventLocation: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        width: 240,
+    },
+    eventDescription: {
+        maxWidth: 240,
+        fontSize: 16,
+        fontFamily: 'WorkSans-Regular',
+        justifyContent: 'left',
+        alignItems: 'left',
+        marginVertical: 5,
     },
     smallText: {
         fontSize: 16,
@@ -538,6 +583,12 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         color: 'white',
         maxWidth: '90%'
+    },
+    smallDarkText: {
+        fontSize: 16,
+        fontFamily: 'WorkSans-Regular',
+        color: '#61646B',
+        maxWidth: 230,
     },
     tagPanel: {
         flex: 1,
@@ -642,11 +693,22 @@ const browseStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#40187B'
     },
+    location: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        color: 'white',
+        height: 20
+    },
+    locationText: {
+        color: 'white'
+    },
     housesFlatList: {
-        paddingTop: 20,
     },
     houseListing: {
-        marginHorizontal: 20,
+        marginRight: 20,
+        marginLeft: 65,
         marginVertical: 10,
         backgroundColor: '#fff',
         borderWidth: 1,
@@ -659,15 +721,26 @@ const browseStyles = StyleSheet.create({
     houseInfo: {
         flex: 1
     },
+    houseGraphic: {
+        width: 100,
+        height: 100,
+    },
+    houseProfilePicture: {
+        width: 65,
+        height: 65,
+        left: 70,
+        bottom: 80,
+        borderRadius: 33,
+        borderWidth: 3,
+        borderColor: '#FB749B'
+    },
     tempIconBackground: {
-        backgroundColor: '#47C8A7',
-        borderRadius: 100, 
         justifyContent: 'center',
         alignItems: 'center',
         padding: 31,
         width: 60,
         height: 60,
-        marginRight: 10
+        marginRight: 30
     },
     button: {
         height: 45,
@@ -677,6 +750,9 @@ const browseStyles = StyleSheet.create({
         color: "#FDC765",
         borderRadius: 24,
         borderWidth: 1,
+    },
+    milesAway: {
+        marginVertical: 1
     },
     tagPanel: {
         flex: 1,
@@ -688,7 +764,8 @@ const browseStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#FFEBC6',
         borderRadius: 24,
-        padding: 10
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
     tagText: {
         textAlign: 'center',

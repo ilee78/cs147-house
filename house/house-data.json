@@ -61,12 +61,12 @@
         "about": "we are a group of casual dancers at In The Groove Studios that love drinking boba! we host boba runs on us on the last saturday of every month so if you wanna meet some new dancers and drink boba on the house, come join!",
         "events": [
             {
-                "eventName": "newbie boba bash (december 2022) @ i-Tea",
+                "eventName": "newbie boba bash (dec 2022) @ i-Tea",
                 "userRSVP": false,
                 "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
                 "eventDate": "12/31/2022",
                 "eventStartTime": "7 PM PST",
-                "about": "boba run welcoming all our new members of december 2022!"
+                "eventAbout": "boba run welcoming all our new members of december 2022!"
             },
             {
                 "eventName": "newbie boba bash (jan 2022) @ i-Tea",
@@ -74,7 +74,7 @@
                 "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
                 "eventDate": "01/28/2023",
                 "eventStartTime": "7 PM PST",
-                "about": "boba run welcoming all our new members of january 2023!"
+                "eventAbout": "boba run welcoming all our new members of january 2023!"
             }
         ],
         "members": [
@@ -107,7 +107,7 @@
                 "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
                 "eventDate": "12/16/2022",
                 "eventStartTime": "5:30 PM PST",
-                "about": "open to all levels!"
+                "eventAbout": "open to all levels!"
             }
         ],
         "members": [
@@ -141,7 +141,7 @@
                 "eventAddress": "422 N Capitol Ave, San Jose, CA 95133", 
                 "eventDate": "12/21/2022",
                 "eventStartTime": "7:30 PM PST",
-                "about": "we're going to on one studios for the popping foundations class with SwitchVilla! please rsvp at least 3 days beforehand so we can coordinate travel."
+                "eventAbout": "we're going to on one studios for the popping foundations class with SwitchVilla! please rsvp at least 3 days beforehand so we can coordinate travel."
             },
             {
                 "eventName": "freestyle sesh in 6th floor evgr c wellness room",
@@ -149,7 +149,7 @@
                 "eventAddress": "726 Serra St, Stanford, CA 94305", 
                 "eventDate": "12/15/2022",
                 "eventStartTime": "10 PM PST",
-                "about": "nightly sesh to get the edge off #swag #finalsareover"
+                "eventAbout": "nightly sesh to get the edge off #swag #finalsareover"
             }
         ],
         "members": [
