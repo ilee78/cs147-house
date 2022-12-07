@@ -12,8 +12,8 @@ import PinIcon from '../../assets/pin.js';
 import BellIcon from '../../assets/bell.js'
 import DotsIcon from '../../assets/dots.js';
 import Store from './../../Store';
-//import HouseProfileImg from '../../assets/houseProfileImg.jpg'
-//import HouseGraphicBorder from '../../assets/browseHouse-Border.png'
+import HouseProfileImg from '../../assets/houseProfileImg.jpg';
+import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
 
 import houseData from '../../house-data.json';
 
@@ -43,7 +43,7 @@ const ProfileItem = ({ item }) => {
 
 function BrowsingScreen({navigation}) {
     const [selected, setSelected] = useState('');
-    
+    const [user, ,updateUser] = Store.useState("user");
     const [search, setSearch] = useState('');
     function updateSearch (search) {
         setSearch(search);
@@ -62,6 +62,12 @@ function BrowsingScreen({navigation}) {
                 onChangeText={(search) => updateSearch(search)}
                 value={search}
             />
+            <SafeAreaView style={browseStyles.location}>
+                <SafeAreaView style={{marginRight: 10}}>
+                    <PinIcon color='white' width='12' height='14'/>
+                </SafeAreaView>
+                <Text style={browseStyles.locationText}>{user.location}</Text>
+            </SafeAreaView>
             <FlatList 
                 style={browseStyles.housesFlatList}
                 data={houseData}
@@ -70,11 +76,15 @@ function BrowsingScreen({navigation}) {
                     <SafeAreaView>
                         <Pressable style={browseStyles.houseListing} onPress={() => navigation.navigate("BrowseHouseLanding", {key: item.key})}>
                             <Pressable style={browseStyles.tempIconBackground}>
-                                <ProfileIcon style={styles.profileIcon} color='white' size='24'/>
                             </Pressable>
                             <SafeAreaView style={browseStyles.houseInfo}>
                                 <Text style={browseStyles.houseName}>{item.houseName}</Text>
-                                <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
+                                <SafeAreaView style={{flexDirection: 'row', marginTop: 5}}>
+                                    <SafeAreaView style={styles.pinIcon}>
+                                        <PinIcon color='black' width='12' height='14'/>
+                                    </SafeAreaView>
+                                    <Text style={browseStyles.milesAway}>{item.milesAway} miles away</Text>
+                                </SafeAreaView>
                                 <FlatList
                                     style={{flexDirection : "row", flexWrap : "wrap"}}
                                     data={item.tags}
@@ -82,6 +92,10 @@ function BrowsingScreen({navigation}) {
                                     renderItem={({item}) => <BrowseItem item={item}/> }
                                 />
                             </SafeAreaView> 
+                        </Pressable>
+                        <Pressable style = {{left: 20, top: 10, position: 'absolute'}} onPress={() => navigation.navigate("BrowseHouseLanding", {key: item.key})}>
+                            <Image style={browseStyles.houseGraphic} source={HouseGraphicBorder}/>
+                            <Image style={browseStyles.houseProfilePicture} source={HouseProfileImg}/>
                         </Pressable>
                     </SafeAreaView>
                 }
@@ -679,11 +693,22 @@ const browseStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#40187B'
     },
+    location: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 10,
+        color: 'white',
+        height: 20
+    },
+    locationText: {
+        color: 'white'
+    },
     housesFlatList: {
-        paddingTop: 20,
     },
     houseListing: {
-        marginHorizontal: 20,
+        marginRight: 20,
+        marginLeft: 65,
         marginVertical: 10,
         backgroundColor: '#fff',
         borderWidth: 1,
@@ -696,15 +721,26 @@ const browseStyles = StyleSheet.create({
     houseInfo: {
         flex: 1
     },
+    houseGraphic: {
+        width: 100,
+        height: 100,
+    },
+    houseProfilePicture: {
+        width: 65,
+        height: 65,
+        left: 70,
+        bottom: 80,
+        borderRadius: 33,
+        borderWidth: 3,
+        borderColor: '#FB749B'
+    },
     tempIconBackground: {
-        backgroundColor: '#47C8A7',
-        borderRadius: 100, 
         justifyContent: 'center',
         alignItems: 'center',
         padding: 31,
         width: 60,
         height: 60,
-        marginRight: 10
+        marginRight: 30
     },
     button: {
         height: 45,
@@ -714,6 +750,9 @@ const browseStyles = StyleSheet.create({
         color: "#FDC765",
         borderRadius: 24,
         borderWidth: 1,
+    },
+    milesAway: {
+        marginVertical: 1
     },
     tagPanel: {
         flex: 1,
@@ -725,7 +764,8 @@ const browseStyles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#FFEBC6',
         borderRadius: 24,
-        padding: 10
+        paddingHorizontal: 10,
+        paddingVertical: 5,
     },
     tagText: {
         textAlign: 'center',
