@@ -15,37 +15,52 @@ import Store from './../../Store';
 
 function CreateHouseLandingScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
+    const [house, ,updateHouse] = Store.useState("created-house");
     const addOwnedHouse = () => {
-        updateUser(user => { user.num_owned_houses += 1 });
-        updateUser(user => { user.owned_houses.push({houseName: '', location: '', about: '', tags: []}) }); // blank form for new house
+        updateHouse(house => {house.houseName = ''});
+        updateHouse(house => {house.location = ''});
+        updateHouse(house => {house.about = ''});
+        updateHouse(house => {house.tags = []});
+        //updateUser(user => { user.num_owned_houses += 1 });
+        //updateUser(user => { user.owned_houses.push({houseName: '', location: '', about: '', tags: []}) }); // blank form for new house
     }
 
     // called when user navigates back and goes to previous screen
     const deleteOwnedHouse = () => {
-        updateUser(user => { user.num_owned_houses -= 1 });
-        updateUser(user => { user.owned_houses.pop() });
+        // reset to values
+        updateHouse(house => {house.houseName = ''});
+        updateHouse(house => {house.location = ''});
+        updateHouse(house => {house.about = ''});
+        updateHouse(house => {house.tags = []});
+
+        // global.HOUSENAME = '';
+        // global.HOUSELOCATION = '';
+        // global.HOUSEABOUT = '';
+        // global.HOUSETAGS = [];
+        //updateUser(user => { user.num_owned_houses -= 1 });
+        //updateUser(user => { user.owned_houses.pop() });
     }
 
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.topPanel}>
-                {/* <Pressable style={styles.backIcon} onPress={() => {deleteOwnedHouse(); navigation.goBack();}}> */}
-                <Pressable style={styles.backIcon} onPress={() => {navigation.goBack();}}>
+                <Pressable style={styles.backIcon} onPress={() => {deleteOwnedHouse(); navigation.goBack();}}>
+                {/* <Pressable style={styles.backIcon} onPress={() => {navigation.goBack();}}> */}
                     <BackIcon color='black'/>
                 </Pressable>
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
-            <Image style={styles.logo} source={Logo} />
-            <Text style={styles.headerText}>
-                let's build a
-                <Text style={styles.houseText}> house</Text>!
-            </Text>
-            <Pressable
-                style={styles.button}
-                onPress={() => {navigation.navigate("CreateHouseName");}}>
-                {/* onPress={() => {addOwnedHouse(); navigation.navigate("CreateHouseName");}}> */}
-                <Text style={styles.buttonText}>next</Text>
-            </Pressable>
+                <Image style={styles.logo} source={Logo} />
+                <Text style={styles.headerText}>
+                    let's build a
+                    <Text style={styles.houseText}> house</Text>!
+                </Text>
+                <Pressable
+                    style={styles.button}
+                    onPress={() => {navigation.navigate("CreateHouseName");}}>
+                    {/* onPress={() => {addOwnedHouse(); navigation.navigate("CreateHouseName");}}> */}
+                    <Text style={styles.buttonText}>next</Text>
+                </Pressable>
             </SafeAreaView>
         </SafeAreaView>
     );
@@ -53,8 +68,11 @@ function CreateHouseLandingScreen({ navigation }) {
 
 function CreateHouseNameScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
+    const [house, ,updateHouse] = Store.useState("created-house");
     const updateHouseName = (name) => {
-        updateUser(user => {user.owned_houses[user.num_owned_houses - 1].houseName = name});
+        updateHouse(house => {house.houseName = name});
+        //global.HOUSENAME = name;
+        // updateUser(user => {user.owned_houses[user.num_owned_houses - 1].houseName = name});
     }
 
     return(
@@ -70,7 +88,7 @@ function CreateHouseNameScreen({ navigation }) {
                 <TextInput
                 style={styles.textInput}
                 placeholder="enter name..."
-                //onChangeText={(name) => updateHouseName(name)}          
+                onChangeText={(name) => updateHouseName(name)}          
                 />
                 <Pressable
                 style={styles.button}
@@ -84,10 +102,13 @@ function CreateHouseNameScreen({ navigation }) {
 
 function CreateHouseLocationScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
+    const [house, ,updateHouse] = Store.useState("created-house");
     const data = [{ key: "1", value: "San Francisco, CA" }];
     
-    const updateHouseLocation = (loc) => {
-        updateUser(user => {user.owned_houses[user.num_owned_houses - 1].location = loc});
+    const updateHouseLocation = (location) => {
+        updateHouse(house => {house.location = location});
+        //global.HOUSELOCATION = location;
+        // updateUser(user => {user.owned_houses[user.num_owned_houses - 1].location = location});
     }
 
     return (
@@ -105,7 +126,7 @@ function CreateHouseLocationScreen({ navigation }) {
             placeholder="search locations..."
             fontFamily="WorkSans-MediumItalic"
             buttonStyle={styles.textInput}
-            //setSelected={(val) => updateHouseLocation(val)}
+            setSelected={(val) => updateHouseLocation(val)}
             data={data}
             save="value"/>
             <Pressable
@@ -120,8 +141,11 @@ function CreateHouseLocationScreen({ navigation }) {
 
 function CreateHouseAboutScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
+    const [house, ,updateHouse] = Store.useState("created-house");
     const updateHouseAbout = (about) => {
-        updateUser(user => {user.owned_houses[user.num_owned_houses - 1].about = about});
+        updateHouse(house => {house.about = about});
+        //global.HOUSEABOUT = about;
+        // updateUser(user => {user.owned_houses[user.num_owned_houses - 1].about = about});
     }
 
     return(
@@ -137,7 +161,7 @@ function CreateHouseAboutScreen({ navigation }) {
                 <TextInput
                 style={styles.textInput}
                 placeholder="enter description..."
-                //onChangeText={(name) => updateHouseAbout(about)}          
+                onChangeText={(about) => updateHouseAbout(about)}          
                 />
                 <Pressable
                 style={styles.button}
@@ -152,17 +176,19 @@ function CreateHouseAboutScreen({ navigation }) {
 function CreateHouseTagsScreen({ navigation }) {
     var tags = [];
     const [user, ,updateUser] = Store.useState("user");
+    const [house, ,updateHouse] = Store.useState("created-house");
   
     function tagsInputHandler() {
-      for (let i = 0; i < SECTIONS.length; i++) {
-        for (let j = 0; j < SECTIONS[i].data.length; j++) {
-          if (SECTIONS[i].data[j].selected) {
-            tags.push(SECTIONS[i].data[j].text);
-          }
+        for (let i = 0; i < SECTIONS.length; i++) {
+            for (let j = 0; j < SECTIONS[i].data.length; j++) {
+                if (SECTIONS[i].data[j].selected) {
+                    tags.push(SECTIONS[i].data[j].text);
+                }
+            }
         }
-      }
-      // uncomment once nav re-render is fixed :(
-      //updateUser(user => {user.owned_houses[user.num_owned_houses - 1].tags = tags});
+        updateHouse(house => {house.tags = tags});
+        //global.HOUSETAGS = tags;
+        //updateUser(user => {user.owned_houses[user.num_owned_houses - 1].tags = tags});
     }
   
     return (
@@ -187,10 +213,10 @@ function CreateHouseTagsScreen({ navigation }) {
                     <>
                     <Text style={styles.sectionHeader}>{section.title}</Text>
                     <FlatList
-                      horizontal
-                      data={section.data}
-                      renderItem={({ item }) => <ListItem item={item} />}
-                      showsHorizontalScrollIndicator={false}
+                    horizontal
+                    data={section.data}
+                    renderItem={({ item }) => <ListItem item={item} />}
+                    showsHorizontalScrollIndicator={false}
                     />
                     </>
                 )}
@@ -203,10 +229,7 @@ function CreateHouseTagsScreen({ navigation }) {
             </View>
             <Pressable
             style={styles.button}
-            onPress={() => {
-            navigation.navigate("CreateHouseLoading");
-            tagsInputHandler();
-            }}
+            onPress={() => {tagsInputHandler(); navigation.navigate("CreateHouseLoading");}}
             >
             <Text style={styles.buttonText}>next</Text>
             </Pressable>
@@ -217,9 +240,18 @@ function CreateHouseTagsScreen({ navigation }) {
 
 function CreateHouseLoadingScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
-    setTimeout(() => {
-        navigation.navigate('Tabs', {screen: 'Neighborhood'});
-    }, 2000);
+    const [house, ,updateHouse] = Store.useState("created-house");
+    setTimeout(() => {dumpData(); navigation.navigate('Tabs', {screen: 'Neighborhood'});}, 2000);
+
+    function dumpData() {
+        updateUser(user => {user.owned_houses.push({
+            houseName: house.houseName,
+            location: house.location,
+            about: house.about,
+            tags: house.tags,
+        })});
+    }
+
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.contentPanel}>
@@ -289,21 +321,20 @@ const SECTIONS = [
     return (
       <View
         style={{
-          marginHorizontal: 6,
-          marginVertical: 10,
-          backgroundColor: selected ? "#FFEBC6" : "#fff",
-          borderWidth: 1,
-          borderColor: selected ? "#FFEBC6" : "#C6C6C6",
-          borderRadius: 24,
-          padding: 10,
+        marginHorizontal: 6,
+        marginVertical: 10,
+        backgroundColor: selected ? "#FFEBC6" : "#fff",
+        borderWidth: 1,
+        borderColor: selected ? "#FFEBC6" : "#C6C6C6",
+        borderRadius: 24,
+        padding: 10,
         }}
       >
         <Pressable
-          onPressOut={() => {
+        onPressOut={() => {
             setSelected(!selected);
             item.selected = !item.selected;
-          }}
-        >
+        }}>
           <Text style={styles.itemText}>{item.text}</Text>
         </Pressable>
       </View>
