@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
-import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen } from './screens/Profile';
+import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen, ViewOnlyProfileScreen } from './screens/Profile';
 import { NeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
 import { BrowsingScreen, HouseLandingScreen, NormsAndRulesScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
@@ -123,6 +123,7 @@ function Houses({navigation}) {
             <HousesStack.Screen name="Browse" component={BrowsingScreen}/>
             <HousesStack.Screen name="BrowseHouseLanding" component={HouseLandingScreen}/>
             <HousesStack.Screen name="NormsAndRules" component={NormsAndRulesScreen}/>
+            <HousesStack.Screen name="ViewOnlyProfile" component={ViewOnlyProfileScreen}/>
         </HousesStack.Navigator>
     );
 }

@@ -9,6 +9,7 @@ import BackIcon from "../../assets/back.js";
 import PlusIcon from "../../assets/plus.js"
 import Store from './../../Store';
 import houseData from '../../house-data.json'
+import profileData from '../../profile-data.json'
 
 const EMPTY_BIO = '';
 
@@ -263,6 +264,85 @@ function SettingsScreen({navigation}) {
     );
 }
 
+function ViewOnlyProfileScreen({route, navigation}) {
+    const { name } = route.params;
+    console.log("name: " + name);
+    const index = profileData.findIndex(profileData => profileData.profileName===name);
+    console.log(index);
+    console.log(profileData[index].songs);
+
+    return(
+        <ScrollView style={styles.background}>
+                <Pressable style={styles.backIconProfile} onPress={() => navigation.goBack()}>
+                    <BackIcon color="black" size="24" />
+                </Pressable>
+                <SafeAreaView style={styles.profilePanel}>
+                    <Pressable style={styles.profileBackground}>
+                        <ProfileIcon style={styles.profileIcon} color='#FFFFFF' size='58'/>
+                    </Pressable>
+                    <SafeAreaView style={styles.namePanel}>
+                        <Text id='username' style={styles.name}>{name.toLowerCase()}</Text>
+                    </SafeAreaView>
+                    <Text
+                    style={{
+                    fontSize: 16,
+                    fontFamily: 'WorkSans-Regular',
+                    color: 'black',
+                    textAlign: 'center',
+                    borderColor: '#AFB1B6',
+                    padding: 21,
+                    borderRadius: 5,
+                    borderWidth: 1,
+                    justifyContent: 'center',
+                    marginTop: 15,
+                    marginLeft: 30,
+                    marginRight: 30,
+                    marginLeft: 30,
+                    flexWrap: 'wrap',
+                    alignItems: 'stretch',
+                    minWidth: '80%' // TODO: change this to stretch 
+                    }}>
+                        {profileData[index].bio}
+                    </Text>
+                </SafeAreaView>
+                <SafeAreaView style={styles.tagPanel}>
+                    <Text style={styles.sectionHeading}>tags</Text>
+                    <FlatList
+                        id = 'tags'
+                        horizontal
+                        data={profileData[index].tags}
+                        renderItem={({item}) => <Tags item={item} /> }
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </SafeAreaView>
+                {profileData[index].showHouses ? <SafeAreaView style={styles.housesPanel}>
+                    <Text style={styles.sectionHeading}>my houses</Text>
+                    <FlatList
+                        id = 'houses'
+                        horizontal
+                        data={profileData[index].houses}
+                        renderItem={({item}) => <Houses item={item}/> }
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </SafeAreaView> : <SafeAreaView></SafeAreaView>}
+                <SafeAreaView style={styles.songsPanel}>
+                    <Text style={styles.sectionHeading}>songs i'm dancing to</Text>
+                    {profileData[index].songs.map(function(songInfo) {return <ProfileSong songInfo={songInfo}/>;})}
+                </SafeAreaView>
+        </ScrollView>
+    );
+}
+
+const ProfileSong = ({ songInfo }) => {
+    return (
+        <View style={styles.songs}>
+            <MusicIcon color="#40187B" size="24" />
+            <Text style={styles.songNameText}>{songInfo.songTitle}
+                <Text style={styles.songArtistText}> {songInfo.songArtist}</Text>
+            </Text>
+        </View>
+    );
+};
 
 const Tags = ({ item, navigation }) => {
     return (
@@ -469,6 +549,10 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
       },
+    backIconProfile: {
+        margin: 15,
+        padding: 5,
+    },
     settingsIcon: {
         alignSelf: 'flex-end',
         margin: 15,
@@ -705,4 +789,4 @@ const editStyles = StyleSheet.create({
     },
 });
 
-export { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen };
+export { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen, ViewOnlyProfileScreen };
