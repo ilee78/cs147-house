@@ -9,9 +9,8 @@ import BackIcon from "../../assets/back.js";
 import BuildingGraphic from './../../assets/buildingGraphic.png';
 import Store from './../../Store';
 
-// TODO: prevent screens from remounting when global state vars are changed
-// TODO: once that is done re-integrate all the input handlers that have been commented out in this file
 // TODO: navigate to landing page for new house once done creating
+// changes for owned house vs. joined house landing page - joined -> owner on button label, report house -> delete house, you are moderator
 
 function CreateHouseLandingScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
@@ -250,6 +249,32 @@ function CreateHouseLoadingScreen({ navigation }) {
             about: house.about,
             tags: house.tags,
         })});
+        // const fs = require('fs');
+        // var data = fs.readFileSync('./../../house-data.json');
+        // var obj = JSON.parse(data);
+        let newHouse = {
+            "key": 4,
+            "houseName": house.houseName, 
+            "color": "yellow",
+            "headerColor": "#FDC765",
+            "profileImg": "houseProfileImg.jpg",
+            "userJoined": true, 
+            "userOwner": true,
+            "location": house.location, 
+            "address": "456 Duck Walk Way, San Francisco, CA 94110",
+            "map": "duck-walkway.png",
+            "milesAway": 0, 
+            "tags": house.tags, 
+            "about": house.about,
+            "events": [],
+            "members": [
+                user.username,
+            ],
+            "moderators": [
+                user.username,
+            ]
+        };
+        obj.push(newHouse);
     }
 
     return(
