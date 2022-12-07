@@ -427,6 +427,7 @@ const styles = StyleSheet.create({
     },
     neighborhoodList: {
         alignSelf: 'center',
+        width: 390
     },
     neighborhoodMenu: {
         backgroundColor: 'white',
@@ -438,7 +439,7 @@ const styles = StyleSheet.create({
     },
     neighborhoodMenuContent: {
         height: 735,
-        paddingLeft: 20,
+        paddingHorizontal: 10,
     },
     nonMenuSpace: {
         position: 'relative',

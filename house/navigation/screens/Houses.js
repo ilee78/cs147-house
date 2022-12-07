@@ -140,6 +140,12 @@ function openUnjoinedMenu(key) {
     );
 };*/
 
+const Roommate = ({ item }) =>  {
+    return (
+        <Text style={{backgroundColor: 'red'}}>{item}</Text>
+    );
+};
+
 function HouseLandingScreen({route, navigation}) {
     // componentDidMount = () => {
     //     LogBox.ignoreWarnings(['VirtualizedLists should never be nested']);
@@ -206,6 +212,19 @@ function HouseLandingScreen({route, navigation}) {
         }).start();
     };
 
+    const Member = ({ name }) => {
+        return (
+            <SafeAreaView style={{borderWidth:1, height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
+                <Pressable style={{flexDirection: 'row'}} onPress={() => naivgation.navigate("ViewOnlyProfile", {name})}>
+                    <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
+                        <ProfileIcon size={24} color='#40187B'/> 
+                    </SafeAreaView>
+                    <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>   
+                </Pressable>
+            </SafeAreaView>
+        );
+    };
+
     return(
         <ScrollView style={styles.background}>
         <Image source={imagePath}></Image>
@@ -263,7 +282,7 @@ function HouseLandingScreen({route, navigation}) {
                             events
                         </Text>
                     </Pressable>
-                    <Pressable onPress={() => {setHouseTab("roommates"); ToRoommates();}}> 
+                    <Pressable onPress={() => {setHouseTab("roommates"); console.log(houseData[key].members); ToRoommates();}}> 
                         <Text style={houseTab=="roommates" ? styles.selected : styles.unselected}>
                             roommates
                         </Text>
@@ -292,24 +311,22 @@ function HouseLandingScreen({route, navigation}) {
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
-                        <FlatList>
-                            data={houseData[key].members}
-                            showsVerticalScrollIndicator={false}
-                            renderItem={({item}) => <Roommate item={item}/>}
-                        </FlatList>
-                        <Text>test</Text>
+                        {user.houses.includes(key)
+                        ? [user.username + ' (me)', ...houseData[key].members].map(function(name) {return <Member name={name}/>;})
+                        : houseData[key].members.map(function(name) {return (<SafeAreaView style={{borderWidth:1, height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
+                        <Pressable style={{flexDirection: 'row'}} onPress={() => navigation.navigate("ViewOnlyProfile", {name: name})}>
+                            <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
+                                <ProfileIcon size={24} color='#40187B'/> 
+                            </SafeAreaView>
+                            <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>   
+                        </Pressable>
+                    </SafeAreaView>);})}
                     </SafeAreaView>
                 </SafeAreaView>
             </Animated.View>
         </ScrollView>
     );
 }
-
-const Roommate = ({ item }) =>  {
-    return (
-        <Text>{item}</Text>
-    );
-};
 
 function NormsAndRulesScreen({route, navigation}) {
     const { key } = route.params;
@@ -392,14 +409,15 @@ const styles = StyleSheet.create({
         marginHorizontal: 32
     },
     roommatesPanel: {
-        backgroundColor: 'pink',
         padding: 20,
         width: 350,
         marginHorizontal: 32
     },
     memberText : {
         fontFamily: 'WorkSans-Regular',
-        fontSize: 24
+        fontSize: 24,
+        color: 'white',
+        paddingBottom: 8,
     },
     container: {
         flex: 1,

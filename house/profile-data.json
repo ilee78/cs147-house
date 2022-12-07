@@ -56,7 +56,7 @@
             "sf voguers",
             "stanford + san jose poppers"
         ],
-        "showHouses": false
+        "showHouses": true
     },
     {
         "profileName": "Caroline Z.",
@@ -88,7 +88,7 @@
     },
     {
         "profileName": "Jeff W.",
-        "bio": "",
+        "bio": "hi! my name is jeff and i like to dance",
         "tags": [],
         "songs": [
             {
@@ -112,7 +112,7 @@
     },
     {
         "profileName": "Izzy L.",
-        "bio": "",
+        "bio": "hi! my name is izzy and i like to dance",
         "tags": [],
         "songs": [
             {
@@ -128,7 +128,7 @@
     },
     {
         "profileName": "Michael C.",
-        "bio": "",
+        "bio": "hi! my name is michael and i like to dance",
         "tags": [],
         "songs": [
             {
@@ -148,7 +148,7 @@
     },
     {
         "profileName": "Hammy O.",
-        "bio": "",
+        "bio": "hi! my name is hammy and i like to dance",
         "tags": [],
         "songs": [
             {
