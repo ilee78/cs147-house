@@ -324,7 +324,7 @@ function HouseLandingScreen({route, navigation}) {
                         </SafeAreaView>
                     </SafeAreaView>
                     <SafeAreaView style={styles.eventsPanel}>
-                        {houseData[key].events.map(function(event) {return <Event event={event}/>})}
+                        {houseData[key].events.map(function(event) {return <Event key={event.eventName} event={event}/>})}
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
@@ -338,7 +338,7 @@ function HouseLandingScreen({route, navigation}) {
                             </Pressable>
                         </SafeAreaView>
                         : <SafeAreaView></SafeAreaView>}
-                        {houseData[key].members.map(function(name) {return (<Member name={name}/>);})}
+                        {houseData[key].members.map(function(name) {return (<Member key={name} name={name}/>);})}
                     </SafeAreaView>
                 </SafeAreaView>
             </Animated.View>
