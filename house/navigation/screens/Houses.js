@@ -154,10 +154,8 @@ function HouseLandingScreen({ route, navigation }) {
     const rsvpEvent = (event) => {
         if (key in user.events) {
             updateUser(user => { user.events[key].push(event) });
-            console.log("added event to existing list");
         } else {
             updateUser(user => { user.events[key] = [event] });
-            console.log("created new key");
         }
     }
 
@@ -966,7 +964,8 @@ const modalStyles = StyleSheet.create({
         borderRadius: 4,
         borderColor: '#AFB1B6',
         paddingVertical: 16,
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
+        width: '99%'
     },
     topPanel: {
         justifyContent: 'flex-start',

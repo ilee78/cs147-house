@@ -7,11 +7,15 @@ import Sidebar from 'react-native-sidebar';
 import houseData from '../../house-data.json';
 
 import EmptyNeighborhoodGraphic from '../../assets/boxesGraphic.png';
+import BackIcon from "../../assets/back.js";
 import LinesIcon from '../../assets/lines.png';
 import XIcon from '../../assets/x.js';
 import HouseMint from '../../assets/house-mint.png';
 import HousePink from '../../assets/house-pink.png';
 import HouseYellow from '../../assets/house-yellow.png';
+import PinIcon from '../../assets/pin.js';
+import BellIcon from '../../assets/bell.js'
+import CalendarIcon from '../../assets/calendar.js';
 import OwnedHouseMint from '../../assets/ownedHouse-Mint.png';
 import OwnedHousePink from '../../assets/ownedHouse-Pink.png';
 import OwnedHouseYellow from '../../assets/ownedHouse-Yellow.png';
@@ -20,16 +24,10 @@ import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 import Store from './../../Store';
 
-//var justJoined = false;
-
 function NeighborhoodScreen({ navigation }) {
-    const [user, ,updateUser] = Store.useState("user");
-    const [modalVisible,setModalVisible] = useState(false);
+    const [user, , updateUser] = Store.useState("user");
+    const [modalVisible, setModalVisible] = useState(false);
 
-    // const flipJustJoined = () => {
-    //     justJoined = !justJoined;
-    // }
-    //houseData[user.houses[user.houses.length-1]].houseName
     const openAnim = useRef(new Animated.Value(-250)).current;
     const openAnim2 = useRef(new Animated.Value(-150)).current;
     const OpenMenu = () => {
@@ -62,7 +60,7 @@ function NeighborhoodScreen({ navigation }) {
         setModalVisible(true);
         global.JUSTJOINEDHOUSE = '';
     }
-    if (user.houses.length > 0){
+    if (user.houses.length > 0) {
         // Neighborhood
         return (
             <SafeAreaView style={styles.background}>
@@ -74,17 +72,17 @@ function NeighborhoodScreen({ navigation }) {
                     >
                         <SafeAreaView style={modalStyles.modalView}>
                             <SafeAreaView style={modalStyles.topPanel}>
-                                <Pressable 
-                                    style={modalStyles.XIcon} 
+                                <Pressable
+                                    style={modalStyles.XIcon}
                                     hitSlop={50}
-                                    onPress={() => {setModalVisible(!modalVisible);}}>
-                                    <XIcon size={20}/>
+                                    onPress={() => { setModalVisible(!modalVisible); }}>
+                                    <XIcon size={20} />
                                 </Pressable>
                             </SafeAreaView>
                             <SafeAreaView style={modalStyles.bottomPanel}>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
-                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length-1]].houseName}</Text>
+                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length - 1]].houseName}</Text>
                             </SafeAreaView>
                         </SafeAreaView>
                     </Modal>
@@ -106,8 +104,8 @@ function NeighborhoodScreen({ navigation }) {
                         vertical
                         numColumns={2}
                         data={user.houses}
-                        renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.houseDisplay}>
-                           <UserHouses item={item} /></Pressable>}
+                        renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.houseDisplay}>
+                            <UserHouses item={item} /></Pressable>}
                         scrollEnabled={true}
                         showsVerticalScrollIndicator={false}
                         style={styles.neighborhoodList}
@@ -118,26 +116,26 @@ function NeighborhoodScreen({ navigation }) {
                     <SafeAreaView style={styles.menuPanel}>
                         <SafeAreaView style={styles.neighborhoodMenu}>
                             <SafeAreaView style={styles.neighborhoodMenuContent}>
-    
-                            <FlatList
-                                ListHeaderComponent={
-                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
-                                        <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
-                                            <Text style={styles.menuText}>+ create a house</Text>
-                                        </Pressable>
-    
-                                    </SafeAreaView>
-                                }
-                                vertical
-                                data={user.houses}
-                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
-                                    <MenuHouse item={item}></MenuHouse>
-                                </Pressable>}
-                                scrollEnabled={true}
-                                showsVerticalScrollIndicator={false}
-                                style={styles.menuNeighborhoodList}
-                            />
+
+                                <FlatList
+                                    ListHeaderComponent={
+                                        <SafeAreaView style={{ justifyContent: 'flex-start' }}>
+                                            <Text style={styles.menuHeader}>my houses</Text>
+                                            <Pressable style={styles.createHouseButton}>
+                                                <Text style={styles.menuText}>+ create a house</Text>
+                                            </Pressable>
+
+                                        </SafeAreaView>
+                                    }
+                                    vertical
+                                    data={user.houses}
+                                    renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.menuHouseContainer}>
+                                        <MenuHouse item={item}></MenuHouse>
+                                    </Pressable>}
+                                    scrollEnabled={true}
+                                    showsVerticalScrollIndicator={false}
+                                    style={styles.menuNeighborhoodList}
+                                />
                             </SafeAreaView>
                         </SafeAreaView>
                         <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
@@ -146,7 +144,7 @@ function NeighborhoodScreen({ navigation }) {
                     </SafeAreaView>
                 </Animated.View>
             </SafeAreaView>
-    
+
         );
     }
     else {
@@ -171,26 +169,26 @@ function NeighborhoodScreen({ navigation }) {
                     <SafeAreaView style={styles.menuPanel}>
                         <SafeAreaView style={styles.neighborhoodMenu}>
                             <SafeAreaView style={styles.neighborhoodMenuContent}>
-    
-                            <FlatList
-                                ListHeaderComponent={
-                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
-                                        <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
-                                            <Text style={styles.menuText}>+ create a house</Text>
-                                        </Pressable>
-    
-                                    </SafeAreaView>
-                                }
-                                vertical
-                                data={user.houses}
-                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
-                                    <MenuHouse item={item}></MenuHouse>
-                                </Pressable>}
-                                scrollEnabled={true}
-                                showsVerticalScrollIndicator={false}
-                                style={styles.menuNeighborhoodList}
-                            />
+
+                                <FlatList
+                                    ListHeaderComponent={
+                                        <SafeAreaView style={{ justifyContent: 'flex-start' }}>
+                                            <Text style={styles.menuHeader}>my houses</Text>
+                                            <Pressable style={styles.createHouseButton}>
+                                                <Text style={styles.menuText}>+ create a house</Text>
+                                            </Pressable>
+
+                                        </SafeAreaView>
+                                    }
+                                    vertical
+                                    data={user.houses}
+                                    renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.menuHouseContainer}>
+                                        <MenuHouse item={item}></MenuHouse>
+                                    </Pressable>}
+                                    scrollEnabled={true}
+                                    showsVerticalScrollIndicator={false}
+                                    style={styles.menuNeighborhoodList}
+                                />
                             </SafeAreaView>
                         </SafeAreaView>
                         <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
@@ -201,7 +199,7 @@ function NeighborhoodScreen({ navigation }) {
             </SafeAreaView>
         );
     }
-    
+
 }
 
 const MenuHouseProfilePicture = ({ item }) => {
@@ -215,8 +213,8 @@ const MenuHouse = ({ item }) => {
     console.log(houseData[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
-                <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
-                <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
+            <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
+            <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
         </SafeAreaView>
     );
 };
@@ -236,16 +234,6 @@ const UserHouses = ({ item }) => {
 };
 
 const HouseIllustration = ({ item }) => {
-    //if (global.OWNEDHOUSES.includes(item)) {
-    //     switch (HouseData[item].color) {
-    //         case 'yellow':
-    //             return (<Image style={styles.houseIllustration} source={OwnedHouseYellow}></Image>);
-    //         case 'pink':
-    //             return (<Image style={styles.houseIllustration} source={OwnedHousePink}></Image>);
-    //         case 'mint':
-    //             return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
-    //     }
-    // }
     switch (houseData[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);
@@ -264,12 +252,106 @@ const HouseProfilePicture = ({ item }) => {
 };
 
 function BulletinScreen({ navigation }) {
+    const [user, , updateUser] = Store.useState("user");
+    //const [eventIndex, updateEventIndex] = useState(0);
+    const [bullModalHouseIndex, updateBullModalHouseIndex] = useState(0);
+    const [bullModalEventIndex, updateBullModalEventIndex] = useState(0);
+    //const [houseIndex, updateHouseIndex] = useState(0);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const Event = ({ event, bulletinHouseIndex, bulletinEventIndex }) => {
+        return (
+            <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center', minWidth: '98%' }}>
+                <Pressable style={{ flexDirection: 'row', paddingVertical: 20 }} onPress={() => { updateBullModalHouseIndex(bulletinHouseIndex),  updateBullModalEventIndex(bulletinEventIndex), setModalVisible(true) }}>
+                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16, top: 2 }}>
+                        <BellIcon width={40} height={40} color='#FDC765' />
+                    </SafeAreaView>
+                    <SafeAreaView style={{ width: 240 }}>
+                        <Text style={{ color: '#40187B', fontFamily: 'WorkSans-Medium', fontSize: 26, marginBottom: 5 }}>
+                            {houseData[bulletinHouseIndex].houseName}:
+                            <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24, marginBottom: 5 }}> {event.eventName}</Text>
+                        </Text>
+                        <SafeAreaView style={bulletinStyles.eventLocation}>
+                            <SafeAreaView style={bulletinStyles.pinIcon}>
+                                <PinIcon color='#61646B' width='12' height='14' />
+                            </SafeAreaView>
+                            <Text id='milesAway' style={bulletinStyles.smallDarkText}>{event.eventAddress}</Text>
+                        </SafeAreaView>
+                        <Text style={bulletinStyles.eventDescription}>{event.eventAbout.length > 80 ? event.eventAbout.substr(0, 100) + '...' : event.eventAbout}</Text>
+                    </SafeAreaView>
+                </Pressable>
+            </SafeAreaView>
+        );
+    };
+
+    var eventsList = [];
+    console.log(user.events)
+    for (var houseInd = 0; houseInd < houseData.length; houseInd++) {
+        if (houseInd in user.events) {
+            console.log(houseInd, houseInd in user.events, user.events);
+            for (var eventInd = 0; eventInd < user.events[houseInd].length; eventInd++) {
+                if (user.events[houseInd].includes(eventInd)) {
+                    console.log(eventInd, user.events[houseInd].includes(eventInd));
+                    eventsList.push(
+                        <Event key={houseData[houseInd].events[eventInd].eventName} event={houseData[houseInd].events[eventInd]} bulletinHouseIndex={houseInd} bulletinEventIndex={eventInd} />
+                    );
+                    console.log("pushed ", houseData[houseInd].events[eventInd].eventName);
+                }
+            }
+        }
+    }
+
     return (
-        <SafeAreaView>
-            <Text>bulletin screen</Text>
-            <Pressable onPress={() => navigation.goBack()}>
-                <Text>go back</Text>
-            </Pressable>
+        <SafeAreaView style={bulletinStyles.background}>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+            >
+                <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', height: '100%' }}>
+                    <SafeAreaView style={bulletinModalStyles.modalView}>
+                        <SafeAreaView style={bulletinModalStyles.topPanel}>
+                            <Pressable
+                                style={bulletinModalStyles.XIcon}
+                                hitSlop={50}
+                                onPress={() => { setModalVisible(!modalVisible); }}>
+                                <XIcon size={20} />
+                            </Pressable>
+                        </SafeAreaView>
+                        <ScrollView style={bulletinModalStyles.infoScroll} contentContainerStyle={bulletinModalStyles.bottomPanel}>
+                            <Text style={bulletinModalStyles.eventTitle}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventName}</Text>
+                            <SafeAreaView style={bulletinModalStyles.infoFlex}>
+                                <SafeAreaView style={bulletinModalStyles.infoIcon}>
+                                    <PinIcon width={24} height={24} color={'#40187B'} />
+                                </SafeAreaView>
+                                <Text style={bulletinModalStyles.eventInfo}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventAddress}</Text>
+                            </SafeAreaView>
+                            <SafeAreaView style={bulletinModalStyles.infoFlex}>
+                                <SafeAreaView style={bulletinModalStyles.infoIcon}>
+                                    <CalendarIcon size={24} color={'#40187B'} />
+                                </SafeAreaView>
+                                <Text style={bulletinModalStyles.eventInfo}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventDate} @ {houseData[bullModalHouseIndex].events[0].eventStartTime}</Text>
+                            </SafeAreaView>
+                            <Text style={bulletinModalStyles.eventInfo}>{'\n'}about:</Text>
+                            <Text style={bulletinModalStyles.eventAbout}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventAbout}</Text>
+                        </ScrollView>
+                    </SafeAreaView>
+                </View>
+            </Modal>
+            <SafeAreaView style={bulletinStyles.neighborhoodHeading}>
+                <Pressable style={bulletinStyles.backIcon} onPress={() => navigation.goBack()}>
+                    <BackIcon color='white' />
+                </Pressable>
+                <Text style={styles.headingText}>bulletin board</Text>
+            </SafeAreaView>
+            <ScrollView
+                style={bulletinStyles.centerContentPanel}
+                justifyContent={'top'}
+                alignItems={'left'}
+                showsVerticalScrollIndicator={false}
+            >
+                {eventsList}
+            </ScrollView>
         </SafeAreaView>
     );
 }
@@ -385,7 +467,7 @@ const styles = StyleSheet.create({
         fontFamily: 'WorkSans-Bold',
     },
     menuHouseContainer: {
-        flex:1,
+        flex: 1,
         width: 200,
         marginVertical: 8,
     },
@@ -465,36 +547,36 @@ const styles = StyleSheet.create({
 
 const modalStyles = StyleSheet.create({
     modalView: {
-      marginTop: 300,
-      width: '80%',
-      aspectRatio: 1.1,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignSelf: 'center',
+        marginTop: 300,
+        width: '80%',
+        aspectRatio: 1.1,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignSelf: 'center',
     },
     button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
     },
     buttonOpen: {
-      backgroundColor: "#F194FF",
+        backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+        backgroundColor: "#2196F3",
     },
     textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
     },
     welcomeHome: {
-      textAlign: "center",
-      fontFamily: "WorkSans-Bold",
-      fontSize: 28,
-      color: "#40187B",
-      marginBottom: 15
+        textAlign: "center",
+        fontFamily: "WorkSans-Bold",
+        fontSize: 28,
+        color: "#40187B",
+        marginBottom: 15
     },
     joinedHouseText: {
         textAlign: "center",
@@ -524,6 +606,171 @@ const modalStyles = StyleSheet.create({
     },
     XIcon: {
         margin: 16
+    }
+});
+
+const bulletinStyles = StyleSheet.create({
+    background: {
+        flex: 1,
+        backgroundColor: '#40187B'
+    },
+    topPanel: {
+        flex: 1,
+        textAlign: "left",
+    },
+    neighborhoodHeading: {
+        flex: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: 'white',
+        borderBottomWidth: 1,
+    },
+    backIcon: {
+        margin: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 50,
+        height: 40,
+    },
+    smallDarkText: {
+        fontSize: 16,
+        fontFamily: 'WorkSans-Regular',
+        color: '#61646B',
+        maxWidth: 230,
+    }, pinIcon: {
+        marginRight: 7,
+        marginVertical: 3,
+    },
+    eventLocation: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        width: 240,
+    },
+    eventDescription: {
+        maxWidth: 240,
+        fontSize: 16,
+        fontFamily: 'WorkSans-Regular',
+        justifyContent: 'left',
+        alignItems: 'left',
+        marginVertical: 5,
+    },
+    centerContentPanel: {
+        flex: 8,
+        fontFamily: 'WorkSans-Medium',
+        marginLeft: 30,
+        marginTop: 20,
+        width: '88%',
+    },
+});
+
+const bulletinModalStyles = StyleSheet.create({
+    modalView: {
+      marginTop: 220,
+      width: '90%',
+      height: '55%',
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignSelf: 'center',
+      borderWidth: 1,
+      borderColor: '#AFB1B6'
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    eventTitle: {
+      textAlign: "left",
+      fontFamily: "WorkSans-Medium",
+      fontSize: 28,
+      color: "black",
+      marginBottom: 20,
+      maxWidth: '90%',
+      color: '#40187B'
+    },
+    eventInfo: {
+        textAlign: "left",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 18,
+        color: "black",
+        marginBottom: 15,
+        maxWidth: '80%'
+    },
+    eventAbout: {
+        textAlign: "left",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 18,
+        color: "black",
+        marginBottom: 15,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: '#AFB1B6',
+        paddingVertical: 16,
+        paddingHorizontal: 10,
+        width: '99%'
+    },
+    topPanel: {
+        justifyContent: 'flex-start',
+        flex: 0,
+        width: 30,
+        height: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20
+    },
+    bottomPanel: {
+        alignItems: "left",
+        justifyContent: 'top',
+    },
+    infoFlex: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    infoIcon: {
+        marginRight: 10,
+    },
+    infoScroll: {
+        flex: 6,
+        width: '80%',
+        marginLeft: 30,
+        marginVertical: 30,
+    },
+    XIcon: {
+        margin: 20,
+    },
+    rsvpButton: {
+        flex: 0,
+        alignItems: 'center',
+        width: 72,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        height: 32,
+        borderRadius: 24,
+        backgroundColor: '#FDC765',
+        marginLeft: 230
+    },
+    cancelButton: {
+        flex: 0,
+        alignItems: 'center',
+        width: 90,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        height: 32,
+        borderRadius: 24,
+        backgroundColor: '#FD6565',
+        marginLeft: 212
     }
   });
 
