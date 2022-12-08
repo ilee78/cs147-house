@@ -28,6 +28,7 @@ import jeffProfilePic from '../../assets/jeffProfilePic.jpg';
 import izzyProfilePic from '../../assets/izzyProfilePic.png';
 import michaelProfilePic from '../../assets/michaelProfilePic.jpg';
 import hammyProfilePic from '../../assets/hammyProfilePic.jpg';
+import defaultProfilePic from '../../assets/defaultProfilePic.jpg'
 
 import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import sfVoguersPic from '../../assets/sfVoguersPic.png';
@@ -306,6 +307,8 @@ function HouseLandingScreen({ route, navigation }) {
                 return <Image style={styles.profileImage} source={michaelProfilePic}></Image>;
             case "Hammy O.":
                 return <Image style={styles.profileImage} source={hammyProfilePic}></Image>;
+            case "user": 
+                return <Image style={styles.profileImage} source={defaultProfilePic}></Image>;
         }
     }
 
@@ -500,11 +503,11 @@ function HouseLandingScreen({ route, navigation }) {
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? global.HOUSEDATA[key].members.length + 1 : global.HOUSEDATA[key].members.length}</Text>
                         {user.houses.includes(key)
                             ? <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
-                                <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("Profile")}>
-                                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16, top: 2 }}>
-                                        <ProfileIcon size={24} color='#40187B' />
+                                <Pressable style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate("Profile")}>
+                                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16 }}>
+                                        <ProfilePic name={"user"} />
                                     </SafeAreaView>
-                                    <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24 }}>{user.username.toLowerCase() + ' (me)'}</Text>
+                                    <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24}}>{user.username.toLowerCase()} (me)</Text>
                                 </Pressable>
                             </SafeAreaView>
                             : <SafeAreaView></SafeAreaView>}
