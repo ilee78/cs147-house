@@ -11,6 +11,8 @@ import ProfileIcon from './../../assets/profile-icon.js';
 import PinIcon from '../../assets/pin.js';
 import BellIcon from '../../assets/bell.js'
 import DotsIcon from '../../assets/dots.js';
+import CalendarIcon from '../../assets/calendar.js';
+import XIcon from '../../assets/x.js';
 import Store from './../../Store';
 import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
@@ -67,6 +69,7 @@ function BrowsingScreen({ navigation }) {
         ID = num;
     }
 
+
     const HouseProfilePic = ({ houseNumber }) => {
         switch (houseNumber) {
             case 0:
@@ -77,6 +80,30 @@ function BrowsingScreen({ navigation }) {
                 return <Image style={browseStyles.houseProfilePicture} source={raeClassCommunityPic}></Image>;
             case 3:
                 return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
+
+    function joinedLabel(house) {
+        if (user.houses.includes(house)) {
+            return(
+                <SafeAreaView style={{
+                    flex: 1,
+                    alignItems: 'flex-end',
+                    justifyContent: 'flex-end',
+                    paddingHorizontal: 12,
+                    paddingVertical: 3,
+                    borderRadius: 24,
+                    maxHeight: 22,
+                    marginLeft: 5,
+                }}>
+                    <Text style={{        
+                        fontSize: 12,
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#FB749C',
+                        fontFamily: 'WorkSans-Medium'}}>
+                    joined</Text>
+                </SafeAreaView>
+            );
         }
     }
 
@@ -104,7 +131,16 @@ function BrowsingScreen({ navigation }) {
                             <Pressable style={browseStyles.tempIconBackground}>
                             </Pressable>
                             <SafeAreaView style={browseStyles.houseInfo}>
-                                <Text style={browseStyles.houseName}>{item.houseName}</Text>
+                                <SafeAreaView style={{flexDirection: 'row'}}>
+                                    <Text style={{
+                                        flex: 1,
+                                        fontFamily: "WorkSans-Regular",
+                                        fontSize: 20
+                                    }}>{item.houseName}</Text>
+                                    <View>
+                                        {joinedLabel(item.key)}
+                                    </View>
+                                </SafeAreaView>
                                 <SafeAreaView style={{ flexDirection: 'row', marginTop: 5 }}>
                                     <SafeAreaView style={styles.pinIcon}>
                                         <PinIcon color='black' width='12' height='14' />
@@ -146,40 +182,13 @@ function openUnjoinedMenu(key) {
                 console.log("report house");
             } else if (buttonIndex === 3) {
                 console.log("leave house");
-                user.houses.filter((_, i) => i !== index)
+                user.houses.filter((_, i) => i !== index);
+                user.events[key] = [];
             }
         }
     );
 };
 
-/*function openJoinedMenu(key) {
-    //const { key } = route.params;
-    const [user, ,updateUser] = Store.useState("user");
-    const leaveHouse = (leftHouse) => {
-        updateUser(user => { user.houses.splice(leftHouse, 1)});
-    }
-    
-    ActionSheetIOS.showActionSheetWithOptions(
-        {
-          options: ["cancel", "share this house", "report house", "leave house"],
-          destructiveButtonIndex: 3,
-          cancelButtonIndex: 0,
-          userInterfaceStyle: 'dark'
-        },
-        buttonIndex => {
-          if (buttonIndex === 0) {
-            // cancel action
-          } else if (buttonIndex === 1) {
-            console.log("share this house");
-          } else if (buttonIndex === 2) {
-            console.log("report house");
-          } else if (buttonIndex === 3) {
-            console.log("leave house");
-            leaveHouse(houseData[key].key)
-          }
-        }
-    );
-};*/
 
 function HouseLandingScreen({ route, navigation }) {
     // componentDidMount = () => {
@@ -189,8 +198,10 @@ function HouseLandingScreen({ route, navigation }) {
     const [user, , updateUser] = Store.useState("user");
     const [houseTab, setHouseTab] = useState("about");
     const layout = useWindowDimensions();
-    //var houseTab = "about";
-    //const [index, setIndex] = React.useState(0);
+    const [eventIndex, updateEventIndex] = useState(0);
+
+    const [modalVisible, setModalVisible] = useState(false);
+
     const [routes] = React.useState([
         { key: 'first', title: 'First' },
         { key: 'second', title: 'Second' },
@@ -199,9 +210,19 @@ function HouseLandingScreen({ route, navigation }) {
     const leaveHouse = (leftHouse) => {
         updateUser(user => { user.houses.splice(leftHouse - 1, 1) });
     }
-    const flipJustJoined = () => {
-        justJoined = !justJoined;
+
+    const rsvpEvent = (event) => {
+        if (key in user.events) {
+            updateUser(user => { user.events[key].push(event) });
+        } else {
+            updateUser(user => { user.events[key] = [event] });
+        }
     }
+
+    const cancelEvent = (event) => {
+        updateUser(user => { user.events[key].splice(event - 1, 1) });
+    }
+
     const openJoinedMenu = () =>
         ActionSheetIOS.showActionSheetWithOptions(
             {
@@ -295,7 +316,7 @@ function HouseLandingScreen({ route, navigation }) {
     const Event = ({ event }) => {
         return (
             <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
-                <Pressable style={{ flexDirection: 'row', paddingVertical: 20 }}>
+                <Pressable style={{ flexDirection: 'row', paddingVertical: 20 }} onPress={() => {updateEventIndex(event.eventIndex), setModalVisible(true)}}>
                     <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16, top: 2 }}>
                         <BellIcon width={40} height={40} color='#FDC765' />
                     </SafeAreaView>
@@ -316,6 +337,52 @@ function HouseLandingScreen({ route, navigation }) {
 
     return (
         <ScrollView style={styles.background}>
+            <SafeAreaView>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                >
+                    <View style={{backgroundColor: 'rgba(0, 0, 0, 0.5)', height: '100%'}}>
+                        <SafeAreaView style={modalStyles.modalView}>
+                            <SafeAreaView style={modalStyles.topPanel}>
+                                <Pressable
+                                    style={modalStyles.XIcon}
+                                    hitSlop={50}
+                                    onPress={() => { setModalVisible(!modalVisible); }}>
+                                    <XIcon size={20} />
+                                </Pressable>
+                                {user.houses.includes(key) ?
+                                    ((key in user.events && user.events[key].includes(eventIndex)) ?
+                                        <Pressable style={modalStyles.cancelButton} onPress={() => cancelEvent(eventIndex)}>
+                                            <Text style={styles.buttonText}>cancel</Text>
+                                        </Pressable>
+                                        : <Pressable style={modalStyles.rsvpButton} onPress={() => rsvpEvent(eventIndex)}>
+                                            <Text style={styles.buttonText}>rsvp</Text>
+                                        </Pressable>)
+                                    : <SafeAreaView></SafeAreaView>}
+                            </SafeAreaView>
+                            <ScrollView style={modalStyles.infoScroll} contentContainerStyle={modalStyles.bottomPanel}>
+                                <Text style={modalStyles.eventTitle}>{houseData[key].events[eventIndex].eventName}</Text>
+                                <SafeAreaView style={modalStyles.infoFlex}>
+                                    <SafeAreaView style={modalStyles.infoIcon}>
+                                        <PinIcon width={24} height={24} color={'#40187B'} />
+                                    </SafeAreaView>
+                                    <Text style={modalStyles.eventInfo}>{houseData[key].events[eventIndex].eventAddress}</Text>
+                                </SafeAreaView>
+                                <SafeAreaView style={modalStyles.infoFlex}>
+                                    <SafeAreaView style={modalStyles.infoIcon}>
+                                        <CalendarIcon size={24} color={'#40187B'} />
+                                    </SafeAreaView>
+                                    <Text style={modalStyles.eventInfo}>{houseData[key].events[eventIndex].eventDate} @ {houseData[key].events[0].eventStartTime}</Text>
+                                </SafeAreaView>
+                                <Text style={modalStyles.eventInfo}>{'\n'}about:</Text>
+                                <Text style={modalStyles.eventAbout}>{houseData[key].events[eventIndex].eventAbout}</Text>
+                            </ScrollView>
+                        </SafeAreaView>
+                    </View>
+                </Modal>
+            </SafeAreaView>
             <Image source={imagePath}></Image>
             <SafeAreaView style={styles.topPanel}>
                 <SafeAreaView style={{ height: 150, width: '100%', backgroundColor: houseData[key].headerColor, position: 'absolute', top: 0 }}></SafeAreaView>
@@ -462,7 +529,7 @@ function NormsAndRulesScreen({ route, navigation }) {
                 <Pressable
                     style={normsStyles.joinButton}
                     disabled={!isSelected}
-                    onPress={() => { global.JUSTJOINEDHOUSE = houseData[key].houseName; navigation.navigate("BrowseHouseLanding", { key: key }); addHouse(houseData[key].key); }}
+                    onPress={() => { global.JUSTJOINEDHOUSE = houseData[key].houseName; addHouse(houseData[key].key); navigation.navigate("BrowseHouseLanding", { key: key }); }}
                 >
                     <Text style={normsStyles.buttonText}>join house</Text>
                 </Pressable>
@@ -935,5 +1002,116 @@ const normsStyles = StyleSheet.create({
         fontFamily: 'WorkSans-Regular'
     }
 });
+
+const modalStyles = StyleSheet.create({
+    modalView: {
+      marginTop: 220,
+      width: '90%',
+      height: '55%',
+      backgroundColor: 'white',
+      borderRadius: 20,
+      padding: 35,
+      alignSelf: 'center',
+      borderWidth: 1,
+      borderColor: '#AFB1B6'
+    },
+    button: {
+      borderRadius: 20,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    eventTitle: {
+      textAlign: "left",
+      fontFamily: "WorkSans-Medium",
+      fontSize: 28,
+      color: "black",
+      marginBottom: 20,
+      maxWidth: '90%',
+      color: '#40187B'
+    },
+    eventInfo: {
+        textAlign: "left",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 18,
+        color: "black",
+        marginBottom: 15,
+        maxWidth: '80%'
+    },
+    eventAbout: {
+        textAlign: "left",
+        fontFamily: "WorkSans-Regular",
+        fontSize: 18,
+        color: "black",
+        marginBottom: 15,
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: '#AFB1B6',
+        paddingVertical: 16,
+        paddingHorizontal: 10,
+        width: '99%'
+    },
+    topPanel: {
+        justifyContent: 'flex-start',
+        flex: 0,
+        width: 30,
+        height: 30,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 20
+    },
+    bottomPanel: {
+        alignItems: "left",
+        justifyContent: 'top',
+    },
+    infoFlex: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    infoIcon: {
+        marginRight: 10,
+    },
+    infoScroll: {
+        flex: 6,
+        width: '80%',
+        marginLeft: 30,
+        marginVertical: 30,
+    },
+    XIcon: {
+        margin: 20,
+    },
+    rsvpButton: {
+        flex: 0,
+        alignItems: 'center',
+        width: 72,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        height: 32,
+        borderRadius: 24,
+        backgroundColor: '#FDC765',
+        marginLeft: 230
+    },
+    cancelButton: {
+        flex: 0,
+        alignItems: 'center',
+        width: 90,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        height: 32,
+        borderRadius: 24,
+        backgroundColor: '#FD6565',
+        marginLeft: 212
+    }
+  });
 
 export { BrowsingScreen, HouseLandingScreen, NormsAndRulesScreen };

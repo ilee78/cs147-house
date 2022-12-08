@@ -1,0 +1,46 @@
+import * as React from "react"
+import Svg, { Path } from "react-native-svg"
+
+function SvgComponent(props) {
+    return (
+        <Svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 22"
+            width={props.size}
+            height={props.size}
+        >
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m18.7 8.9h-17.9c-0.4 0-0.7-0.3-0.7-0.7 0-0.5 0.3-0.8 0.7-0.8h17.9c0.4 0 0.7 0.3 0.7 0.8 0 0.4-0.3 0.7-0.7 0.7z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m14.2 12.8c-0.4 0-0.8-0.3-0.8-0.7 0-0.5 0.4-0.8 0.8-0.8 0.4 0 0.8 0.3 0.8 0.8 0 0.4-0.4 0.7-0.8 0.7z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m9.8 12.8c-0.5 0-0.8-0.3-0.8-0.7 0-0.5 0.3-0.8 0.8-0.8 0.4 0 0.7 0.3 0.7 0.8 0 0.4-0.3 0.7-0.7 0.7z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m5.3 12.8c-0.4 0-0.7-0.3-0.7-0.7 0-0.5 0.3-0.8 0.7-0.8 0.4 0 0.8 0.3 0.8 0.8 0 0.4-0.4 0.7-0.8 0.7z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m14.2 16.7c-0.4 0-0.8-0.3-0.8-0.8 0-0.4 0.4-0.7 0.8-0.7 0.4 0 0.8 0.3 0.8 0.7 0 0.5-0.4 0.8-0.8 0.8z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m9.8 16.7c-0.5 0-0.8-0.3-0.8-0.8 0-0.4 0.3-0.7 0.8-0.7 0.4 0 0.7 0.3 0.7 0.7 0 0.5-0.3 0.8-0.7 0.8z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m5.3 16.7c-0.4 0-0.7-0.3-0.7-0.8 0-0.4 0.3-0.7 0.7-0.7 0.4 0 0.8 0.3 0.8 0.7 0 0.5-0.4 0.8-0.8 0.8z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m13.8 4.8c-0.4 0-0.8-0.3-0.8-0.8v-3.3c0-0.4 0.4-0.7 0.8-0.7 0.4 0 0.7 0.3 0.7 0.8v3.2c0 0.5-0.3 0.8-0.7 0.8z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m5.7 4.8c-0.4 0-0.7-0.3-0.7-0.8v-3.3c0-0.4 0.3-0.7 0.7-0.7 0.4 0 0.8 0.3 0.8 0.8v3.2c0 0.5-0.4 0.8-0.8 0.8z"
+                fill={props.color}
+            />
+            <Path id="Layer" fill-rule="evenodd" class="s0" d="m14 21.5h-8.5c-3.4 0-5.5-2.1-5.5-5.5v-9c0-3.4 2.1-5.4 5.5-5.4h8.5c1.7 0 3.1 0.5 4.1 1.5 0.9 0.9 1.4 2.3 1.4 3.9v9.1c0 3.3-2.1 5.4-5.5 5.4zm-8.5-18.4c-2.6 0-4 1.4-4 3.9v9c0 2.6 1.4 4 4 4h8.5c2.6 0 4-1.4 4-3.9v-9.1q0-1.9-1-2.9c-0.7-0.7-1.7-1-3-1z"
+                fill={props.color}
+            />
+        </Svg>
+    )
+}
+
+export default SvgComponent
