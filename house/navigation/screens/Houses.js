@@ -80,6 +80,8 @@ function BrowsingScreen({ navigation }) {
                 return <Image style={browseStyles.houseProfilePicture} source={raeClassCommunityPic}></Image>;
             case 3:
                 return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
+        }
+    }
 
     function joinedLabel(house) {
         if (user.houses.includes(house)) {
@@ -187,7 +189,7 @@ function openUnjoinedMenu(key) {
             }
         }
     );
-};
+}
 
 
 function HouseLandingScreen({ route, navigation }) {
