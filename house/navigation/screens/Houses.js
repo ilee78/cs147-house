@@ -47,6 +47,7 @@ function BrowsingScreen({ navigation }) {
     const [selected, setSelected] = useState('');
     const [user, , updateUser] = Store.useState("user");
     const [search, setSearch] = useState('');
+    
     function updateSearch(search) {
         setSearch(search);
     }
@@ -54,6 +55,32 @@ function BrowsingScreen({ navigation }) {
     function houseHandler(house) {
         setSelected(house);
         ID = num;
+    }
+
+    function joinedLabel(house) {
+        if (user.houses.includes(house)) {
+            return(
+                <SafeAreaView style={{
+                    flex: 1,
+                    alignItems: 'flex-end',
+                    justifyContent: 'flex-end',
+                    paddingHorizontal: 12,
+                    paddingVertical: 3,
+                    borderRadius: 24,
+                    maxHeight: 22,
+                    marginLeft: 5,
+                }}>
+                    <Text style={{        
+                        fontSize: 12,
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#FB749C',
+                        fontFamily: 'WorkSans-Medium'}}>
+                    joined</Text>
+                </SafeAreaView>
+            );
+        }
     }
 
     return (
@@ -80,7 +107,16 @@ function BrowsingScreen({ navigation }) {
                             <Pressable style={browseStyles.tempIconBackground}>
                             </Pressable>
                             <SafeAreaView style={browseStyles.houseInfo}>
-                                <Text style={browseStyles.houseName}>{item.houseName}</Text>
+                                <SafeAreaView style={{flexDirection: 'row'}}>
+                                    <Text style={{
+                                        flex: 1,
+                                        fontFamily: "WorkSans-Regular",
+                                        fontSize: 20
+                                    }}>{item.houseName}</Text>
+                                    <View>
+                                        {joinedLabel(item.key)}
+                                    </View>
+                                </SafeAreaView>
                                 <SafeAreaView style={{ flexDirection: 'row', marginTop: 5 }}>
                                     <SafeAreaView style={styles.pinIcon}>
                                         <PinIcon color='black' width='12' height='14' />
@@ -439,7 +475,7 @@ function NormsAndRulesScreen({ route, navigation }) {
                 <Pressable
                     style={normsStyles.joinButton}
                     disabled={!isSelected}
-                    onPress={() => { global.JUSTJOINEDHOUSE = houseData[key].houseName; navigation.navigate("BrowseHouseLanding", { key: key }); addHouse(houseData[key].key); }}
+                    onPress={() => { global.JUSTJOINEDHOUSE = houseData[key].houseName; addHouse(houseData[key].key); navigation.navigate("BrowseHouseLanding", { key: key }); }}
                 >
                     <Text style={normsStyles.buttonText}>join house</Text>
                 </Pressable>
