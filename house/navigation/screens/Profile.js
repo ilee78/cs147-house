@@ -8,8 +8,9 @@ import MusicIcon from './../../assets/music.js';
 import BackIcon from "../../assets/back.js";
 import PlusIcon from "../../assets/plus.js"
 import Store from './../../Store';
-import houseData from '../../house-data.json'
-import profileData from '../../profile-data.json'
+//import houseData from '../../house-data.json'
+import profileData from '../../profile-data.json';
+import './Global.js';
 
 const EMPTY_BIO = '';
 
@@ -52,7 +53,7 @@ function ProfileScreen({navigation}) {
                         id = 'houses'
                         horizontal
                         data={user.houses}
-                        renderItem={({item}) => <Houses item={houseData[item].houseName}/> }
+                        renderItem={({item}) => <Houses item={global.HOUSEDATA[item].houseName}/> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>

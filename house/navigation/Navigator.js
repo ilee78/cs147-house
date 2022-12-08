@@ -14,6 +14,7 @@ import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen
 
 // Global vars
 import Store from './../Store';
+import './screens/Global.js';
 
 // Icons
 import NeighborhoodIcon from '../assets/neighborhood-icon.js';

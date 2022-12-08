@@ -16,9 +16,9 @@
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
     "@react-navigation/stack": "^6.3.5",
-    "expo": "~47.0.7",
+    "expo": "^47.0.0",
     "expo-app-loading": "~2.1.1",
-    "expo-checkbox": "^2.2.2",
+    "expo-checkbox": "~2.2.2",
     "expo-file-system": "~15.1.1",
     "expo-font": "~11.0.1",
     "expo-splash-screen": "~0.17.5",
@@ -27,7 +27,7 @@
     "react-native": "0.70.5",
     "react-native-dropdown-select-list": "^2.0.2",
     "react-native-fs": "^2.20.0",
-    "react-native-gesture-handler": "^2.8.0",
+    "react-native-gesture-handler": "~2.8.0",
     "react-native-paper": "^4.12.5",
     "react-native-reanimated": "~2.12.0",
     "react-native-safe-area-context": "4.4.1",
@@ -38,7 +38,7 @@
     "state-pool": "^0.8.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.19.3"
   },
   "private": true
 }

@@ -4,7 +4,7 @@ import { View, Animated, PanResponder, SafeAreaView, Text, StyleSheet, Pressable
 //import { createDrawerNavigator } from '@react-navigation/drawer';
 import Sidebar from 'react-native-sidebar';
 
-import houseData from '../../house-data.json';
+//import houseData from '../../house-data.json';
 
 import EmptyNeighborhoodGraphic from '../../assets/boxesGraphic.png';
 import BackIcon from "../../assets/back.js";
@@ -23,6 +23,7 @@ import Bulletin from '../../assets/bulletinBoard.png'
 import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 import Store from './../../Store';
+import './Global.js';
 
 import sfVoguersPic from '../../assets/sfVoguersPic.png';
 import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
@@ -71,6 +72,8 @@ function NeighborhoodScreen({ navigation }) {
     }
     if (user.houses.length > 0) {
         // Neighborhood
+        console.log(global.COUNTCREATE);
+        console.log(global.HOUSEDATA);
         return (
             <SafeAreaView style={styles.background}>
                 <SafeAreaView>
@@ -92,7 +95,7 @@ function NeighborhoodScreen({ navigation }) {
                                 <Text>🎉</Text>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
-                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length - 1]].houseName}</Text>
+                                <Text style={modalStyles.joinedHouseName}>{global.HOUSEDATA[user.houses[user.houses.length-1]].houseName}</Text>
                             </SafeAreaView>
                         </SafeAreaView>
                     </Modal>
@@ -241,11 +244,11 @@ const MenuHouseProfilePicture = ({ houseNumber }) => {
 };
 
 const MenuHouse = ({ item }) => {
-    console.log(houseData[item].houseName);
+    console.log(global.HOUSEDATA[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
-            <MenuHouseProfilePicture houseNumber={houseData[item].key}></MenuHouseProfilePicture>
-            <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
+            <MenuHouseProfilePicture houseNumber={global.HOUSEDATA[item].key}></MenuHouseProfilePicture>
+            <Text style={styles.menuHouseNameText}>{global.HOUSEDATA[item].houseName}</Text>
         </SafeAreaView>
     );
 };
@@ -254,7 +257,7 @@ const UserHouses = ({ item }) => {
     return (
         <SafeAreaView>
             <SafeAreaView style={styles.houseNameContainer}>
-                <Text style={styles.houseNameText}>{houseData[item].houseName}</Text>
+                <Text style={styles.houseNameText}>{global.HOUSEDATA[item].houseName}</Text>
             </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
@@ -265,7 +268,7 @@ const UserHouses = ({ item }) => {
 };
 
 const HouseIllustration = ({ item }) => {
-    switch (houseData[item].color) {
+    switch (global.HOUSEDATA[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);
         case 'pink':
@@ -276,7 +279,7 @@ const HouseIllustration = ({ item }) => {
 };
 
 const HouseProfilePicture = ({ item }) => {
-    switch (houseData[item].profileImg) {
+    switch (global.HOUSEDATA[item].profileImg) {
         case 'houseProfileImg.jpg':
             return (<Image style={styles.houseProfileImage} source={HouseProfileImg}></Image>);
     }

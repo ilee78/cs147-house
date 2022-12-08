@@ -16,8 +16,8 @@ import XIcon from '../../assets/x.js';
 import Store from './../../Store';
 import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
-
-import houseData from '../../house-data.json';
+import './Global.js';
+//import houseData from '../../house-data.json';
 import profileData from '../../profile-data.json';
 
 import SfVoguersMap from '../../assets/duckwalkway.png';
@@ -125,7 +125,7 @@ function BrowsingScreen({ navigation }) {
             </SafeAreaView>
             <FlatList
                 style={browseStyles.housesFlatList}
-                data={houseData}
+                data={global.HOUSEDATA}
                 showsVerticalScrollIndicator={false}
                 renderItem={({ item }) =>
                     <SafeAreaView>
@@ -208,7 +208,7 @@ function HouseLandingScreen({ route, navigation }) {
         { key: 'first', title: 'First' },
         { key: 'second', title: 'Second' },
     ]);
-    const imagePath = "./../../" + houseData[key].profileImg
+    const imagePath = "./../../"+global.HOUSEDATA[key].profileImg
     const leaveHouse = (leftHouse) => {
         updateUser(user => { user.houses.splice(leftHouse - 1, 1) });
     }
@@ -401,8 +401,8 @@ function HouseLandingScreen({ route, navigation }) {
                     <HouseProfilePic houseNumber={key}/>
                     <SafeAreaView>
                         <SafeAreaView style={styles.nameAndJoin}>
-                            <Text id='houseName' style={styles.houseName}>{houseData[key].houseName}</Text>
-                            {user.houses.includes(key) ?
+                            <Text id='houseName' style={styles.houseName}>{global.HOUSEDATA[key].houseName}</Text>
+                            {user.houses.includes(key) ? 
                                 <SafeAreaView style={styles.joinedLabel}>
                                     <Text style={styles.joinedLabelText}>joined</Text>
                                 </SafeAreaView>
@@ -414,14 +414,14 @@ function HouseLandingScreen({ route, navigation }) {
                             <SafeAreaView style={styles.pinIcon}>
                                 <PinIcon color='white' width='12' height='14' />
                             </SafeAreaView>
-                            <Text id='milesAway' style={styles.smallText}>{houseData[key].milesAway} miles away</Text>
+                            <Text id='milesAway' style={styles.smallText}>{global.HOUSEDATA[key].milesAway} miles away</Text>
                         </SafeAreaView>
                         <SafeAreaView style={styles.tagPanel}>
                             <FlatList
                                 id='tags'
                                 horizontal
-                                data={houseData[key].tags}
-                                renderItem={({ item }) => <Tags item={item} />}
+                                data={global.HOUSEDATA[key].tags}
+                                renderItem={({item}) => <Tags item={item}/> }
                                 showsHorizontalScrollIndicator={false}
                             />
                         </SafeAreaView>
@@ -451,22 +451,22 @@ function HouseLandingScreen({ route, navigation }) {
                 <SafeAreaView style={styles.houseInfoPanels}>
                     <SafeAreaView style={styles.aboutPanel}>
                         <Text style={styles.where}>where we are</Text>
-                        <Text style={styles.smallText}>{houseData[key].address}</Text>
+                        <Text style={styles.smallText}>{global.HOUSEDATA[key].address}</Text>
                         <Image style={styles.map} source={SfVoguersMap} />
                         <Text style={styles.aboutUs}>about us</Text>
-                        <Text style={styles.smallText}>{houseData[key].about}</Text>
+                        <Text style={styles.smallText}>{global.HOUSEDATA[key].about}</Text>
                         <SafeAreaView style={styles.moderatorsPanel}>
                             <Pressable style={styles.profileIconBackground}>
                                 <ProfileIcon style={styles.profileIcon} color='white' size='24' />
                             </Pressable>
-                            <Text style={styles.moderatorText}>{houseData[key].moderators} is a moderator.</Text>
+                            <Text style={styles.moderatorText}>{global.HOUSEDATA[key].moderators} is a moderator.</Text>
                         </SafeAreaView>
                     </SafeAreaView>
                     <SafeAreaView style={styles.eventsPanel}>
                         {houseData[key].events.map(function (event) { return <Event key={event.eventName} event={event} /> })}
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
-                        <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
+                        <Text style={styles.memberText}>members: {user.houses.includes(key) ? global.HOUSEDATA[key].members.length + 1 : global.HOUSEDATA[key].members.length}</Text>
                         {user.houses.includes(key)
                             ? <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
                                 <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("Profile")}>
@@ -506,7 +506,7 @@ function NormsAndRulesScreen({ route, navigation }) {
                     <Pressable style={normsStyles.houseIconBackground}>
                         <HouseIcon style={styles.houseIcon} color='white' size='58' />
                     </Pressable>
-                    <Text style={normsStyles.houseName}>{houseData[key].houseName}</Text>
+                    <Text style={normsStyles.houseName}>{global.HOUSEDATA[key].houseName}</Text>
                     <Text style={normsStyles.normsTitle}>house rules & norms</Text>
                 </SafeAreaView>
             </SafeAreaView>
@@ -531,7 +531,7 @@ function NormsAndRulesScreen({ route, navigation }) {
                 <Pressable
                     style={normsStyles.joinButton}
                     disabled={!isSelected}
-                    onPress={() => { global.JUSTJOINEDHOUSE = houseData[key].houseName; addHouse(houseData[key].key); navigation.navigate("BrowseHouseLanding", { key: key }); }}
+                    onPress={() => { global.JUSTJOINEDHOUSE = global.HOUSEDATA[key].houseName; addHouse(global.HOUSEDATA[key].key); navigation.navigate("BrowseHouseLanding", { key: key }); }}
                 >
                     <Text style={normsStyles.buttonText}>join house</Text>
                 </Pressable>
