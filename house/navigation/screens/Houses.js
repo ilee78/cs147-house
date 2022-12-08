@@ -16,8 +16,16 @@ import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
 
 import houseData from '../../house-data.json';
+import profileData from '../../profile-data.json';
 
 import SfVoguersMap from '../../assets/duckwalkway.png';
+import annabelleProfilePic from '../../assets/annabelleProfilePic.png';
+import naliProfilePic from '../../assets/naliProfilePic.png';
+import carolineProfilePic from '../../assets/carolineProfilePic.png';
+import jeffProfilePic from '../../assets/jeffProfilePic.jpg';
+import izzyProfilePic from '../../assets/izzyProfilePic.png';
+import defaultProfilePic from '../../assets/defaultProfilePic.png';
+import hammyProfilePic from '../../assets/hammyProfilePic.jpg';
 
 // Global variable - bad style lol, change later
 var ID = "";
@@ -221,14 +229,42 @@ function HouseLandingScreen({route, navigation}) {
         }).start();
     };
 
+    const ProfilePic = ({ name }) => {
+        switch (name) {
+            case "Annabelle W.":
+                return <Image style={styles.profileImage} source={annabelleProfilePic}></Image>;
+            case "Nali W.":
+                return <Image style={styles.profileImage} source={naliProfilePic}></Image>;
+            case "Caroline Z.":
+                return <Image style={styles.profileImage} source={carolineProfilePic}></Image>;
+            case "Jeff W.":
+                return <Image style={styles.profileImage} source={jeffProfilePic}></Image>;
+            case "Izzy L.":
+                return <Image style={styles.profileImage} source={izzyProfilePic}></Image>;
+            case "Michael C.":
+                return <Image style={styles.profileImage} source={HouseProfileImg}></Image>;
+            case "Hammy O.":
+                return <Image style={styles.profileImage} source={hammyProfilePic}></Image>;
+        }
+    }
+
     const Member = ({ name }) => {
         return (
+<<<<<<< Updated upstream
             <SafeAreaView style={{borderWidth:1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center'}}>
                 <Pressable style={{flexDirection: 'row'}} onPress={() => navigation.navigate("ViewOnlyProfile", {name})}>
                     <SafeAreaView style={{marginLeft: 4, paddingHorizontal: 16, top: 2}}>
                         <ProfileIcon size={24} color='#40187B'/> 
                     </SafeAreaView>
                     <Text style={{color: 'black', fontFamily:'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>   
+=======
+            <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
+                <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("ViewOnlyProfile", { name })}>
+                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16, top: 2 }}>
+                        <ProfilePic name={name}></ProfilePic>
+                    </SafeAreaView>
+                    <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24, paddingTop: 5}}>{name.toLowerCase()}</Text>
+>>>>>>> Stashed changes
                 </Pressable>
             </SafeAreaView>
         );
@@ -449,6 +485,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         paddingBottom: 10,
+    },
+    profileImage: {
+        height: 40,
+        width: 40,
+        borderRadius: 20
     },
     container: {
         flex: 1,

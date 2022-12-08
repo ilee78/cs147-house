@@ -25,6 +25,7 @@ import Store from './../../Store';
 function NeighborhoodScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
     const [modalVisible,setModalVisible] = useState(false);
+    const layout = useWindowDimensions();
 
     // const flipJustJoined = () => {
     //     justJoined = !justJoined;
@@ -82,6 +83,7 @@ function NeighborhoodScreen({ navigation }) {
                                 </Pressable>
                             </SafeAreaView>
                             <SafeAreaView style={modalStyles.bottomPanel}>
+                                <Text>🎉</Text>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
                                 <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length-1]].houseName}</Text>
