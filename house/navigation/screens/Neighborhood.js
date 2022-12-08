@@ -20,11 +20,16 @@ import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 import Store from './../../Store';
 
+import sfVoguersPic from '../../assets/sfVoguersPic.png';
+import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
+import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
+import poppersPic from '../../assets/houseProfileImg.jpg';
+
 //var justJoined = false;
 
 function NeighborhoodScreen({ navigation }) {
-    const [user, ,updateUser] = Store.useState("user");
-    const [modalVisible,setModalVisible] = useState(false);
+    const [user, , updateUser] = Store.useState("user");
+    const [modalVisible, setModalVisible] = useState(false);
     const layout = useWindowDimensions();
 
     // const flipJustJoined = () => {
@@ -57,13 +62,14 @@ function NeighborhoodScreen({ navigation }) {
             useNativeDriver: true
         }).start();
     };
+
     if (global.JUSTJOINEDHOUSE !== '') {
         console.log("joined house :");
         console.log(global.JUSTJOINEDHOUSE);
         setModalVisible(true);
         global.JUSTJOINEDHOUSE = '';
     }
-    if (user.houses.length > 0){
+    if (user.houses.length > 0) {
         // Neighborhood
         return (
             <SafeAreaView style={styles.background}>
@@ -75,18 +81,18 @@ function NeighborhoodScreen({ navigation }) {
                     >
                         <SafeAreaView style={modalStyles.modalView}>
                             <SafeAreaView style={modalStyles.topPanel}>
-                                <Pressable 
-                                    style={modalStyles.XIcon} 
+                                <Pressable
+                                    style={modalStyles.XIcon}
                                     hitSlop={50}
-                                    onPress={() => {setModalVisible(!modalVisible);}}>
-                                    <XIcon size={20}/>
+                                    onPress={() => { setModalVisible(!modalVisible); }}>
+                                    <XIcon size={20} />
                                 </Pressable>
                             </SafeAreaView>
                             <SafeAreaView style={modalStyles.bottomPanel}>
                                 <Text>🎉</Text>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
-                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length-1]].houseName}</Text>
+                                <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length - 1]].houseName}</Text>
                             </SafeAreaView>
                         </SafeAreaView>
                     </Modal>
@@ -108,8 +114,8 @@ function NeighborhoodScreen({ navigation }) {
                         vertical
                         numColumns={2}
                         data={user.houses}
-                        renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.houseDisplay}>
-                           <UserHouses item={item} /></Pressable>}
+                        renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.houseDisplay}>
+                            <UserHouses item={item} /></Pressable>}
                         scrollEnabled={true}
                         showsVerticalScrollIndicator={false}
                         style={styles.neighborhoodList}
@@ -120,26 +126,26 @@ function NeighborhoodScreen({ navigation }) {
                     <SafeAreaView style={styles.menuPanel}>
                         <SafeAreaView style={styles.neighborhoodMenu}>
                             <SafeAreaView style={styles.neighborhoodMenuContent}>
-    
-                            <FlatList
-                                ListHeaderComponent={
-                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
-                                        <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
-                                            <Text style={styles.menuText}>+ create a house</Text>
-                                        </Pressable>
-    
-                                    </SafeAreaView>
-                                }
-                                vertical
-                                data={user.houses}
-                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
-                                    <MenuHouse item={item}></MenuHouse>
-                                </Pressable>}
-                                scrollEnabled={true}
-                                showsVerticalScrollIndicator={false}
-                                style={styles.menuNeighborhoodList}
-                            />
+
+                                <FlatList
+                                    ListHeaderComponent={
+                                        <SafeAreaView style={{ justifyContent: 'flex-start' }}>
+                                            <Text style={styles.menuHeader}>my houses</Text>
+                                            <Pressable style={styles.createHouseButton}>
+                                                <Text style={styles.menuText}>+ create a house</Text>
+                                            </Pressable>
+
+                                        </SafeAreaView>
+                                    }
+                                    vertical
+                                    data={user.houses}
+                                    renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.menuHouseContainer}>
+                                        <MenuHouse item={item}></MenuHouse>
+                                    </Pressable>}
+                                    scrollEnabled={true}
+                                    showsVerticalScrollIndicator={false}
+                                    style={styles.menuNeighborhoodList}
+                                />
                             </SafeAreaView>
                         </SafeAreaView>
                         <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
@@ -148,7 +154,7 @@ function NeighborhoodScreen({ navigation }) {
                     </SafeAreaView>
                 </Animated.View>
             </SafeAreaView>
-    
+
         );
     }
     else {
@@ -173,26 +179,26 @@ function NeighborhoodScreen({ navigation }) {
                     <SafeAreaView style={styles.menuPanel}>
                         <SafeAreaView style={styles.neighborhoodMenu}>
                             <SafeAreaView style={styles.neighborhoodMenuContent}>
-    
-                            <FlatList
-                                ListHeaderComponent={
-                                    <SafeAreaView style={{justifyContent: 'flex-start'}}>
-                                        <Text style={styles.menuHeader}>my houses</Text>
-                                        <Pressable style={styles.createHouseButton}>
-                                            <Text style={styles.menuText}>+ create a house</Text>
-                                        </Pressable>
-    
-                                    </SafeAreaView>
-                                }
-                                vertical
-                                data={user.houses}
-                                renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", {key: item})} style={styles.menuHouseContainer}>
-                                    <MenuHouse item={item}></MenuHouse>
-                                </Pressable>}
-                                scrollEnabled={true}
-                                showsVerticalScrollIndicator={false}
-                                style={styles.menuNeighborhoodList}
-                            />
+
+                                <FlatList
+                                    ListHeaderComponent={
+                                        <SafeAreaView style={{ justifyContent: 'flex-start' }}>
+                                            <Text style={styles.menuHeader}>my houses</Text>
+                                            <Pressable style={styles.createHouseButton}>
+                                                <Text style={styles.menuText}>+ create a house</Text>
+                                            </Pressable>
+
+                                        </SafeAreaView>
+                                    }
+                                    vertical
+                                    data={user.houses}
+                                    renderItem={({ item }) => <Pressable onPress={() => navigation.navigate("NeighborhoodHouseLanding", { key: item })} style={styles.menuHouseContainer}>
+                                        <MenuHouse item={item}></MenuHouse>
+                                    </Pressable>}
+                                    scrollEnabled={true}
+                                    showsVerticalScrollIndicator={false}
+                                    style={styles.menuNeighborhoodList}
+                                />
                             </SafeAreaView>
                         </SafeAreaView>
                         <Animated.View style={[{ transform: [{ translateX: openAnim2 }] }]}>
@@ -203,13 +209,34 @@ function NeighborhoodScreen({ navigation }) {
             </SafeAreaView>
         );
     }
-    
+
 }
 
-const MenuHouseProfilePicture = ({ item }) => {
-    switch (houseData[item].profileImg) {
-        case 'houseProfileImg.jpg':
-            return (<Image style={styles.menuHouseProfileImage} source={HouseProfileImg}></Image>);
+const HouseProfilePic = ({ houseNumber }) => {
+    switch (houseNumber) {
+        case 0:
+            return <Image style={styles.houseProfileImage} source={sfVoguersPic}></Image>;
+        case 1:
+            return <Image style={styles.houseProfileImage} source={oaklandBobaBashPic}></Image>;
+        case 2:
+            return <Image style={styles.houseProfileImage} source={raeClassCommunityPic}></Image>;
+        case 3:
+            return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
+
+    }
+}
+
+const MenuHouseProfilePicture = ({ houseNumber }) => {
+    switch (houseNumber) {
+        case 0:
+            return <Image style={styles.menuHouseProfileImage} source={sfVoguersPic}></Image>;
+        case 1:
+            return <Image style={styles.menuHouseProfileImage} source={oaklandBobaBashPic}></Image>;
+        case 2:
+            return <Image style={styles.menuHouseProfileImage} source={raeClassCommunityPic}></Image>;
+        case 3:
+            return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
+
     }
 };
 
@@ -217,8 +244,8 @@ const MenuHouse = ({ item }) => {
     console.log(houseData[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
-                <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
-                <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
+            <MenuHouseProfilePicture houseNumber={houseData[item].key}></MenuHouseProfilePicture>
+            <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
         </SafeAreaView>
     );
 };
@@ -231,7 +258,7 @@ const UserHouses = ({ item }) => {
             </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
-                <HouseProfilePicture item={item}></HouseProfilePicture>
+                <HouseProfilePic houseNumber={houseData[item].key} />
             </SafeAreaView>
         </SafeAreaView>
     );
@@ -387,7 +414,7 @@ const styles = StyleSheet.create({
         fontFamily: 'WorkSans-Bold',
     },
     menuHouseContainer: {
-        flex:1,
+        flex: 1,
         width: 200,
         marginVertical: 8,
     },
@@ -462,41 +489,43 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'WorkSans-Regular',
     },
+    houseProfilePicture: {
 
+    }
 });
 
 const modalStyles = StyleSheet.create({
     modalView: {
-      marginTop: 300,
-      width: '80%',
-      aspectRatio: 1.1,
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignSelf: 'center',
+        marginTop: 300,
+        width: '80%',
+        aspectRatio: 1.1,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignSelf: 'center',
     },
     button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2
     },
     buttonOpen: {
-      backgroundColor: "#F194FF",
+        backgroundColor: "#F194FF",
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+        backgroundColor: "#2196F3",
     },
     textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
     },
     welcomeHome: {
-      textAlign: "center",
-      fontFamily: "WorkSans-Bold",
-      fontSize: 28,
-      color: "#40187B",
-      marginBottom: 15
+        textAlign: "center",
+        fontFamily: "WorkSans-Bold",
+        fontSize: 28,
+        color: "#40187B",
+        marginBottom: 15
     },
     joinedHouseText: {
         textAlign: "center",
@@ -527,6 +556,6 @@ const modalStyles = StyleSheet.create({
     XIcon: {
         margin: 16
     }
-  });
+});
 
 export { NeighborhoodScreen, BulletinScreen };
