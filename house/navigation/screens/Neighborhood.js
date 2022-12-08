@@ -24,9 +24,17 @@ import BulletinNotif from '../../assets/bulletinBoard-Notif.png'
 import HouseProfileImg from '../../assets/houseProfileImg.jpg'
 import Store from './../../Store';
 
+import sfVoguersPic from '../../assets/sfVoguersPic.png';
+import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
+import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
+import poppersPic from '../../assets/houseProfileImg.jpg';
+
+//var justJoined = false;
+
 function NeighborhoodScreen({ navigation }) {
     const [user, , updateUser] = Store.useState("user");
     const [modalVisible, setModalVisible] = useState(false);
+    const layout = useWindowDimensions();
 
     const openAnim = useRef(new Animated.Value(-250)).current;
     const openAnim2 = useRef(new Animated.Value(-150)).current;
@@ -54,6 +62,7 @@ function NeighborhoodScreen({ navigation }) {
             useNativeDriver: true
         }).start();
     };
+
     if (global.JUSTJOINEDHOUSE !== '') {
         console.log("joined house :");
         console.log(global.JUSTJOINEDHOUSE);
@@ -80,6 +89,7 @@ function NeighborhoodScreen({ navigation }) {
                                 </Pressable>
                             </SafeAreaView>
                             <SafeAreaView style={modalStyles.bottomPanel}>
+                                <Text>🎉</Text>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
                                 <Text style={modalStyles.joinedHouseName}>{houseData[user.houses[user.houses.length - 1]].houseName}</Text>
@@ -202,10 +212,31 @@ function NeighborhoodScreen({ navigation }) {
 
 }
 
-const MenuHouseProfilePicture = ({ item }) => {
-    switch (houseData[item].profileImg) {
-        case 'houseProfileImg.jpg':
-            return (<Image style={styles.menuHouseProfileImage} source={HouseProfileImg}></Image>);
+const HouseProfilePic = ({ houseNumber }) => {
+    switch (houseNumber) {
+        case 0:
+            return <Image style={styles.houseProfileImage} source={sfVoguersPic}></Image>;
+        case 1:
+            return <Image style={styles.houseProfileImage} source={oaklandBobaBashPic}></Image>;
+        case 2:
+            return <Image style={styles.houseProfileImage} source={raeClassCommunityPic}></Image>;
+        case 3:
+            return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
+
+    }
+}
+
+const MenuHouseProfilePicture = ({ houseNumber }) => {
+    switch (houseNumber) {
+        case 0:
+            return <Image style={styles.menuHouseProfileImage} source={sfVoguersPic}></Image>;
+        case 1:
+            return <Image style={styles.menuHouseProfileImage} source={oaklandBobaBashPic}></Image>;
+        case 2:
+            return <Image style={styles.menuHouseProfileImage} source={raeClassCommunityPic}></Image>;
+        case 3:
+            return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
+
     }
 };
 
@@ -213,7 +244,7 @@ const MenuHouse = ({ item }) => {
     console.log(houseData[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
-            <MenuHouseProfilePicture item={item}></MenuHouseProfilePicture>
+            <MenuHouseProfilePicture houseNumber={houseData[item].key}></MenuHouseProfilePicture>
             <Text style={styles.menuHouseNameText}>{houseData[item].houseName}</Text>
         </SafeAreaView>
     );
@@ -227,7 +258,7 @@ const UserHouses = ({ item }) => {
             </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
-                <HouseProfilePicture item={item}></HouseProfilePicture>
+                <HouseProfilePic houseNumber={houseData[item].key} />
             </SafeAreaView>
         </SafeAreaView>
     );
@@ -542,7 +573,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'WorkSans-Regular',
     },
+    houseProfilePicture: {
 
+    }
 });
 
 const modalStyles = StyleSheet.create({

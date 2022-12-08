@@ -18,8 +18,21 @@ import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
 
 import houseData from '../../house-data.json';
+import profileData from '../../profile-data.json';
 
 import SfVoguersMap from '../../assets/duckwalkway.png';
+import annabelleProfilePic from '../../assets/annabelleProfilePic.png';
+import naliProfilePic from '../../assets/naliProfilePic.png';
+import carolineProfilePic from '../../assets/carolineProfilePic.png';
+import jeffProfilePic from '../../assets/jeffProfilePic.jpg';
+import izzyProfilePic from '../../assets/izzyProfilePic.png';
+import defaultProfilePic from '../../assets/defaultProfilePic.png';
+import hammyProfilePic from '../../assets/hammyProfilePic.jpg';
+
+import sfVoguersPic from '../../assets/sfVoguersPic.png';
+import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
+import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
+import poppersPic from '../../assets/houseProfileImg.jpg';
 
 // Global variable - bad style lol, change later
 var ID = "";
@@ -47,7 +60,6 @@ function BrowsingScreen({ navigation }) {
     const [selected, setSelected] = useState('');
     const [user, , updateUser] = Store.useState("user");
     const [search, setSearch] = useState('');
-    
     function updateSearch(search) {
         setSearch(search);
     }
@@ -56,6 +68,18 @@ function BrowsingScreen({ navigation }) {
         setSelected(house);
         ID = num;
     }
+
+
+    const HouseProfilePic = ({ houseNumber }) => {
+        switch (houseNumber) {
+            case 0:
+                return <Image style={browseStyles.houseProfilePicture} source={sfVoguersPic}></Image>;
+            case 1:
+                return <Image style={browseStyles.houseProfilePicture} source={oaklandBobaBashPic}></Image>;
+            case 2:
+                return <Image style={browseStyles.houseProfilePicture} source={raeClassCommunityPic}></Image>;
+            case 3:
+                return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
 
     function joinedLabel(house) {
         if (user.houses.includes(house)) {
@@ -133,7 +157,7 @@ function BrowsingScreen({ navigation }) {
                         </Pressable>
                         <Pressable style={{ left: 20, top: 10, position: 'absolute' }} onPress={() => navigation.navigate("BrowseHouseLanding", { key: item.key })}>
                             <Image style={browseStyles.houseGraphic} source={HouseGraphicBorder} />
-                            <Image style={browseStyles.houseProfilePicture} source={HouseProfileImg} />
+                            <HouseProfilePic houseNumber={item.key} />
                         </Pressable>
                     </SafeAreaView>
                 }
@@ -244,6 +268,38 @@ function HouseLandingScreen({ route, navigation }) {
         }).start();
     };
 
+    const ProfilePic = ({ name }) => {
+        switch (name) {
+            case "Annabelle W.":
+                return <Image style={styles.profileImage} source={annabelleProfilePic}></Image>;
+            case "Nali W.":
+                return <Image style={styles.profileImage} source={naliProfilePic}></Image>;
+            case "Caroline Z.":
+                return <Image style={styles.profileImage} source={carolineProfilePic}></Image>;
+            case "Jeff W.":
+                return <Image style={styles.profileImage} source={jeffProfilePic}></Image>;
+            case "Izzy L.":
+                return <Image style={styles.profileImage} source={izzyProfilePic}></Image>;
+            case "Michael C.":
+                return <Image style={styles.profileImage} source={HouseProfileImg}></Image>;
+            case "Hammy O.":
+                return <Image style={styles.profileImage} source={hammyProfilePic}></Image>;
+        }
+    }
+
+    const HouseProfilePic = ({ houseNumber }) => {
+        switch (houseNumber) {
+            case 0:
+                return <Image style={styles.houseIconBackground} source={sfVoguersPic}></Image>;
+            case 1:
+                return <Image style={styles.houseIconBackground} source={oaklandBobaBashPic}></Image>;
+            case 2:
+                return <Image style={styles.houseIconBackground} source={raeClassCommunityPic}></Image>;
+            case 3:
+                return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
+        }
+    }
+
     const Member = ({ name }) => {
         return (
             <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
@@ -340,9 +396,7 @@ function HouseLandingScreen({ route, navigation }) {
                     </Pressable>
                 </SafeAreaView>
                 <SafeAreaView style={styles.infoPanel}>
-                    <Pressable style={styles.houseIconBackground}>
-                        <HouseIcon style={styles.houseIcon} color='white' size='45' />
-                    </Pressable>
+                    <HouseProfilePic houseNumber={key}/>
                     <SafeAreaView>
                         <SafeAreaView style={styles.nameAndJoin}>
                             <Text id='houseName' style={styles.houseName}>{houseData[key].houseName}</Text>
@@ -407,7 +461,7 @@ function HouseLandingScreen({ route, navigation }) {
                         </SafeAreaView>
                     </SafeAreaView>
                     <SafeAreaView style={styles.eventsPanel}>
-                    {houseData[key].events.map(function(event) {return <Event key={event.eventName} event={event}/>})}
+                        {houseData[key].events.map(function (event) { return <Event key={event.eventName} event={event} /> })}
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? houseData[key].members.length + 1 : houseData[key].members.length}</Text>
@@ -518,6 +572,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'white',
         paddingBottom: 10,
+    },
+    profileImage: {
+        height: 40,
+        width: 40,
+        borderRadius: 20
     },
     container: {
         flex: 1,
@@ -801,7 +860,7 @@ const browseStyles = StyleSheet.create({
         bottom: 80,
         borderRadius: 33,
         borderWidth: 3,
-        borderColor: '#FB749B'
+        borderColor: '#FB749B',
     },
     tempIconBackground: {
         justifyContent: 'center',
@@ -876,7 +935,6 @@ const normsStyles = StyleSheet.create({
         alignItems: 'center',
     },
     houseIconBackground: {
-        backgroundColor: '#47C8A7',
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
