@@ -667,7 +667,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     houseIconBackground: {
-        backgroundColor: '#47C8A7',
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
