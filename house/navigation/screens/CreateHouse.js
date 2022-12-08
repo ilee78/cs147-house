@@ -9,6 +9,7 @@ import BackIcon from "../../assets/back.js";
 import BuildingGraphic from './../../assets/buildingGraphic.png';
 import Store from './../../Store';
 import './Global.js';
+import { Button } from "react-native-paper";
 
 // TODO: navigate to landing page for new house once done creating
 // changes for owned house vs. joined house landing page - joined -> owner on button label, report house -> delete house, you are moderator
@@ -84,7 +85,7 @@ function CreateHouseNameScreen({ navigation }) {
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo} />
-                <Text style={styles.headerText}>what do you want to name your house?</Text>
+                <Text style={styles.headerText}>give your house a name:</Text>
                 <TextInput
                 style={styles.textInput}
                 placeholder="enter name..."
@@ -157,7 +158,7 @@ function CreateHouseAboutScreen({ navigation }) {
             </SafeAreaView>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo} />
-                <Text style={styles.headerText}>tell us more about your house!</Text>
+                <Text style={styles.headerText}>tell us about your house!</Text>
                 <TextInput
                 style={styles.textInput}
                 placeholder="enter description..."
@@ -241,6 +242,7 @@ function CreateHouseTagsScreen({ navigation }) {
 function CreateHouseLoadingScreen({ navigation }) {
     const [user, ,updateUser] = Store.useState("user");
     const [house, ,updateHouse] = Store.useState("created-house");
+    //setTimeout(() => {dumpData(); navigation.navigate('Tabs', {screen: 'Neighborhood'});}, 2000);
 
     function dumpData() {
         updateUser(user => {user.owned_houses.push({
@@ -253,43 +255,53 @@ function CreateHouseLoadingScreen({ navigation }) {
         // var data = fs.readFileSync('./../../house-data.json');
         // var obj = JSON.parse(data);
         let newHouse = {
-            "key": global.HOUSEDATA.length,
-            "houseName": house.houseName, 
-            "color": "yellow",
-            "headerColor": "#FDC765",
-            "profileImg": "houseProfileImg.jpg",
-            "userJoined": true, 
-            "userOwner": true,
-            "location": house.location, 
-            "address": "456 Duck Walk Way, San Francisco, CA 94110",
-            "map": "duck-walkway.png",
-            "milesAway": 0, 
-            "tags": house.tags, 
-            "about": house.about,
-            "events": [],
-            "members": [
-                user.username,
-            ],
-            "moderators": [
-                user.username,
-            ]
-        };
-        global.HOUSEDATA = [...global.HOUSEDATA, newHouse];
-        global.COUNTCREATE = global.COUNTCREATE + 1;
-        updateUser(user => { user.houses.push(newHouse.key)});
+          "key": global.HOUSEDATA.length,
+          "houseName": house.houseName, 
+          "color": "yellow",
+          "headerColor": "#FDC765",
+          "profileImg": "houseProfileImg.jpg",
+          "userJoined": true, 
+          "userOwner": true,
+          "location": house.location, 
+          "address": "456 Duck Walk Way, San Francisco, CA 94110",
+          "map": "duck-walkway.png",
+          "milesAway": 0, 
+          "tags": house.tags, 
+          "about": house.about,
+          "events": [
+            {
+                "eventIndex": 0,
+                "eventName": "meet the house!",
+                "userRSVP": false,
+                "eventAddress": "388 9th St #125a, Oakland, CA 94607", 
+                "eventDate": "12/16/2022",
+                "eventStartTime": "5:30 PM PST",
+                "eventAbout": "come meet everyone! we will have snacks and drinks"
+            }
+        ],
+          "members": [
+              user.username,
+          ],
+          "moderators": [
+              user.username,
+          ]
+      };
+      global.HOUSEDATA = [...global.HOUSEDATA, newHouse];
+      global.COUNTCREATE = global.COUNTCREATE + 1;
+      updateUser(user => { user.houses.push(newHouse.key)});
     }
 
     return(
         <SafeAreaView style={styles.background}>
             <SafeAreaView style={styles.contentPanel}>
                 <Image style={styles.logo} source={Logo} />
-                <Text style={styles.headerText}>building your house...</Text>
-                <Pressable
-                style={styles.button}
-                onPress={() => {dumpData(); navigation.navigate('Tabs', {screen: 'Neighborhood'});}}
-                >
-                <Text style={styles.buttonText}>create!</Text>
-                </Pressable>
+                <Text style={styles.headerText}>building <Text style={{color: '#FB749C'}}>{house.houseName}</Text>...</Text>
+          <Pressable
+            style={styles.button}
+            onPress={() => { dumpData(); navigation.navigate("CreateHouseLoading"); }}
+          >
+            <Text style={styles.buttonText}>create!</Text>
+          </Pressable>
             </SafeAreaView>
             <SafeAreaView style={styles.graphicPanel}>
                 <Image style={styles.buildingImage} source={BuildingGraphic}/>
@@ -441,6 +453,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       marginTop: 20,
+      marginBottom: 50,
       width: 128,
       height: 45,
       borderRadius: 24,

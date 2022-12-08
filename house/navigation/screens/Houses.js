@@ -74,11 +74,17 @@ function BrowsingScreen({ navigation }) {
         switch (houseNumber) {
             case 0:
                 return <Image style={browseStyles.houseProfilePicture} source={sfVoguersPic}></Image>;
+                break;
             case 1:
                 return <Image style={browseStyles.houseProfilePicture} source={oaklandBobaBashPic}></Image>;
+                break;
             case 2:
                 return <Image style={browseStyles.houseProfilePicture} source={raeClassCommunityPic}></Image>;
+                break;
             case 3:
+                return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
+                break;
+            default:
                 return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
         }
     }
@@ -293,11 +299,17 @@ function HouseLandingScreen({ route, navigation }) {
         switch (houseNumber) {
             case 0:
                 return <Image style={styles.houseIconBackground} source={sfVoguersPic}></Image>;
+                break;
             case 1:
                 return <Image style={styles.houseIconBackground} source={oaklandBobaBashPic}></Image>;
+                break;
             case 2:
                 return <Image style={styles.houseIconBackground} source={raeClassCommunityPic}></Image>;
+                break;
             case 3:
+                return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
+                break;
+            default:
                 return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
         }
     }
@@ -365,21 +377,21 @@ function HouseLandingScreen({ route, navigation }) {
                                     : <SafeAreaView></SafeAreaView>}
                             </SafeAreaView>
                             <ScrollView style={modalStyles.infoScroll} contentContainerStyle={modalStyles.bottomPanel}>
-                                <Text style={modalStyles.eventTitle}>{houseData[key].events[eventIndex].eventName}</Text>
+                                <Text style={modalStyles.eventTitle}>{global.HOUSEDATA[key].events[eventIndex].eventName}</Text>
                                 <SafeAreaView style={modalStyles.infoFlex}>
                                     <SafeAreaView style={modalStyles.infoIcon}>
                                         <PinIcon width={24} height={24} color={'#40187B'} />
                                     </SafeAreaView>
-                                    <Text style={modalStyles.eventInfo}>{houseData[key].events[eventIndex].eventAddress}</Text>
+                                    <Text style={modalStyles.eventInfo}>{global.HOUSEDATA[key].events[eventIndex].eventAddress}</Text>
                                 </SafeAreaView>
                                 <SafeAreaView style={modalStyles.infoFlex}>
                                     <SafeAreaView style={modalStyles.infoIcon}>
                                         <CalendarIcon size={24} color={'#40187B'} />
                                     </SafeAreaView>
-                                    <Text style={modalStyles.eventInfo}>{houseData[key].events[eventIndex].eventDate} @ {houseData[key].events[0].eventStartTime}</Text>
+                                    <Text style={modalStyles.eventInfo}>{global.HOUSEDATA[key].events[eventIndex].eventDate} @ {global.HOUSEDATA[key].events[0].eventStartTime}</Text>
                                 </SafeAreaView>
                                 <Text style={modalStyles.eventInfo}>{'\n'}about:</Text>
-                                <Text style={modalStyles.eventAbout}>{houseData[key].events[eventIndex].eventAbout}</Text>
+                                <Text style={modalStyles.eventAbout}>{global.HOUSEDATA[key].events[eventIndex].eventAbout}</Text>
                             </ScrollView>
                         </SafeAreaView>
                     </View>
@@ -387,7 +399,7 @@ function HouseLandingScreen({ route, navigation }) {
             </SafeAreaView>
             <Image source={imagePath}></Image>
             <SafeAreaView style={styles.topPanel}>
-                <SafeAreaView style={{ height: 150, width: '100%', backgroundColor: houseData[key].headerColor, position: 'absolute', top: 0 }}></SafeAreaView>
+                <SafeAreaView style={{ height: 150, width: '100%', backgroundColor: global.HOUSEDATA[key].headerColor, position: 'absolute', top: 0 }}></SafeAreaView>
                 <SafeAreaView style={{ flexDirection: 'row', justifyContent: 'center', width: '100%', flex: 1 }}>
                     <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
                         <BackIcon color='white' />
@@ -463,7 +475,7 @@ function HouseLandingScreen({ route, navigation }) {
                         </SafeAreaView>
                     </SafeAreaView>
                     <SafeAreaView style={styles.eventsPanel}>
-                        {houseData[key].events.map(function (event) { return <Event key={event.eventName} event={event} /> })}
+                        {global.HOUSEDATA[key].events.map(function (event) { return <Event key={event.eventName} event={event} /> })}
                     </SafeAreaView>
                     <SafeAreaView style={styles.roommatesPanel}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? global.HOUSEDATA[key].members.length + 1 : global.HOUSEDATA[key].members.length}</Text>
@@ -477,7 +489,7 @@ function HouseLandingScreen({ route, navigation }) {
                                 </Pressable>
                             </SafeAreaView>
                             : <SafeAreaView></SafeAreaView>}
-                        {houseData[key].members.map(function (name) { return (<Member key={name} name={name} />); })}
+                        {global.HOUSEDATA[key].members.map(function (name) { return (<Member key={name} name={name} />); })}
                     </SafeAreaView>
                 </SafeAreaView>
             </Animated.View>

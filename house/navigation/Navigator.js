@@ -11,6 +11,8 @@ import { ProfileScreen, EditProfileScreen, EditTagsScreen, SettingsScreen, ViewO
 import { NeighborhoodScreen, BulletinScreen } from './screens/Neighborhood';
 import { BrowsingScreen, HouseLandingScreen, NormsAndRulesScreen } from './screens/Houses';
 import { WelcomeScreen, NameScreen, LocationScreen, TravelScreen, InterestScreen, UnpackingScreen } from './screens/Onboarding.js';
+import { CreateHouseLandingScreen, CreateHouseNameScreen, CreateHouseLocationScreen, CreateHouseAboutScreen, CreateHouseTagsScreen, CreateHouseLoadingScreen } from './screens/CreateHouse.js';
+
 
 // Global vars
 import Store from './../Store';
@@ -50,6 +52,7 @@ function Navigator(props) {
                 <MainStack.Screen name="Tabs" component={Tabs}/>
                 {/*<MainStack.Screen name="Houses" component={BrowsingScreen}/>
                 <MainStack.Screen name="UserNeighborhood" component={EmptyNeighborhoodScreen}/>*/}
+                <MainStack.Screen name="CreateHouse" component={CreateHouse} />
             </MainStack.Navigator>
         </NavigationContainer>
     );
@@ -140,6 +143,21 @@ function Profile({navigation}) {
             <ProfileStack.Screen name="Settings" component={SettingsScreen}/>
         </ProfileStack.Navigator>
     );
+}
+
+const CreateHouseStack = createNativeStackNavigator();
+
+function CreateHouse({navigation}) {
+    return(
+        <CreateHouseStack.Navigator screenOptions={{headerShown: false}}>
+            <CreateHouseStack.Screen name="CreateHouseLanding" component={CreateHouseLandingScreen}/>
+            <CreateHouseStack.Screen name="CreateHouseName" component={CreateHouseNameScreen}/>
+            <CreateHouseStack.Screen name="CreateHouseLocation" component={CreateHouseLocationScreen}/>
+            <CreateHouseStack.Screen name="CreateHouseAbout" component={CreateHouseAboutScreen}/>
+            <CreateHouseStack.Screen name="CreateHouseTags" component={CreateHouseTagsScreen}/>
+            <CreateHouseStack.Screen name="CreateHouseLoading" component={CreateHouseLoadingScreen}/>
+        </CreateHouseStack.Navigator>
+    )
 }
 
 export default Navigator;

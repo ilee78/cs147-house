@@ -110,8 +110,8 @@ function NeighborhoodScreen({ navigation }) {
                     <FlatList
                         ListHeaderComponent={
                             <Pressable onPress={() => navigation.navigate("Bulletin")} style={styles.bulletinPanel}>
-                                <Image style={styles.bulletinImage} source={global.NOTIFCOUNT > 0 ? BulletinNotif : Bulletin} />
-                                {global.NOTIFCOUNT > 0 ? <Text style={styles.notifCount}>{global.NOTIFCOUNT > 98 ? 99 : global.NOTIFCOUNT}</Text> : <Text></Text>}
+                                <Image style={styles.bulletinImage} source={user.events.length > 0 ? BulletinNotif : Bulletin} />
+                                {user.events.length > 0 ? <Text style={styles.notifCount}>{user.events.length > 98 ? 99 : user.events.length}</Text> : <Text></Text>}
                             </Pressable>
                         }
                         vertical
@@ -134,7 +134,7 @@ function NeighborhoodScreen({ navigation }) {
                                     ListHeaderComponent={
                                         <SafeAreaView style={{ justifyContent: 'flex-start' }}>
                                             <Text style={styles.menuHeader}>my houses</Text>
-                                            <Pressable style={styles.createHouseButton}>
+                                            <Pressable style={styles.createHouseButton} onPress={() => navigation.navigate("CreateHouse")}>
                                                 <Text style={styles.menuText}>+ create a house</Text>
                                             </Pressable>
 
@@ -187,7 +187,7 @@ function NeighborhoodScreen({ navigation }) {
                                     ListHeaderComponent={
                                         <SafeAreaView style={{ justifyContent: 'flex-start' }}>
                                             <Text style={styles.menuHeader}>my houses</Text>
-                                            <Pressable style={styles.createHouseButton}>
+                                            <Pressable style={styles.createHouseButton} onPress={() => navigation.navigate("CreateHouse")}>
                                                 <Text style={styles.menuText}>+ create a house</Text>
                                             </Pressable>
 
@@ -219,11 +219,17 @@ const HouseProfilePic = ({ houseNumber }) => {
     switch (houseNumber) {
         case 0:
             return <Image style={styles.houseProfileImage} source={sfVoguersPic}></Image>;
+            break;
         case 1:
             return <Image style={styles.houseProfileImage} source={oaklandBobaBashPic}></Image>;
+            break;
         case 2:
             return <Image style={styles.houseProfileImage} source={raeClassCommunityPic}></Image>;
+            break;
         case 3:
+            return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
+            break;
+        default:
             return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
 
     }
@@ -233,11 +239,17 @@ const MenuHouseProfilePicture = ({ houseNumber }) => {
     switch (houseNumber) {
         case 0:
             return <Image style={styles.menuHouseProfileImage} source={sfVoguersPic}></Image>;
+            break;
         case 1:
             return <Image style={styles.menuHouseProfileImage} source={oaklandBobaBashPic}></Image>;
+            break;
         case 2:
             return <Image style={styles.menuHouseProfileImage} source={raeClassCommunityPic}></Image>;
+            break;
         case 3:
+            return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
+            break;
+        default:
             return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
 
     }
@@ -261,7 +273,7 @@ const UserHouses = ({ item }) => {
             </SafeAreaView>
             <SafeAreaView style={styles.horizontalGraphicsContainer}>
                 <HouseIllustration item={item}></HouseIllustration>
-                <HouseProfilePic houseNumber={houseData[item].key} />
+                <HouseProfilePic houseNumber={global.HOUSEDATA[item].key} />
             </SafeAreaView>
         </SafeAreaView>
     );
@@ -302,7 +314,7 @@ function BulletinScreen({ navigation }) {
                     </SafeAreaView>
                     <SafeAreaView style={{ width: 240 }}>
                         <Text style={{ color: '#40187B', fontFamily: 'WorkSans-Medium', fontSize: 26, marginBottom: 5 }}>
-                            {houseData[bulletinHouseIndex].houseName}:
+                            {global.HOUSEDATA[bulletinHouseIndex].houseName}:
                             <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24, marginBottom: 5 }}> {event.eventName}</Text>
                         </Text>
                         <SafeAreaView style={bulletinStyles.eventLocation}>
@@ -320,16 +332,16 @@ function BulletinScreen({ navigation }) {
 
     var eventsList = [];
     console.log(user.events)
-    for (var houseInd = 0; houseInd < houseData.length; houseInd++) {
+    for (var houseInd = 0; houseInd < global.HOUSEDATA.length; houseInd++) {
         if (houseInd in user.events) {
             console.log(houseInd, houseInd in user.events, user.events);
             for (var eventInd = 0; eventInd < user.events[houseInd].length; eventInd++) {
                 if (user.events[houseInd].includes(eventInd)) {
                     console.log(eventInd, user.events[houseInd].includes(eventInd));
                     eventsList.push(
-                        <Event key={houseData[houseInd].events[eventInd].eventName} event={houseData[houseInd].events[eventInd]} bulletinHouseIndex={houseInd} bulletinEventIndex={eventInd} />
+                        <Event key={global.HOUSEDATA[houseInd].events[eventInd].eventName} event={global.HOUSEDATA[houseInd].events[eventInd]} bulletinHouseIndex={houseInd} bulletinEventIndex={eventInd} />
                     );
-                    console.log("pushed ", houseData[houseInd].events[eventInd].eventName);
+                    console.log("pushed ", global.HOUSEDATA[houseInd].events[eventInd].eventName);
                 }
             }
         }
@@ -353,21 +365,21 @@ function BulletinScreen({ navigation }) {
                             </Pressable>
                         </SafeAreaView>
                         <ScrollView style={bulletinModalStyles.infoScroll} contentContainerStyle={bulletinModalStyles.bottomPanel}>
-                            <Text style={bulletinModalStyles.eventTitle}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventName}</Text>
+                            <Text style={bulletinModalStyles.eventTitle}>{global.HOUSEDATA[bullModalHouseIndex].events[bullModalEventIndex].eventName}</Text>
                             <SafeAreaView style={bulletinModalStyles.infoFlex}>
                                 <SafeAreaView style={bulletinModalStyles.infoIcon}>
                                     <PinIcon width={24} height={24} color={'#40187B'} />
                                 </SafeAreaView>
-                                <Text style={bulletinModalStyles.eventInfo}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventAddress}</Text>
+                                <Text style={bulletinModalStyles.eventInfo}>{global.HOUSEDATA[bullModalHouseIndex].events[bullModalEventIndex].eventAddress}</Text>
                             </SafeAreaView>
                             <SafeAreaView style={bulletinModalStyles.infoFlex}>
                                 <SafeAreaView style={bulletinModalStyles.infoIcon}>
                                     <CalendarIcon size={24} color={'#40187B'} />
                                 </SafeAreaView>
-                                <Text style={bulletinModalStyles.eventInfo}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventDate} @ {houseData[bullModalHouseIndex].events[0].eventStartTime}</Text>
+                                <Text style={bulletinModalStyles.eventInfo}>{global.HOUSEDATA[bullModalHouseIndex].events[bullModalEventIndex].eventDate} @ {global.HOUSEDATA[bullModalHouseIndex].events[0].eventStartTime}</Text>
                             </SafeAreaView>
                             <Text style={bulletinModalStyles.eventInfo}>{'\n'}about:</Text>
-                            <Text style={bulletinModalStyles.eventAbout}>{houseData[bullModalHouseIndex].events[bullModalEventIndex].eventAbout}</Text>
+                            <Text style={bulletinModalStyles.eventAbout}>{global.HOUSEDATA[bullModalHouseIndex].events[bullModalEventIndex].eventAbout}</Text>
                         </ScrollView>
                     </SafeAreaView>
                 </View>

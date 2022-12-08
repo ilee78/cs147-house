@@ -15,7 +15,17 @@ Store.setState("user",
         { key: 0, song: '', artist: ''},
         { key: 1, song: '', artist: ''},
         { key: 2, song: '', artist: ''}
-    ]
+    ],
+    owned_houses: [],
+});
+
+
+Store.setState("created-house",
+{
+    houseName: '',
+    location: '',
+    about: '',
+    tags: []
 });
 
 export default Store;
