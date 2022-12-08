@@ -44,7 +44,7 @@ function NameScreen({ navigation }) {
     <SafeAreaView style={styles.background}>
       <SafeAreaView style={styles.topPanel}>
         <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-          <BackIcon />
+          <BackIcon color={'black'}/>
         </Pressable>
       </SafeAreaView>
       <SafeAreaView style={styles.contentPanel}>
@@ -105,7 +105,7 @@ function LocationScreen({ navigation }) {
     <SafeAreaView style={styles.background}>
       <SafeAreaView style={styles.topPanel}>
         <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-          <BackIcon />
+          <BackIcon color={'black'}/>
         </Pressable>
       </SafeAreaView>
       <SafeAreaView style={styles.contentPanel}>
@@ -171,7 +171,7 @@ function TravelScreen({ navigation }) {
     <SafeAreaView style={styles.background}>
       <SafeAreaView style={styles.topPanel}>
         <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-          <BackIcon />
+          <BackIcon color={'black'}/>
         </Pressable>
       </SafeAreaView>
       <SafeAreaView style={styles.contentPanel}>
@@ -321,7 +321,7 @@ function InterestScreen({ navigation }) {
     <SafeAreaView style={styles.background}>
       <SafeAreaView style={styles.topPanel}>
         <Pressable style={styles.backIcon} onPress={() => navigation.goBack()}>
-          <BackIcon />
+          <BackIcon color={'black'}/>
         </Pressable>
       </SafeAreaView>
       <SafeAreaView style={styles.contentPanel}>

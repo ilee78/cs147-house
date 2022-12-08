@@ -65,15 +65,11 @@ function NeighborhoodScreen({ navigation }) {
     };
 
     if (global.JUSTJOINEDHOUSE !== '') {
-        console.log("joined house :");
-        console.log(global.JUSTJOINEDHOUSE);
         setModalVisible(true);
         global.JUSTJOINEDHOUSE = '';
     }
     if (user.houses.length > 0) {
         // Neighborhood
-        console.log(global.COUNTCREATE);
-        console.log(global.HOUSEDATA);
         return (
             <SafeAreaView style={styles.background}>
                 <SafeAreaView>
@@ -92,7 +88,7 @@ function NeighborhoodScreen({ navigation }) {
                                 </Pressable>
                             </SafeAreaView>
                             <SafeAreaView style={modalStyles.bottomPanel}>
-                                <Text>🎉</Text>
+                                <Text style={{fontSize: 45, bottom: 20}}>🎉</Text>
                                 <Text style={modalStyles.welcomeHome}>welcome home!</Text>
                                 <Text style={modalStyles.joinedHouseText}>you've joined the house</Text>
                                 <Text style={modalStyles.joinedHouseName}>{global.HOUSEDATA[user.houses[user.houses.length-1]].houseName}</Text>
@@ -110,8 +106,8 @@ function NeighborhoodScreen({ navigation }) {
                     <FlatList
                         ListHeaderComponent={
                             <Pressable onPress={() => navigation.navigate("Bulletin")} style={styles.bulletinPanel}>
-                                <Image style={styles.bulletinImage} source={user.events.length > 0 ? BulletinNotif : Bulletin} />
-                                {user.events.length > 0 ? <Text style={styles.notifCount}>{user.events.length > 98 ? 99 : user.events.length}</Text> : <Text></Text>}
+                                <Image style={styles.bulletinImage} source={global.NOTIFCOUNT > 0 ? BulletinNotif : Bulletin} />
+                                {global.NOTIFCOUNT > 0 ? <Text style={styles.notifCount}>{global.NOTIFCOUNT > 98 ? 99 : global.NOTIFCOUNT}</Text> : <Text></Text>}
                             </Pressable>
                         }
                         vertical
@@ -256,11 +252,16 @@ const MenuHouseProfilePicture = ({ houseNumber }) => {
 };
 
 const MenuHouse = ({ item }) => {
-    console.log(global.HOUSEDATA[item].houseName);
     return (
         <SafeAreaView style={styles.horizontalMenuHouseContainer}>
             <MenuHouseProfilePicture houseNumber={global.HOUSEDATA[item].key}></MenuHouseProfilePicture>
-            <Text style={styles.menuHouseNameText}>{global.HOUSEDATA[item].houseName}</Text>
+            {global.HOUSEDATA[item].userOwner
+            ? <SafeAreaView style={{flexDirection: 'column'}}>
+                <Text style={styles.menuHouseNameText}>{global.HOUSEDATA[item].houseName}</Text>
+                <Text style={{marginLeft: 10, color: '#FB749B'}}>(owner)</Text>
+            </SafeAreaView>
+            :  <Text style={styles.menuHouseNameText}>{global.HOUSEDATA[item].houseName}</Text>
+            }
         </SafeAreaView>
     );
 };
@@ -280,6 +281,16 @@ const UserHouses = ({ item }) => {
 };
 
 const HouseIllustration = ({ item }) => {
+    if (global.HOUSEDATA[item].userOwner) {
+        switch (global.HOUSEDATA[item].color) {
+            case 'yellow':
+                return (<Image style={styles.houseIllustration} source={OwnedHouseYellow}></Image>);
+            case 'pink':
+                return (<Image style={styles.houseIllustration} source={OwnedHousePink}></Image>);
+            case 'mint':
+                return (<Image style={styles.houseIllustration} source={OwnedHouseMint}></Image>);
+        }
+    }
     switch (global.HOUSEDATA[item].color) {
         case 'yellow':
             return (<Image style={styles.houseIllustration} source={HouseYellow}></Image>);
@@ -331,17 +342,13 @@ function BulletinScreen({ navigation }) {
     };
 
     var eventsList = [];
-    console.log(user.events)
     for (var houseInd = 0; houseInd < global.HOUSEDATA.length; houseInd++) {
         if (houseInd in user.events) {
-            console.log(houseInd, houseInd in user.events, user.events);
             for (var eventInd = 0; eventInd < user.events[houseInd].length; eventInd++) {
                 if (user.events[houseInd].includes(eventInd)) {
-                    console.log(eventInd, user.events[houseInd].includes(eventInd));
                     eventsList.push(
                         <Event key={global.HOUSEDATA[houseInd].events[eventInd].eventName} event={global.HOUSEDATA[houseInd].events[eventInd]} bulletinHouseIndex={houseInd} bulletinEventIndex={eventInd} />
                     );
-                    console.log("pushed ", global.HOUSEDATA[houseInd].events[eventInd].eventName);
                 }
             }
         }
@@ -350,7 +357,7 @@ function BulletinScreen({ navigation }) {
     return (
         <SafeAreaView style={bulletinStyles.background}>
             <Modal
-                animationType="slide"
+                animationType="none"
                 transparent={true}
                 visible={modalVisible}
             >
@@ -467,7 +474,6 @@ const styles = StyleSheet.create({
     headingText: {
         fontSize: 36,
         color: 'white',
-        marginLeft: 10,
         fontFamily: 'WorkSans-Bold',
     },
     horizontalGraphicsContainer: {

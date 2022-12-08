@@ -8,8 +8,7 @@ global.BIO = 'add a bio';
 global.TAGS = [];
 global.HOUSES = [];
 global.OWNEDHOUSES = [];
-global.NOTIFCOUNT = 10;
-//global.SONGS = [ { key: "0", song: "juice", artist: "brb." }, { key: "1", song: "Alone with You", artist: "Alina Baraz" }, { key: "2", song: "Killing Me", artist: "Omar Apollo" }];
+global.NOTIFCOUNT = 0;
 global.SONGS = [];
 global.JUSTJOINEDHOUSE = '';
 global.COUNTCREATE = 0;
@@ -47,7 +46,7 @@ global.HOUSEDATA = [
                 "eventIndex": 1,
                 "eventName": "VIBE tickets",
                 "userRSVP": false,
-                "eventAddress": "location lol",
+                "eventAddress": "123 Vibe Street, San Francisco, CA 94110",
                 "eventDate": "12/1/2022",
                 "eventStartTime": "9 PM PST", 
                 "eventAbout": "tickets to VIBE dance competition on 2/26/2023 are dropping soon! come watch the show with us so remember to get your tickets in time!"

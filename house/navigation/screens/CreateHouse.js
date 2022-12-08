@@ -245,12 +245,13 @@ function CreateHouseLoadingScreen({ navigation }) {
     //setTimeout(() => {dumpData(); navigation.navigate('Tabs', {screen: 'Neighborhood'});}, 2000);
 
     function dumpData() {
-        updateUser(user => {user.owned_houses.push({
-            houseName: house.houseName,
-            location: house.location,
-            about: house.about,
-            tags: house.tags,
-        })});
+        // updateUser(user => {user.owned_houses.push({
+        //     houseName: house.houseName,
+        //     location: house.location,
+        //     about: house.about,
+        //     tags: house.tags,
+        // })});
+        updateUser(user => {user.owned_houses.push(global.HOUSEDATA.length)});
         // const fs = require('fs');
         // var data = fs.readFileSync('./../../house-data.json');
         // var obj = JSON.parse(data);
@@ -279,9 +280,7 @@ function CreateHouseLoadingScreen({ navigation }) {
                 "eventAbout": "come meet everyone! we will have snacks and drinks"
             }
         ],
-          "members": [
-              user.username,
-          ],
+          "members": [],
           "moderators": [
               user.username,
           ]
@@ -429,6 +428,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
       fontFamily: "WorkSans-Regular",
+      width: '90%'
     },
     houseText: {
       fontSize: 24,

@@ -102,6 +102,7 @@ function BrowsingScreen({ navigation }) {
                     maxHeight: 22,
                     marginLeft: 5,
                 }}>
+                    {user.owned_houses.includes(house) ? 
                     <Text style={{        
                         fontSize: 12,
                         textAlign: 'center',
@@ -109,7 +110,16 @@ function BrowsingScreen({ navigation }) {
                         justifyContent: 'center',
                         color: '#FB749C',
                         fontFamily: 'WorkSans-Medium'}}>
-                    joined</Text>
+                    owner</Text>
+                    :                
+                    <Text style={{        
+                        fontSize: 12,
+                        textAlign: 'center',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#FB749C',
+                        fontFamily: 'WorkSans-Medium'}}>
+                    joined</Text>}
                 </SafeAreaView>
             );
         }
@@ -216,7 +226,8 @@ function HouseLandingScreen({ route, navigation }) {
     ]);
     const imagePath = "./../../"+global.HOUSEDATA[key].profileImg
     const leaveHouse = (leftHouse) => {
-        updateUser(user => { user.houses.splice(leftHouse - 1, 1) });
+        var leftIndex = user.houses.indexOf(leftHouse);
+        updateUser(user => { user.houses.splice(leftIndex, 1) });
     }
 
     const rsvpEvent = (event) => {
@@ -228,7 +239,8 @@ function HouseLandingScreen({ route, navigation }) {
     }
 
     const cancelEvent = (event) => {
-        updateUser(user => { user.events[key].splice(event - 1, 1) });
+        var indexOfEvent = user.events[key].indexOf(event);
+        updateUser(user => { user.events[key].splice(indexOfEvent, 1) });
     }
 
     const openJoinedMenu = () =>
@@ -353,7 +365,7 @@ function HouseLandingScreen({ route, navigation }) {
         <ScrollView style={styles.background}>
             <SafeAreaView>
                 <Modal
-                    animationType="slide"
+                    animationType="none"
                     transparent={true}
                     visible={modalVisible}
                 >
@@ -368,10 +380,10 @@ function HouseLandingScreen({ route, navigation }) {
                                 </Pressable>
                                 {user.houses.includes(key) ?
                                     ((key in user.events && user.events[key].includes(eventIndex)) ?
-                                        <Pressable style={modalStyles.cancelButton} onPress={() => cancelEvent(eventIndex)}>
+                                        <Pressable style={modalStyles.cancelButton} onPress={() => {global.NOTIFCOUNT=global.NOTIFCOUNT - 1; cancelEvent(eventIndex)}}>
                                             <Text style={styles.buttonText}>cancel</Text>
                                         </Pressable>
-                                        : <Pressable style={modalStyles.rsvpButton} onPress={() => rsvpEvent(eventIndex)}>
+                                        : <Pressable style={modalStyles.rsvpButton} onPress={() => {global.NOTIFCOUNT=global.NOTIFCOUNT + 1; rsvpEvent(eventIndex)}}>
                                             <Text style={styles.buttonText}>rsvp</Text>
                                         </Pressable>)
                                     : <SafeAreaView></SafeAreaView>}
@@ -415,9 +427,14 @@ function HouseLandingScreen({ route, navigation }) {
                         <SafeAreaView style={styles.nameAndJoin}>
                             <Text id='houseName' style={styles.houseName}>{global.HOUSEDATA[key].houseName}</Text>
                             {user.houses.includes(key) ? 
+                                (user.owned_houses.includes(key) ? 
+                                <SafeAreaView style={styles.joinedLabel}>
+                                    <Text style={styles.joinedLabelText}>owner</Text>
+                                </SafeAreaView>
+                                : 
                                 <SafeAreaView style={styles.joinedLabel}>
                                     <Text style={styles.joinedLabelText}>joined</Text>
-                                </SafeAreaView>
+                                </SafeAreaView>)
                                 : <Pressable style={styles.joinButton} onPress={() => navigation.navigate("NormsAndRules", { key: key })}>
                                     <Text style={styles.buttonText}>join</Text>
                                 </Pressable>}
