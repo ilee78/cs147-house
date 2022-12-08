@@ -29,6 +29,7 @@ import sfVoguersPic from '../../assets/sfVoguersPic.png';
 import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
 import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
 import poppersPic from '../../assets/houseProfileImg.jpg';
+import createdHousePic from '../../assets/createdHousePic.png';
 
 //var justJoined = false;
 
@@ -226,7 +227,7 @@ const HouseProfilePic = ({ houseNumber }) => {
             return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
             break;
         default:
-            return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
+            return <Image style={styles.houseProfileImage} source={createdHousePic}></Image>;
 
     }
 }
@@ -246,7 +247,7 @@ const MenuHouseProfilePicture = ({ houseNumber }) => {
             return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
             break;
         default:
-            return <Image style={styles.menuHouseProfileImage} source={poppersPic}></Image>;
+            return <Image style={styles.menuHouseProfileImage} source={createdHousePic}></Image>;
 
     }
 };
@@ -542,7 +543,8 @@ const styles = StyleSheet.create({
         marginRight: 30,
     },
     menuNeighborhoodList: {
-        paddingLeft: 20
+        paddingLeft: 20,
+        paddingRight: 20
     },
     menuPanel: {
         flexDirection: 'row',
@@ -550,7 +552,7 @@ const styles = StyleSheet.create({
     },
     menuText: {
         fontSize: 18,
-        marginBottom: 10
+        marginBottom: 10,
     },
     neighborhoodHeading: {
         flex: 1,

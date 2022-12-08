@@ -14,7 +14,7 @@ import DotsIcon from '../../assets/dots.js';
 import CalendarIcon from '../../assets/calendar.js';
 import XIcon from '../../assets/x.js';
 import Store from './../../Store';
-import HouseProfileImg from '../../assets/houseProfileImg.jpg';
+
 import HouseGraphicBorder from '../../assets/browseHouse-Border.png';
 import './Global.js';
 //import houseData from '../../house-data.json';
@@ -26,13 +26,15 @@ import naliProfilePic from '../../assets/naliProfilePic.png';
 import carolineProfilePic from '../../assets/carolineProfilePic.png';
 import jeffProfilePic from '../../assets/jeffProfilePic.jpg';
 import izzyProfilePic from '../../assets/izzyProfilePic.png';
-import defaultProfilePic from '../../assets/defaultProfilePic.png';
+import michaelProfilePic from '../../assets/michaelProfilePic.jpg';
 import hammyProfilePic from '../../assets/hammyProfilePic.jpg';
 
+import HouseProfileImg from '../../assets/houseProfileImg.jpg';
 import sfVoguersPic from '../../assets/sfVoguersPic.png';
 import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
 import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
 import poppersPic from '../../assets/houseProfileImg.jpg';
+import createdHousePic from '../../assets/createdHousePic.png';
 
 // Global variable - bad style lol, change later
 var ID = "";
@@ -85,7 +87,7 @@ function BrowsingScreen({ navigation }) {
                 return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
                 break;
             default:
-                return <Image style={browseStyles.houseProfilePicture} source={poppersPic}></Image>;
+                return <Image style={browseStyles.houseProfilePicture} source={createdHousePic}></Image>;
         }
     }
 
@@ -300,8 +302,8 @@ function HouseLandingScreen({ route, navigation }) {
                 return <Image style={styles.profileImage} source={jeffProfilePic}></Image>;
             case "Izzy L.":
                 return <Image style={styles.profileImage} source={izzyProfilePic}></Image>;
-            case "Michael C.":
-                return <Image style={styles.profileImage} source={HouseProfileImg}></Image>;
+            case "Michael W.":
+                return <Image style={styles.profileImage} source={michaelProfilePic}></Image>;
             case "Hammy O.":
                 return <Image style={styles.profileImage} source={hammyProfilePic}></Image>;
         }
@@ -322,18 +324,18 @@ function HouseLandingScreen({ route, navigation }) {
                 return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
                 break;
             default:
-                return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
+                return <Image style={styles.houseIconBackground} source={createdHousePic}></Image>;
         }
     }
 
     const Member = ({ name }) => {
         return (
             <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
-                <Pressable style={{ flexDirection: 'row' }} onPress={() => navigation.navigate("ViewOnlyProfile", { name })}>
-                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16, top: 2 }}>
-                        <ProfileIcon size={24} color='#40187B' />
+                <Pressable style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.navigate("ViewOnlyProfile", { name })}>
+                    <SafeAreaView style={{ marginLeft: 4, paddingHorizontal: 16 }}>
+                        <ProfilePic name={name} />
                     </SafeAreaView>
-                    <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24 }}>{name.toLowerCase()}</Text>
+                    <Text style={{ color: 'black', fontFamily: 'WorkSans-Regular', fontSize: 24}}>{name.toLowerCase()}</Text>
                 </Pressable>
             </SafeAreaView>
         );
@@ -524,6 +526,25 @@ function NormsAndRulesScreen({ route, navigation }) {
         updateUser(user => { user.houses.push(joinedHouse) });
     }
 
+    const HouseProfilePic = ({ houseNumber }) => {
+        switch (houseNumber) {
+            case 0:
+                return <Image style={styles.houseIconBackground} source={sfVoguersPic}></Image>;
+                break;
+            case 1:
+                return <Image style={styles.houseIconBackground} source={oaklandBobaBashPic}></Image>;
+                break;
+            case 2:
+                return <Image style={styles.houseIconBackground} source={raeClassCommunityPic}></Image>;
+                break;
+            case 3:
+                return <Image style={styles.houseIconBackground} source={poppersPic}></Image>;
+                break;
+            default:
+                return <Image style={styles.houseIconBackground} source={createdHousePic}></Image>;
+        }
+    }
+
 
     return (
         <SafeAreaView style={styles.background}>
@@ -532,9 +553,7 @@ function NormsAndRulesScreen({ route, navigation }) {
                     <BackIcon color='white' />
                 </Pressable>
                 <SafeAreaView style={normsStyles.normsHeader}>
-                    <Pressable style={normsStyles.houseIconBackground}>
-                        <HouseIcon style={styles.houseIcon} color='white' size='58' />
-                    </Pressable>
+                    <HouseProfilePic houseNumber={key}/>
                     <Text style={normsStyles.houseName}>{global.HOUSEDATA[key].houseName}</Text>
                     <Text style={normsStyles.normsTitle}>house rules & norms</Text>
                 </SafeAreaView>

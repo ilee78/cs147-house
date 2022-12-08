@@ -135,7 +135,7 @@ global.HOUSEDATA = [
         ],
         "members": [
             "Izzy L.", 
-            "Michael C.", 
+            "Michael W.", 
             "Annabelle W."
         ],
         "moderators": [
@@ -179,12 +179,12 @@ global.HOUSEDATA = [
             }
         ],
         "members": [
-            "Michael C.",
+            "Michael W.",
             "Nali W.", 
             "Izzy L."
         ],
         "moderators": [
-            "Michael C."
+            "Michael W."
         ]
     }
 ];

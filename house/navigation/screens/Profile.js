@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, SafeAreaView, Text, TextInput, StyleSheet, Pressable, ScrollView, FlatList, SectionList } from 'react-native';
+import { View, SafeAreaView, Text, TextInput, StyleSheet, Pressable, ScrollView, FlatList, SectionList, Image } from 'react-native';
 import ProfileIcon from './../../assets/profile-icon.js';
 import EditIcon from './../../assets/edit.js';
 import SettingsIcon from './../../assets/gear.js';
@@ -11,6 +11,20 @@ import Store from './../../Store';
 //import houseData from '../../house-data.json'
 import profileData from '../../profile-data.json';
 import './Global.js';
+
+import annabelleProfilePic from '../../assets/annabelleProfilePic.png';
+import naliProfilePic from '../../assets/naliProfilePic.png';
+import carolineProfilePic from '../../assets/carolineProfilePic.png';
+import jeffProfilePic from '../../assets/jeffProfilePic.jpg';
+import izzyProfilePic from '../../assets/izzyProfilePic.png';
+import michaelProfilePic from '../../assets/michaelProfilePic.jpg';
+import hammyProfilePic from '../../assets/hammyProfilePic.jpg';
+
+import sfVoguersPic from '../../assets/sfVoguersPic.png';
+import oaklandBobaBashPic from '../../assets/oaklandBobaBashPic.png';
+import raeClassCommunityPic from '../../assets/raeClassCommunityPic.png';
+import poppersPic from '../../assets/houseProfileImg.jpg';
+import createdHousePic from '../../assets/createdHousePic.png';
 
 const EMPTY_BIO = '';
 
@@ -53,7 +67,7 @@ function ProfileScreen({navigation}) {
                         id = 'houses'
                         horizontal
                         data={user.houses}
-                        renderItem={({item}) => <Houses item={global.HOUSEDATA[item].houseName}/> }
+                        renderItem={({item}) => <Houses item={item}/> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
@@ -265,12 +279,28 @@ function SettingsScreen({navigation}) {
     );
 }
 
+const ProfilePic = ({ name }) => {
+    switch (name) {
+        case "Annabelle W.":
+            return <Image style={styles.profileImage} source={annabelleProfilePic}></Image>;
+        case "Nali W.":
+            return <Image style={styles.profileImage} source={naliProfilePic}></Image>;
+        case "Caroline Z.":
+            return <Image style={styles.profileImage} source={carolineProfilePic}></Image>;
+        case "Jeff W.":
+            return <Image style={styles.profileImage} source={jeffProfilePic}></Image>;
+        case "Izzy L.":
+            return <Image style={styles.profileImage} source={izzyProfilePic}></Image>;
+        case "Michael W.":
+            return <Image style={styles.profileImage} source={michaelProfilePic}></Image>;
+        case "Hammy O.":
+            return <Image style={styles.profileImage} source={hammyProfilePic}></Image>;
+    }
+}
+
 function ViewOnlyProfileScreen({route, navigation}) {
     const { name } = route.params;
-    console.log("name: " + name);
     const index = profileData.findIndex(profileData => profileData.profileName===name);
-    console.log(index);
-    console.log(profileData[index].songs);
 
     return(
         <ScrollView style={styles.background}>
@@ -279,7 +309,7 @@ function ViewOnlyProfileScreen({route, navigation}) {
                 </Pressable>
                 <SafeAreaView style={styles.profilePanel}>
                     <Pressable style={styles.profileBackground}>
-                        <ProfileIcon style={styles.profileIcon} color='#FFFFFF' size='58'/>
+                        <ProfilePic style={styles.profileIcon} name={name}/>
                     </Pressable>
                     <SafeAreaView style={styles.namePanel}>
                         <Text id='username' style={styles.name}>{name.toLowerCase()}</Text>
@@ -312,7 +342,7 @@ function ViewOnlyProfileScreen({route, navigation}) {
                         id = 'tags'
                         horizontal
                         data={profileData[index].tags}
-                        renderItem={({item}) => <Tags item={item} /> }
+                        renderItem={({item}) => <Tags key={item} item={item} /> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView>
@@ -322,13 +352,13 @@ function ViewOnlyProfileScreen({route, navigation}) {
                         id = 'houses'
                         horizontal
                         data={profileData[index].houses}
-                        renderItem={({item}) => <Houses item={item}/> }
+                        renderItem={({item}) => <Houses key={global.HOUSEDATA[item]} item={item}/> }
                         showsHorizontalScrollIndicator={false}
                     />
                 </SafeAreaView> : <SafeAreaView></SafeAreaView>}
                 <SafeAreaView style={styles.songsPanel}>
                     <Text style={styles.sectionHeading}>songs i'm dancing to</Text>
-                    {profileData[index].songs.map(function(songInfo) {return <ProfileSong songInfo={songInfo}/>;})}
+                    {profileData[index].songs.map(function(songInfo) {return <ProfileSong key={songInfo.songTitle} songInfo={songInfo}/>;})}
                 </SafeAreaView>
         </ScrollView>
     );
@@ -355,12 +385,34 @@ const Tags = ({ item, navigation }) => {
     );
 };
 
+const HouseProfilePic = ({ houseNumber }) => {
+    switch (houseNumber) {
+        case 0:
+            return <Image style={styles.houseProfileImage} source={sfVoguersPic}></Image>;
+            break;
+        case 1:
+            return <Image style={styles.houseProfileImage} source={oaklandBobaBashPic}></Image>;
+            break;
+        case 2:
+            return <Image style={styles.houseProfileImage} source={raeClassCommunityPic}></Image>;
+            break;
+        case 3:
+            return <Image style={styles.houseProfileImage} source={poppersPic}></Image>;
+            break;
+        default:
+            return <Image style={styles.houseProfileImage} source={createdHousePic}></Image>;
+
+    }
+};
+
 const Houses = ({ item }) => {
     return (
         <View style={styles.house}>
             <Pressable>
-                <SafeAreaView style={styles.houseIconContainer}><HouseIcon width={30} height={30} color={'white'}/></SafeAreaView>
-                <Text style={styles.houseText}>{item}</Text>
+                <SafeAreaView style={styles.houseIconContainer}>
+                    <HouseProfilePic houseNumber={item}></HouseProfilePic>
+                </SafeAreaView>
+                <Text style={styles.houseText}>{global.HOUSEDATA[item].houseName}</Text>
             </Pressable>
         </View>
     );
@@ -523,6 +575,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    houseProfileImage: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        borderWidth: 1,
+        borderColor: 'white'
+    }, 
     namePanel: {
         flexDirection: 'row',
     },
@@ -623,8 +682,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 10,
         //justifyContent: 'center',
-        maxWidth: 94,
-        minWidth: 94,
+        maxWidth: 100,
+        minWidth: 100,
         minHeight: 120,
     },
     houseText: {
@@ -632,7 +691,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'WorkSans-Regular',
         paddingTop: 8,
-        fontSize: 16
+        fontSize: 14
+    },
+    profileImage: {
+        height: 120,
+        width: 120,
+        borderRadius: 60
     },
     plusIcon : {
         margin: 30,
@@ -640,7 +704,8 @@ const styles = StyleSheet.create({
     songs: {
         flexDirection: 'row',
         paddingTop: 12,
-        paddingBottom: 12
+        paddingBottom: 12,
+        alignItems: 'center'
     },
     songNameText: {
         color: '#61646B',
@@ -736,7 +801,7 @@ const editStyles = StyleSheet.create({
     },
     songPanel: {
         flexDirection: 'row',
-        marginBottom: 10
+        marginBottom: 10,
     },
     sectionHeading: {
         marginLeft: 30,
