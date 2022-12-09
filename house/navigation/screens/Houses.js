@@ -483,10 +483,11 @@ function HouseLandingScreen({ route, navigation }) {
             <Animated.View
                 style={[{ transform: [{ translateX: moveAnim }] }]}>
                 <SafeAreaView style={styles.houseInfoPanels}>
-                    <SafeAreaView style={styles.aboutPanel}>
+                    <SafeAreaView>
+                    <SafeAreaView style={{padding: 20, width: layout.width-60, marginHorizontal: 30}}>
                         <Text style={styles.where}>where we are</Text>
                         <Text style={styles.smallText}>{global.HOUSEDATA[key].address}</Text>
-                        <Image style={styles.map} source={SfVoguersMap} />
+                        <Image style={{width: layout.width-60, height: 16*(layout.width-60)/35, marginTop: 10, borderRadius: 10}} source={SfVoguersMap} />
                         <Text style={styles.aboutUs}>about us</Text>
                         <Text style={styles.smallText}>{global.HOUSEDATA[key].about}</Text>
                         <SafeAreaView style={styles.moderatorsPanel}>
@@ -496,10 +497,15 @@ function HouseLandingScreen({ route, navigation }) {
                             <Text style={styles.moderatorText}>{global.HOUSEDATA[key].moderators} is a moderator.</Text>
                         </SafeAreaView>
                     </SafeAreaView>
-                    <SafeAreaView style={styles.eventsPanel}>
+                    </SafeAreaView>
+                    
+                    <SafeAreaView>
+                    <SafeAreaView style={{padding: 20, width: layout.width-60, marginHorizontal: 30}}>
                         {global.HOUSEDATA[key].events.map(function (event) { return <Event key={event.eventName} event={event} /> })}
                     </SafeAreaView>
-                    <SafeAreaView style={styles.roommatesPanel}>
+                    </SafeAreaView>
+                    
+                    <SafeAreaView style={{padding: 20, width: layout.width-60, marginHorizontal: 30}}>
                         <Text style={styles.memberText}>members: {user.houses.includes(key) ? global.HOUSEDATA[key].members.length + 1 : global.HOUSEDATA[key].members.length}</Text>
                         {user.houses.includes(key)
                             ? <SafeAreaView style={{ borderWidth: 1, borderColor: '#AFB1B6', height: 60, backgroundColor: 'white', borderRadius: 5, marginVertical: 5, justifyContent: 'center' }}>
@@ -610,11 +616,11 @@ const styles = StyleSheet.create({
         padding: 20,
         marginHorizontal: 32
     },
-    eventsPanel: {
-        padding: 20,
-        width: 350,
-        marginHorizontal: 32
-    },
+    // eventsPanel: {
+    //     padding: 20,
+    //     width: 350,
+    //     marginHorizontal: 32
+    // },
     roommatesPanel: {
         padding: 20,
         width: 350,
