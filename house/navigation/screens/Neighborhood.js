@@ -124,8 +124,8 @@ function NeighborhoodScreen({ navigation }) {
                 <Animated.View
                     style={[{ transform: [{ translateX: openAnim }] }]}>
                     <SafeAreaView style={styles.menuPanel}>
-                        <SafeAreaView style={styles.neighborhoodMenu}>
-                            <SafeAreaView style={styles.neighborhoodMenuContent}>
+                        <SafeAreaView style={{backgroundColor: 'white', position: 'relative', justifyContent: 'flex-end', bottom: layout.height*0.9, height: layout.height*0.9, width: 250,}}>
+                            <SafeAreaView style={{height: layout.height-170, paddingHorizontal: 10,}}>
 
                                 <FlatList
                                     ListHeaderComponent={
@@ -177,8 +177,8 @@ function NeighborhoodScreen({ navigation }) {
                 <Animated.View
                     style={[{ transform: [{ translateX: openAnim }] }]}>
                     <SafeAreaView style={styles.menuPanel}>
-                        <SafeAreaView style={styles.neighborhoodMenu}>
-                            <SafeAreaView style={styles.neighborhoodMenuContent}>
+                        <SafeAreaView style={{backgroundColor: 'white', position: 'relative', justifyContent: 'flex-end', bottom: layout.height*0.9, height: layout.height*0.9, width: 250,}}>
+                            <SafeAreaView style={{height: layout.height-170, paddingHorizontal: 10,}}>
 
                                 <FlatList
                                     ListHeaderComponent={

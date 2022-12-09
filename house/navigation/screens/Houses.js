@@ -579,12 +579,15 @@ function NormsAndRulesScreen({ route, navigation }) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={normsStyles.agreement}>
-                <CheckBox
-                    value={isSelected}
-                    onValueChange={setSelection}
-                    color={'#AFB1B6'}
-                />
-                <Text style={normsStyles.iagree}>i agree</Text>
+                <Pressable style={{flexDirection: 'row'}} onPress= {() => { setSelection(!isSelected)}}>
+                    <CheckBox
+                        value={isSelected}
+                        onValueChange={setSelection}
+                        hitSlop={30}
+                        color={'#AFB1B6'}
+                    />
+                    <Text style={normsStyles.iagree}>i agree</Text>
+                </Pressable>
                 <Pressable
                     style={normsStyles.joinButton}
                     disabled={!isSelected}
