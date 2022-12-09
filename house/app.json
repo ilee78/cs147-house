@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "acaihouse",
     "name": "house",
     "slug": "house",
     "version": "1.0.0",
